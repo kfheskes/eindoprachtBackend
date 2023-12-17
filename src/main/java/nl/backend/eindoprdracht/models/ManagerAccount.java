@@ -1,14 +1,19 @@
 package nl.backend.eindoprdracht.models;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
+
 @Entity
-@Table(name = "customer_account")
-public class CustomerAccount {
+@Table(name = "manager_account")
+public class ManagerAccount {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -17,30 +22,26 @@ public class CustomerAccount {
     private String fName;
     private String mName;
     private String lName;
+    private Date dob;
 
     private String address;
     private String zipcode;
     private String pNumber;
-    private String companyName;
-    private String contract;
-    private Double balans;
 
-    // TODO: list of invoice
-    public CustomerAccount(long id, String fName, String mName, String lName, String address, String zipcode, String pNumber, String companyName, String contract, Double balans) {
+    private String responsibilities;
+
+    public ManagerAccount(long id, String fName, String mName, String lName, Date dob, String address, String zipcode, String pNumber, String responsibilities) {
         this.id = id;
         this.fName = fName;
         this.mName = mName;
         this.lName = lName;
+        this.dob = dob;
         this.address = address;
         this.zipcode = zipcode;
         this.pNumber = pNumber;
-        this.companyName = companyName;
-        this.contract = contract;
-        this.balans = balans;
+        this.responsibilities = responsibilities;
     }
 
-   public CustomerAccount(){
-   }
-
-
+    public ManagerAccount(){
+    }
 }
