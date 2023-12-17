@@ -13,7 +13,6 @@ public class CustomerAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long id;
-
     private String fName;
     private String mName;
     private String lName;
