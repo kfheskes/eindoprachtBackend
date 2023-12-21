@@ -88,7 +88,7 @@ public class CustomerAccountService {
         if (getCustomerAccount.isEmpty()) {
             throw new RecordNotFoundException("No customerAccount found by id");
         } else {
-CustomerAccount changeCustomerAccount1 = getCustomerAccount.get();
+            CustomerAccount changeCustomerAccount1 = getCustomerAccount.get();
             changeCustomerAccount1.setFName(customerAccount.getFName());
             changeCustomerAccount1.setMName(customerAccount.getMName());
             changeCustomerAccount1.setLName(customerAccount.getLName());
