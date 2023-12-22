@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "customer_account")
+@Table(name = "customer_accounts")
 public class CustomerAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +38,8 @@ public class CustomerAccount {
         this.balans = balans;
     }
 
-   public CustomerAccount(){
-   }
+    public CustomerAccount() {
+    }
 
 
 }

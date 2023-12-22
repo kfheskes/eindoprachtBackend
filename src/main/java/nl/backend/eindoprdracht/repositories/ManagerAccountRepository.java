@@ -1,5 +1,8 @@
 package nl.backend.eindoprdracht.repositories;
 
+
+
+
 import nl.backend.eindoprdracht.models.ManagerAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 

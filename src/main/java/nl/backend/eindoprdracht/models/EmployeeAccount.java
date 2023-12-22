@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 
 @Entity
-@Table(name = "employee_account")
+@Table(name = "employee_accounts")
 public class EmployeeAccount {
 
     @Id

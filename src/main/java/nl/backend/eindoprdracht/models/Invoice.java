@@ -9,13 +9,13 @@ import java.time.LocalDate;
     @Getter
     @Setter
     @Entity
-    @Table(name = "invoice")
+    @Table(name = "invoices")
     public class Invoice {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-        private Long Id;
+        private Long id;
         private String typeOfWork;
         private Double price;
         private String typeOfProduct;
@@ -27,7 +27,7 @@ import java.time.LocalDate;
         private String customerAddress;
         private String termOfPayment;
         public Invoice(Long id, String typeOfWork, Double price, String typeOfProduct, String businessTaxNumber, int amount, long taxAmount, LocalDate date, String businessAddress, String customerAddress, String termOfPayment) {
-            Id = id;
+            this.id = id;
             this.typeOfWork = typeOfWork;
             this.price = price;
             this.typeOfProduct = typeOfProduct;

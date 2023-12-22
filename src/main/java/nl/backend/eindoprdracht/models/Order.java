@@ -10,14 +10,16 @@ import java.time.LocalTime;
 
 @Getter
 @Setter
+
 @Entity
-@Table(name = "order")
+@Table (name = "orders")
+
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long Id;
+    private long id;
     private String typeOfWork;
     private int amount;
     private Double price;
@@ -31,7 +33,7 @@ public class Order {
     private String workZipcode;
 
     public Order(Long id, String typeOfWork, int amount, Double price, int productId, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
-        Id = id;
+        this.id = id;
         this.typeOfWork = typeOfWork;
         this.amount = amount;
         this.price = price;

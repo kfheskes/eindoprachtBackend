@@ -11,7 +11,7 @@ import java.util.Date;
 @Setter
 
 @Entity
-@Table(name = "manager_account")
+@Table(name = "manager_accounts")
 public class ManagerAccount {
 
     @Id
