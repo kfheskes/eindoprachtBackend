@@ -13,9 +13,9 @@ public class EmployeeAccountInputDto {
     public String mName;
     public String lName;
     public Date dob;
-public String address;
+    public String address;
     public String zipcode;
     public String pNumber;
-public Double contractH;
+    public Double contractH;
     public Date startContract;
 }

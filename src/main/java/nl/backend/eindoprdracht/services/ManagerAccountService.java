@@ -1,4 +1,4 @@
 package nl.backend.eindoprdracht.services;
 
-public class MangerAccountService {
+public class ManagerAccountService {
 }

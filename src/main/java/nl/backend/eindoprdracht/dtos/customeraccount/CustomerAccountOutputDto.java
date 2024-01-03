@@ -1,10 +1,7 @@
 package nl.backend.eindoprdracht.dtos.customeraccount;
 
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
+
 public class CustomerAccountOutputDto {
 
     public long id;

@@ -6,8 +6,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Setter
-@Getter
+
 public class OrderOutputDto {
 
     public Long Id;

@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
+//TODO kijk naar de datums dattype de data wilt meestal YYYY-MAAND-DAG dit moet anders
+
 @Getter
 @Setter
 
@@ -27,6 +29,7 @@ public class EmployeeAccount {
     private String zipcode;
     private String pNumber;
 
+    @Column(name = "contract_h")
     private Double contractH;
     private Date startContract;
 
