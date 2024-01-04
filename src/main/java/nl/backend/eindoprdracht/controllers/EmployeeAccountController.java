@@ -6,6 +6,7 @@ import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountInputDto;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountInputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
+import nl.backend.eindoprdracht.models.EmployeeAccount;
 import nl.backend.eindoprdracht.services.EmployeeAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -56,6 +57,19 @@ public class EmployeeAccountController {
         return ResponseEntity.ok(eaDtoList);
     }
 
+@PutMapping("/{id}")
+public ResponseEntity<EmployeeAccountOutputDto>
+    updateEmployeeAccount(@PathVariable long id, @RequestBody EmployeeAccountInputDto employeeAccountInputDto){
+        EmployeeAccountOutputDto dto = employeeAccountService.updateEmployeeAccount(id, employeeAccountInputDto);
+        return ResponseEntity.ok().body(dto);
+}
+// TODO kijken of er ook een return teruggestuurd kan worden.
 
+@DeleteMapping("/{id}")
+    public ResponseEntity<EmployeeAccount> deleteEmployeeAccount(@PathVariable long id) {
+        employeeAccountService.deleteEmployeeAccount(id);
+            return ResponseEntity.noContent().build();
+
+}
 
 }

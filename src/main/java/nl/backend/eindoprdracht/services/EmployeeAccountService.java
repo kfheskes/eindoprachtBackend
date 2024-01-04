@@ -122,6 +122,8 @@ public class EmployeeAccountService {
 
     }
 
-
+    public void deleteEmployeeAccount(long id) {
+        employeeAccountRepository.deleteById(id);
+    }
 
 }
