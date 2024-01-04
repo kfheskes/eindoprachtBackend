@@ -5,7 +5,7 @@ import org.springframework.validation.FieldError;
 
 public class ControllerHelper {
 
-
+//TODO krijg geen foutmelding bij dubbelen punt
     public static String checkForBindingResult (BindingResult br) {
         StringBuilder sb = new StringBuilder();
         for (FieldError fe : br.getFieldErrors()) {

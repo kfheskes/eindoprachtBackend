@@ -1,11 +1,11 @@
 package nl.backend.eindoprdracht.controllers;
 
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountInputDto;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountInputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
+import nl.backend.eindoprdracht.exceptions.ValidationException;
 import nl.backend.eindoprdracht.models.EmployeeAccount;
 import nl.backend.eindoprdracht.services.EmployeeAccountService;
 import org.springframework.http.ResponseEntity;
