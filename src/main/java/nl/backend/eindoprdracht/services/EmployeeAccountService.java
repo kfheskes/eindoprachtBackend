@@ -1,11 +1,9 @@
 package nl.backend.eindoprdracht.services;
 
-import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountInputDto;
-import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
+
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountInputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
-import nl.backend.eindoprdracht.models.CustomerAccount;
 import nl.backend.eindoprdracht.models.EmployeeAccount;
 import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,7 @@ import java.util.Optional;
 @Service
 public class EmployeeAccountService {
 
-    private EmployeeAccountRepository employeeAccountRepository;
+    private final EmployeeAccountRepository employeeAccountRepository;
 
     public EmployeeAccountService(EmployeeAccountRepository employeeAccountRepository) {
         this.employeeAccountRepository = employeeAccountRepository;

@@ -21,9 +21,9 @@ public class Order {
 
     private long id;
     private String typeOfWork;
-    private int amount;
+    private Integer amount;
     private Double price;
-    private int productId;
+    private Integer productId;
     private String productName;
     private String customerName;
     private String status;

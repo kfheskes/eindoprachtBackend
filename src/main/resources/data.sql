@@ -19,3 +19,9 @@ VALUES
     ( 'Emma', '', 'Smith', '1985-06-15', 'Hoofdstraat 100 Haarlem', '1234 ZX', '0612345678', 'Algemeen management'),
     ( 'Liam', '', 'Johnson', '1978-04-22', 'Zijstraat 25 Hoofddorp', '5678 AB', '0698765432', 'Financieel management'),
     ( 'Olivia', '', 'Williams', '1990-11-30', 'Achterweg 40 Groningen', '9012 CD', '0678901234', 'Operationeel management');
+
+INSERT INTO orders (type_of_work, amount, price, product_id, product_name, customer_name, status, date_created, time, work_address, work_zipcode)
+VALUES
+    ('Schoonmaken', 10, 150.00, 1, 'Schoonmaakmiddelen', 'Bedrijf A', 'In behandeling', '2024-01-10', '08:00', 'Hoofdstraat 1', '1234 AB'),
+    ('Ramen lappen', 20, 200.00, 2, 'Raamreiniger', 'Bedrijf B', 'Voltooid', '2024-01-15', '09:00', 'Zijstraat 2', '5678 CD'),
+    ('Vloerreiniging', 5, 100.00, 3, 'Vloerreiniger', 'Bedrijf C', 'Gepland', '2024-01-20', '10:00', 'Achterweg 3', '9012 EF');
