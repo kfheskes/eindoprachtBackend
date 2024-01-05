@@ -32,6 +32,11 @@ public class Order {
     private String workAddress;
     private String workZipcode;
 
+    @OneToOne
+    private Invoice invoice;
+
+
+
     public Order(Long id, String typeOfWork, int amount, Double price, int productId, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
         this.id = id;
         this.typeOfWork = typeOfWork;
