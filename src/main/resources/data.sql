@@ -25,3 +25,9 @@ VALUES
     ('Schoonmaken', 10, 150.00, 1, 'Schoonmaakmiddelen', 'Bedrijf A', 'In behandeling', '2024-01-10', '08:00', 'Hoofdstraat 1', '1234 AB'),
     ('Ramen lappen', 20, 200.00, 2, 'Raamreiniger', 'Bedrijf B', 'Voltooid', '2024-01-15', '09:00', 'Zijstraat 2', '5678 CD'),
     ('Vloerreiniging', 5, 100.00, 3, 'Vloerreiniger', 'Bedrijf C', 'Gepland', '2024-01-20', '10:00', 'Achterweg 3', '9012 EF');
+
+INSERT INTO work_schedule (date, time, available, absence, sick, manager_available)
+VALUES
+    ('2024-01-10', '08:00', '2024-01-10 08:00', NULL, NULL, 'Manager A'),
+    ('2024-01-15', '09:00', NULL, '2024-01-15 09:00', NULL, 'Manager B'),
+    ('2024-01-20', '10:00', '2024-01-20 10:00', NULL, '2024-01-20', 'Manager C');
