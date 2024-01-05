@@ -2,7 +2,6 @@ package nl.backend.eindoprdracht.controllers;
 
 
 import jakarta.validation.Valid;
-import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceInputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;

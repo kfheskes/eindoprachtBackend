@@ -38,7 +38,7 @@ public class EmployeeAccountService {
         return employeeAccount;
     }
 
-//TODO check of onderstaande juist werkt anders aanpassen zie customerAccountService navragen bij Rowan
+
     public EmployeeAccountOutputDto employeeAccountTransferToDto(EmployeeAccount employeeAccount) {
         EmployeeAccountOutputDto employeeAccountOutputDto = new EmployeeAccountOutputDto();
         employeeAccountOutputDto.id = (employeeAccount.getId());

@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class ManagerAccountOutputDto {
 
-    public long id;
+    public Long id;
     public String fName;
     public String mName;
     public String lName;
@@ -15,5 +15,5 @@ public class ManagerAccountOutputDto {
     public String address;
     public String zipcode;
     public String pNumber;
-public String responsibilities;
+    public String responsibilities;
 }
