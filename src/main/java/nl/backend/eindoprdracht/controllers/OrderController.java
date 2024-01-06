@@ -1,6 +1,7 @@
 package nl.backend.eindoprdracht.controllers;
 
 import jakarta.validation.Valid;
+import nl.backend.eindoprdracht.dtos.IdInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;
@@ -56,6 +57,15 @@ public class OrderController {
         OrderOutputDto dto = orderService.updateOrder(id, orderInputDto);
         return ResponseEntity.ok().body(dto);
     }
+
+    //TODO Rowan vragen voor uitleg one to one relatie plus input.id
+    //TODO Rowan wanneer gebruik maken van Cascade??
+    @PutMapping("/{id}/invoices")
+    public ResponseEntity<OrderOutputDto> assignInvoiceToOrder(@PathVariable long id, @RequestBody IdInputDto input ) {
+        orderService.assignInvoiceToOrder(id, input.id);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable long id) {

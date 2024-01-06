@@ -2,6 +2,7 @@ package nl.backend.eindoprdracht.dtos.order;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,4 +23,10 @@ public class OrderOutputDto {
     private LocalTime time;
     private String workAddress;
     private String workZipcode;
+
+    private InvoiceOutputDto invoiceOutputDto;
+
+    public void setInvoiceOutputDto(InvoiceOutputDto invoiceOutputDto) {
+        this.invoiceOutputDto = invoiceOutputDto;
+    }
 }

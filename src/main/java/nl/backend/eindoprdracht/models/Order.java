@@ -33,7 +33,9 @@ public class Order {
     private String workZipcode;
 
     @OneToOne
+    @JoinColumn(name = "InvoiceCombi")
     private Invoice invoice;
+
 
 
 

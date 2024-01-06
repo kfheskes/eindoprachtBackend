@@ -3,7 +3,9 @@ package nl.backend.eindoprdracht.services;
 import nl.backend.eindoprdracht.dtos.order.OrderInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
+import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.models.Order;
+import nl.backend.eindoprdracht.repositories.InvoiceRepository;
 import nl.backend.eindoprdracht.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +18,14 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public OrderService(OrderRepository orderRepository) {
+    private final InvoiceRepository invoiceRepository;
+
+    private final InvoiceService invoiceService;
+
+    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService) {
         this.orderRepository = orderRepository;
+        this.invoiceRepository = invoiceRepository;
+        this.invoiceService = invoiceService;
     }
 
     public Order dtoTransferToOrder(OrderInputDto dto) {
@@ -53,6 +61,11 @@ public class OrderService {
         dto.setTime(order.getTime());
         dto.setWorkAddress(order.getWorkAddress());
         dto.setWorkZipcode(order.getWorkZipcode());
+
+        if (order.getInvoice() != null){
+            dto.setInvoiceOutputDto(invoiceService.invoiceTransferToDto(order.getInvoice()));
+        }
+
 
         return dto;
     }
@@ -134,7 +147,21 @@ public class OrderService {
     }
 
 
-//    public void assignInvoiceToOrder
+    public void assignInvoiceToOrder(long orderId, long invoiceId ){
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        Optional<Invoice>  optionalInvoice = invoiceRepository.findById(invoiceId);
+
+        if (optionalOrder.isPresent() && optionalInvoice.isPresent()) {
+            Order order = optionalOrder.get();
+            Invoice invoice = optionalInvoice.get();
+
+            order.setInvoice(invoice);
+
+            orderRepository.save(order);
+        } else {
+            throw new RecordNotFoundException("no order or invoice has found");
+        }
+    }
 
 
 }
