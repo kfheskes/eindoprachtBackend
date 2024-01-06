@@ -33,6 +33,10 @@ public class EmployeeAccount {
     private Double contractH;
     private Date startContract;
 
+    @ManyToOne
+    @JoinColumn(name = "work_schedule")
+    private WorkSchedule myWorkSchedule;
+
     public EmployeeAccount(long id, String fName, String mName, String lName, Date dob, String address, String zipcode, String pNumber, Double contractH, Date startContract) {
         this.id = id;
         this.fName = fName;

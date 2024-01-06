@@ -5,7 +5,9 @@ import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountInputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
 import nl.backend.eindoprdracht.models.EmployeeAccount;
+import nl.backend.eindoprdracht.models.WorkSchedule;
 import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
+import nl.backend.eindoprdracht.repositories.WorkScheduleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,8 +19,14 @@ public class EmployeeAccountService {
 
     private final EmployeeAccountRepository employeeAccountRepository;
 
-    public EmployeeAccountService(EmployeeAccountRepository employeeAccountRepository) {
+    private final WorkScheduleRepository workScheduleRepository;
+
+    private final WorkScheduleService workScheduleService;
+
+    public EmployeeAccountService(EmployeeAccountRepository employeeAccountRepository, WorkScheduleRepository workScheduleRepository, WorkScheduleService workScheduleService) {
         this.employeeAccountRepository = employeeAccountRepository;
+        this.workScheduleRepository = workScheduleRepository;
+        this.workScheduleService = workScheduleService;
     }
 
     public EmployeeAccount dtoTransferToEmployeeAccount(EmployeeAccountInputDto employeeAccountInputDto) {
@@ -49,6 +57,11 @@ public class EmployeeAccountService {
         employeeAccountOutputDto.pNumber = (employeeAccount.getPNumber());
         employeeAccountOutputDto.contractH = (employeeAccount.getContractH());
         employeeAccountOutputDto.startContract = (employeeAccount.getStartContract());
+
+        if (employeeAccount.getMyWorkSchedule() != null) {
+            employeeAccountOutputDto.setWorkScheduleOutputDto(workScheduleService.workScheduleTransferToDto(employeeAccount.getMyWorkSchedule()));
+        }
+
 
         return employeeAccountOutputDto;
     }
@@ -119,6 +132,21 @@ public class EmployeeAccountService {
         }
 
     }
+
+    public void assignEmployeesToWorkSchedule(long employeeAccountId, long workScheduleId) {
+        Optional<EmployeeAccount> optionalEmployeeAccount = employeeAccountRepository.findById(employeeAccountId);
+        Optional<WorkSchedule> optionalWorkSchedule = workScheduleRepository.findById(workScheduleId);
+
+        if (optionalEmployeeAccount.isPresent() && optionalWorkSchedule.isPresent()) {
+            EmployeeAccount employee = optionalEmployeeAccount.get();
+            WorkSchedule workSchedule = optionalWorkSchedule.get();
+            employee.setMyWorkSchedule(workSchedule);
+            employeeAccountRepository.save(employee);
+        } else {
+            throw new RecordNotFoundException("No employeeAccount find with work schedule");
+        }
+    }
+
 
     public void deleteEmployeeAccount(long id) {
         employeeAccountRepository.deleteById(id);

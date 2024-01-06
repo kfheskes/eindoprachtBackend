@@ -1,6 +1,7 @@
 package nl.backend.eindoprdracht.controllers;
 
 import jakarta.validation.Valid;
+import nl.backend.eindoprdracht.dtos.IdInputDto;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountInputDto;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountInputDto;
@@ -63,6 +64,14 @@ public ResponseEntity<EmployeeAccountOutputDto>
         EmployeeAccountOutputDto dto = employeeAccountService.updateEmployeeAccount(id, employeeAccountInputDto);
         return ResponseEntity.ok().body(dto);
 }
+
+@PutMapping("{id}/workschedule")
+public ResponseEntity<EmployeeAccountOutputDto> assignEmployeeToWorkSchedule(@PathVariable long id, @RequestBody IdInputDto input) {
+        employeeAccountService.assignEmployeesToWorkSchedule(id, input.id);
+        return ResponseEntity.noContent().build();
+}
+
+
 //TODO kijken of er ook een return teruggestuurd kan worden.
 
 @DeleteMapping("/{id}")

@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -32,6 +35,9 @@ public class WorkSchedule {
     private LocalDate sick;
 
     private String managerAvailable;
+
+    @OneToMany(mappedBy = "empolyees")
+    private Set<EmployeeAccount> employees = new HashSet<>();
 
 
     public WorkSchedule(long id, LocalDate date, LocalTime time, LocalDateTime available, LocalDateTime absence, LocalDate sick, String managerAvailable) {
