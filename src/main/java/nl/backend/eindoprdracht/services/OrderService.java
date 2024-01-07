@@ -3,8 +3,10 @@ package nl.backend.eindoprdracht.services;
 import nl.backend.eindoprdracht.dtos.order.OrderInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
+import nl.backend.eindoprdracht.models.EmployeeAccount;
 import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.models.Order;
+import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
 import nl.backend.eindoprdracht.repositories.InvoiceRepository;
 import nl.backend.eindoprdracht.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class OrderService {
@@ -22,10 +25,13 @@ public class OrderService {
 
     private final InvoiceService invoiceService;
 
-    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService) {
+    private final EmployeeAccountRepository employeeAccountRepository;
+
+    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService, EmployeeAccountRepository employeeAccountRepository) {
         this.orderRepository = orderRepository;
         this.invoiceRepository = invoiceRepository;
         this.invoiceService = invoiceService;
+        this.employeeAccountRepository = employeeAccountRepository;
     }
 
     public Order dtoTransferToOrder(OrderInputDto dto) {
@@ -64,6 +70,9 @@ public class OrderService {
 
         if (order.getInvoice() != null){
             dto.setInvoiceOutputDto(invoiceService.invoiceTransferToDto(order.getInvoice()));
+        }
+        if (order.getEmployees() != null) {
+
         }
 
 
@@ -163,5 +172,18 @@ public class OrderService {
         }
     }
 
+    public void assignEmployeesToOrder(long orderId, long employeesId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        Optional<EmployeeAccount> optionalEmployeeAccount = employeeAccountRepository.findById(employeesId);
+
+        if (optionalOrder.isPresent() && optionalEmployeeAccount.isPresent()) {
+            Order order = optionalOrder.get();
+            EmployeeAccount employee = optionalEmployeeAccount.get();
+            order.getEmployees().add(employee);
+            orderRepository.save(order);
+        } else {
+            throw new RecordNotFoundException("No combination emplyee work schedule is found");
+        }
+    }
 
 }

@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -36,8 +38,12 @@ public class Order {
     @JoinColumn(name = "InvoiceCombi")
     private Invoice invoice;
 
+    @ManyToMany
+    @JoinTable(name = "orders_employees", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns =  @JoinColumn(name = "employee_id"))
 
+    //TODO waarom een set gebruiken inplaats van List
 
+    private Set<EmployeeAccount> employees = new HashSet<>();
 
     public Order(Long id, String typeOfWork, int amount, Double price, int productId, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
         this.id = id;
