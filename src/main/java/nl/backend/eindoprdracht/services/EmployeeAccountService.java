@@ -58,8 +58,8 @@ public class EmployeeAccountService {
         employeeAccountOutputDto.contractH = (employeeAccount.getContractH());
         employeeAccountOutputDto.startContract = (employeeAccount.getStartContract());
 
-        if (employeeAccount.getMyWorkSchedule() != null) {
-            employeeAccountOutputDto.setWorkScheduleOutputDto(workScheduleService.workScheduleTransferToDto(employeeAccount.getMyWorkSchedule()));
+        if (employeeAccount.getWorkSchedule() != null) {
+            employeeAccountOutputDto.setWorkScheduleOutputDto(workScheduleService.workScheduleTransferToDto(employeeAccount.getWorkSchedule()));
         }
 
 
@@ -140,7 +140,7 @@ public class EmployeeAccountService {
         if (optionalEmployeeAccount.isPresent() && optionalWorkSchedule.isPresent()) {
             EmployeeAccount employee = optionalEmployeeAccount.get();
             WorkSchedule workSchedule = optionalWorkSchedule.get();
-            employee.setMyWorkSchedule(workSchedule);
+            employee.setWorkSchedule(workSchedule);
             employeeAccountRepository.save(employee);
         } else {
             throw new RecordNotFoundException("No employeeAccount find with work schedule");

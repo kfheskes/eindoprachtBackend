@@ -34,8 +34,8 @@ public class EmployeeAccount {
     private Date startContract;
 
     @ManyToOne
-    @JoinColumn(name = "work_schedule")
-    private WorkSchedule myWorkSchedule;
+    @JoinColumn(name = "work_schedule_id")
+    private WorkSchedule workSchedule;
 
     public EmployeeAccount(long id, String fName, String mName, String lName, Date dob, String address, String zipcode, String pNumber, Double contractH, Date startContract) {
         this.id = id;

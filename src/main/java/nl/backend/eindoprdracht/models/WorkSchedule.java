@@ -36,7 +36,7 @@ public class WorkSchedule {
 
     private String managerAvailable;
 
-    @OneToMany(mappedBy = "empolyees")
+    @OneToMany(mappedBy = "workSchedule")
     private Set<EmployeeAccount> employees = new HashSet<>();
 
 

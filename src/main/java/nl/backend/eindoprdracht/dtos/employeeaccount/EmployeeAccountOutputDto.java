@@ -1,5 +1,6 @@
 package nl.backend.eindoprdracht.dtos.employeeaccount;
 
+import nl.backend.eindoprdracht.dtos.workschedule.WorkScheduleOutputDto;
 import nl.backend.eindoprdracht.models.WorkSchedule;
 
 import java.util.Date;
@@ -18,9 +19,12 @@ public class EmployeeAccountOutputDto {
     public Double contractH;
     public Date startContract;
 
-    public WorkSchedule workSchedule;
 
-    public void setWorkScheduleOutputDto(WorkSchedule workSchedule) {
-        this.workSchedule = workSchedule;
+    public void setWorkScheduleOutputDto(WorkScheduleOutputDto workScheduleDto) {
+        this.workScheduleDto = workScheduleDto;
     }
+
+    public WorkScheduleOutputDto workScheduleDto;
+
+
 }
