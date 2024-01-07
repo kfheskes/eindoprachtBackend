@@ -1,6 +1,7 @@
 package nl.backend.eindoprdracht.controllers;
 
 import jakarta.validation.Valid;
+import nl.backend.eindoprdracht.dtos.IdInputDto;
 import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountInputDto;
 import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;
@@ -57,6 +58,13 @@ public class ManagerAccountController {
         ManagerAccountOutputDto dto = managerAccountService.updateManagerAccount(id, managerAccountInputDto);
         return ResponseEntity.ok().body(dto);
     }
+
+    @PutMapping("{id}/workschedule")
+    public ResponseEntity<ManagerAccountOutputDto> assignManagerToWorkSchedule(@PathVariable long id, @RequestBody IdInputDto input){
+        managerAccountService.assignManagerToWorkSchedule(id, input.id);
+        return ResponseEntity.noContent().build();
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ManagerAccount> deleteManagerAccount(@PathVariable long id) {

@@ -31,6 +31,10 @@ public class ManagerAccount {
 
     private String responsibilities;
 
+    @ManyToOne
+    @JoinColumn(name = "work_schedule_id")
+    private WorkSchedule workSchedule;
+
     public ManagerAccount(long id, String fName, String mName, String lName, Date dob, String address, String zipcode, String pNumber, String responsibilities) {
         this.id = id;
         this.fName = fName;

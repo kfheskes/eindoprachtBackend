@@ -4,7 +4,9 @@ import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountInputDto;
 import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
 import nl.backend.eindoprdracht.models.ManagerAccount;
+import nl.backend.eindoprdracht.models.WorkSchedule;
 import nl.backend.eindoprdracht.repositories.ManagerAccountRepository;
+import nl.backend.eindoprdracht.repositories.WorkScheduleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,8 +18,13 @@ public class ManagerAccountService {
 
     private final ManagerAccountRepository managerAccountRepository;
 
-    public ManagerAccountService(ManagerAccountRepository managerAccountRepository) {
+    private final WorkScheduleRepository workScheduleRepository;
+    private final WorkScheduleService workScheduleService;
+
+    public ManagerAccountService(ManagerAccountRepository managerAccountRepository, WorkScheduleRepository workScheduleRepository, WorkScheduleService workScheduleService) {
         this.managerAccountRepository = managerAccountRepository;
+        this.workScheduleRepository = workScheduleRepository;
+        this.workScheduleService = workScheduleService;
     }
 
     public ManagerAccount dtoTransferToManagerAccount(ManagerAccountInputDto dto) {
@@ -47,6 +54,11 @@ public class ManagerAccountService {
         dto.zipcode = (managerAccount.getZipcode());
         dto.pNumber = (managerAccount.getPNumber());
         dto.responsibilities = (managerAccount.getResponsibilities());
+
+        if (managerAccount.getWorkSchedule() != null) {
+            dto.setManagerAccountOutputDto(workScheduleService.workScheduleTransferToDto(managerAccount.getWorkSchedule()));
+        }
+
 
         return dto;
     }
@@ -107,6 +119,21 @@ public class ManagerAccountService {
             }
             ManagerAccount updatedAccount = managerAccountRepository.save(accountToUpdate);
             return managerAccountTransferToDto(updatedAccount);
+        }
+
+    }
+
+    public void assignManagerToWorkSchedule (long managerAccountId, long workScheduleId){
+        Optional<ManagerAccount> optionalManagerAccount = managerAccountRepository.findById(managerAccountId);
+        Optional<WorkSchedule> optionalWorkSchedule = workScheduleRepository.findById(workScheduleId);
+
+        if (optionalManagerAccount.isPresent() && optionalWorkSchedule.isPresent()) {
+            ManagerAccount manager = optionalManagerAccount.get();
+            WorkSchedule workSchedule = optionalWorkSchedule.get();
+            manager.setWorkSchedule(workSchedule);
+            managerAccountRepository.save(manager);
+        } else {
+            throw new RecordNotFoundException("No managerAccount find with work schedule");
         }
 
     }
