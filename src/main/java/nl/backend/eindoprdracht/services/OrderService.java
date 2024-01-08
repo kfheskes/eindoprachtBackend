@@ -1,5 +1,6 @@
 package nl.backend.eindoprdracht.services;
 
+import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
@@ -11,10 +12,7 @@ import nl.backend.eindoprdracht.repositories.InvoiceRepository;
 import nl.backend.eindoprdracht.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -27,11 +25,14 @@ public class OrderService {
 
     private final EmployeeAccountRepository employeeAccountRepository;
 
-    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService, EmployeeAccountRepository employeeAccountRepository) {
+    private final EmployeeAccountService employeeAccountService;
+
+    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService, EmployeeAccountRepository employeeAccountRepository, EmployeeAccountService employeeAccountService) {
         this.orderRepository = orderRepository;
         this.invoiceRepository = invoiceRepository;
         this.invoiceService = invoiceService;
         this.employeeAccountRepository = employeeAccountRepository;
+        this.employeeAccountService = employeeAccountService;
     }
 
     public Order dtoTransferToOrder(OrderInputDto dto) {
@@ -72,9 +73,12 @@ public class OrderService {
             dto.setInvoiceOutputDto(invoiceService.invoiceTransferToDto(order.getInvoice()));
         }
         if (order.getEmployees() != null) {
-
+            Set<EmployeeAccountOutputDto> employeeAccountOutputDtos = new HashSet<>();
+            for(EmployeeAccount ea : order.getEmployees()){
+                employeeAccountOutputDtos.add(employeeAccountService.employeeAccountTransferToDto(ea));
+            }
+            dto.setEmployees(employeeAccountOutputDtos);
         }
-
 
         return dto;
     }

@@ -66,6 +66,12 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
+    //TODO uitleg vragen many to many
+    @PutMapping("{id}/employees")
+    public ResponseEntity<OrderOutputDto> assignEmployeesToOrder(@PathVariable long id, @RequestBody IdInputDto input) {
+        orderService.assignEmployeesToOrder(id, input.id);
+        return ResponseEntity.noContent().build();
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable long id) {

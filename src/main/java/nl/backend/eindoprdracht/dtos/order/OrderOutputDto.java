@@ -2,10 +2,12 @@ package nl.backend.eindoprdracht.dtos.order;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,7 +28,14 @@ public class OrderOutputDto {
 
     private InvoiceOutputDto invoiceOutputDto;
 
+
     public void setInvoiceOutputDto(InvoiceOutputDto invoiceOutputDto) {
         this.invoiceOutputDto = invoiceOutputDto;
     }
+
+    private Set<EmployeeAccountOutputDto> employees;
+
+    public OrderOutputDto() {
+    }
+
 }
