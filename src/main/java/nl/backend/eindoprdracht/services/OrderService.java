@@ -1,14 +1,17 @@
 package nl.backend.eindoprdracht.services;
 
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
+import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
 import nl.backend.eindoprdracht.models.EmployeeAccount;
 import nl.backend.eindoprdracht.models.Invoice;
+import nl.backend.eindoprdracht.models.ManagerAccount;
 import nl.backend.eindoprdracht.models.Order;
 import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
 import nl.backend.eindoprdracht.repositories.InvoiceRepository;
+import nl.backend.eindoprdracht.repositories.ManagerAccountRepository;
 import nl.backend.eindoprdracht.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +30,19 @@ public class OrderService {
 
     private final EmployeeAccountService employeeAccountService;
 
-    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService, EmployeeAccountRepository employeeAccountRepository, EmployeeAccountService employeeAccountService) {
+    private final ManagerAccountRepository managerAccountRepository;
+
+    private final ManagerAccountService managerAccountService;
+
+    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService, EmployeeAccountRepository employeeAccountRepository, EmployeeAccountService employeeAccountService, ManagerAccountRepository managerAccountRepository, ManagerAccountService managerAccountService) {
         this.orderRepository = orderRepository;
         this.invoiceRepository = invoiceRepository;
         this.invoiceService = invoiceService;
         this.employeeAccountRepository = employeeAccountRepository;
         this.employeeAccountService = employeeAccountService;
+        this.managerAccountRepository = managerAccountRepository;
+
+        this.managerAccountService = managerAccountService;
     }
 
     public Order dtoTransferToOrder(OrderInputDto dto) {
@@ -78,6 +88,13 @@ public class OrderService {
                 employeeAccountOutputDtos.add(employeeAccountService.employeeAccountTransferToDto(ea));
             }
             dto.setEmployees(employeeAccountOutputDtos);
+        }
+        if (order.getManagers() != null){
+            Set<ManagerAccountOutputDto> managerAccountOutputDtos = new HashSet<>();
+            for(ManagerAccount ma : order.getManagers()){
+                managerAccountOutputDtos.add(managerAccountService.managerAccountTransferToDto(ma));
+            }
+            dto.setManagers(managerAccountOutputDtos);
         }
 
         return dto;
@@ -186,8 +203,23 @@ public class OrderService {
             order.getEmployees().add(employee);
             orderRepository.save(order);
         } else {
-            throw new RecordNotFoundException("No combination emplyee work schedule is found");
+            throw new RecordNotFoundException("No combination employee order is found");
         }
     }
+
+    public void assignManagerToOrder(long orderId, long managerId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        Optional<ManagerAccount> optionalManager =managerAccountRepository.findById(managerId);
+        if (optionalOrder.isPresent() && optionalManager.isPresent()){
+            Order order = optionalOrder.get();
+            ManagerAccount manager = optionalManager.get();
+            order.getManagers().add(manager);
+            orderRepository.save(order);
+        } else {
+            throw new RecordNotFoundException("No combination manager order is found");
+        }
+    }
+
+
 
 }

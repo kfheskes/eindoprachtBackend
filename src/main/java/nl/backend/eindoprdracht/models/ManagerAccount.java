@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,6 +36,9 @@ public class ManagerAccount {
     @ManyToOne
     @JoinColumn(name = "work_schedule_id")
     private WorkSchedule workSchedule;
+
+    @ManyToMany(mappedBy = "managers")
+    private Set<Order> orders = new HashSet<>();
 
     public ManagerAccount(long id, String fName, String mName, String lName, Date dob, String address, String zipcode, String pNumber, String responsibilities) {
         this.id = id;

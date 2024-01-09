@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
+import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,6 +36,7 @@ public class OrderOutputDto {
 
     private Set<EmployeeAccountOutputDto> employees;
 
+    private Set<ManagerAccountOutputDto> managers;
     public OrderOutputDto() {
     }
 
