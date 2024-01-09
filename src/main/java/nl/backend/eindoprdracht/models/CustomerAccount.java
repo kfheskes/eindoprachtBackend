@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -24,6 +27,10 @@ public class CustomerAccount {
     private String contract;
     private Double balans;
 
+    @OneToMany(mappedBy = "customerAccount")
+    private Set<Order> orders = new HashSet<>();
+
+
     // TODO: list of invoice
     public CustomerAccount(long id, String fName, String mName, String lName, String address, String zipcode, String pNumber, String companyName, String contract, Double balans) {
         this.id = id;
@@ -40,6 +47,7 @@ public class CustomerAccount {
 
     public CustomerAccount() {
     }
+
 
 
 }

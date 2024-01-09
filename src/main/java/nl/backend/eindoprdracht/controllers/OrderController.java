@@ -79,6 +79,12 @@ public class OrderController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("{id}/customers")
+    public ResponseEntity<OrderOutputDto> assignCustomerToOrder (@PathVariable long id, @RequestBody IdInputDto input) {
+        orderService.assignCustomerToOrder(id, input.id);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrder(@PathVariable long id) {
         orderService.deleteOrder(id);

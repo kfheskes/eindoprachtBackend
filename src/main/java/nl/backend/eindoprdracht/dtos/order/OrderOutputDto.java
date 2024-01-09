@@ -2,6 +2,7 @@ package nl.backend.eindoprdracht.dtos.order;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
@@ -37,7 +38,16 @@ public class OrderOutputDto {
     private Set<EmployeeAccountOutputDto> employees;
 
     private Set<ManagerAccountOutputDto> managers;
+
+    private CustomerAccountOutputDto customerAccountOutputDto;
+
+    public void setCustomerAccountOutputDto(CustomerAccountOutputDto customerAccountOutputDto) {
+        this.customerAccountOutputDto = customerAccountOutputDto;
+    }
+
+
     public OrderOutputDto() {
     }
+
 
 }

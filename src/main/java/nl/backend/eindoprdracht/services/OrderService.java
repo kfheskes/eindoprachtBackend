@@ -5,14 +5,8 @@ import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
-import nl.backend.eindoprdracht.models.EmployeeAccount;
-import nl.backend.eindoprdracht.models.Invoice;
-import nl.backend.eindoprdracht.models.ManagerAccount;
-import nl.backend.eindoprdracht.models.Order;
-import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
-import nl.backend.eindoprdracht.repositories.InvoiceRepository;
-import nl.backend.eindoprdracht.repositories.ManagerAccountRepository;
-import nl.backend.eindoprdracht.repositories.OrderRepository;
+import nl.backend.eindoprdracht.models.*;
+import nl.backend.eindoprdracht.repositories.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -34,15 +28,20 @@ public class OrderService {
 
     private final ManagerAccountService managerAccountService;
 
-    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService, EmployeeAccountRepository employeeAccountRepository, EmployeeAccountService employeeAccountService, ManagerAccountRepository managerAccountRepository, ManagerAccountService managerAccountService) {
+    private final CustomerAccountRepository customerAccountRepository;
+
+    private final CustomerAccountService customerAccountService;
+
+    public OrderService(OrderRepository orderRepository, InvoiceRepository invoiceRepository, InvoiceService invoiceService, EmployeeAccountRepository employeeAccountRepository, EmployeeAccountService employeeAccountService, ManagerAccountRepository managerAccountRepository, ManagerAccountService managerAccountService, CustomerAccountRepository customerAccountRepository, CustomerAccountService customerAccountService) {
         this.orderRepository = orderRepository;
         this.invoiceRepository = invoiceRepository;
         this.invoiceService = invoiceService;
         this.employeeAccountRepository = employeeAccountRepository;
         this.employeeAccountService = employeeAccountService;
         this.managerAccountRepository = managerAccountRepository;
-
         this.managerAccountService = managerAccountService;
+        this.customerAccountRepository = customerAccountRepository;
+        this.customerAccountService = customerAccountService;
     }
 
     public Order dtoTransferToOrder(OrderInputDto dto) {
@@ -95,6 +94,9 @@ public class OrderService {
                 managerAccountOutputDtos.add(managerAccountService.managerAccountTransferToDto(ma));
             }
             dto.setManagers(managerAccountOutputDtos);
+        }
+        if (order.getCustomerAccount() != null) {
+            dto.setCustomerAccountOutputDto(customerAccountService.customerAccountTransferCustomerAccountOutputDto(order.getCustomerAccount()));
         }
 
         return dto;
@@ -220,6 +222,17 @@ public class OrderService {
         }
     }
 
-
+    public void assignCustomerToOrder(long orderId, long customerId) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+        Optional<CustomerAccount> optionalCustomerAccount = customerAccountRepository.findById(customerId);
+        if (optionalOrder.isPresent() && optionalCustomerAccount.isPresent()) {
+            Order order = optionalOrder.get();
+            CustomerAccount customer = optionalCustomerAccount.get();
+            order.setCustomerAccount(customer);
+            orderRepository.save(order);
+        } else {
+            throw new RecordNotFoundException("No combination order customer is found");
+        }
+    }
 
 }

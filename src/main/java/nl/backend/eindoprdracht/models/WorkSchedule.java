@@ -40,7 +40,7 @@ public class WorkSchedule {
     private Set<EmployeeAccount> employees = new HashSet<>();
 
     @OneToMany(mappedBy =  "workSchedule")
-    private Set<ManagerAccount> mangers = new HashSet<>();
+    private Set<ManagerAccount> managers = new HashSet<>();
 
     public WorkSchedule(long id, LocalDate date, LocalTime time, LocalDateTime available, LocalDateTime absence, LocalDate sick, String managerAvailable) {
         this.id = id;
