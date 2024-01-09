@@ -2,8 +2,11 @@ package nl.backend.eindoprdracht.dtos.invoice;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
+import nl.backend.eindoprdracht.models.CustomerAccount;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public class InvoiceOutputDto {
 
@@ -18,4 +21,12 @@ public class InvoiceOutputDto {
     public String businessAddress;
     public String customerAddress;
     public String termOfPayment;
+
+
+    private CustomerAccountOutputDto customers;
+
+    public void setCustomerAccountOutputDto(CustomerAccountOutputDto customerAccountOutputDto) {
+        this.customers = customerAccountOutputDto;
+    }
+
 }

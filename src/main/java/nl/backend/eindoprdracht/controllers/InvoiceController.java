@@ -2,6 +2,7 @@ package nl.backend.eindoprdracht.controllers;
 
 
 import jakarta.validation.Valid;
+import nl.backend.eindoprdracht.dtos.IdInputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceInputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;
@@ -21,7 +22,7 @@ import static nl.backend.eindoprdracht.controllers.ControllerHelper.checkForBind
 @RestController
 public class InvoiceController {
 
-    private InvoiceService invoiceService;
+    private final InvoiceService invoiceService;
 
     public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
@@ -58,6 +59,12 @@ public class InvoiceController {
     updateInvoice(@PathVariable long id, @RequestBody InvoiceInputDto invoiceInputDto) {
         InvoiceOutputDto dto = invoiceService.updateInvoice(id, invoiceInputDto);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @PutMapping("{id}/customer")
+    public ResponseEntity<InvoiceOutputDto> assignCustomerToInvoice(@PathVariable long id, @RequestBody IdInputDto input) {
+        invoiceService.assignCustomerToInvoice(id, input.id);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

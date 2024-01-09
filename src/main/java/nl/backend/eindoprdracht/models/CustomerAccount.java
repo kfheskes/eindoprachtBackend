@@ -30,6 +30,8 @@ public class CustomerAccount {
     @OneToMany(mappedBy = "customerAccount")
     private Set<Order> orders = new HashSet<>();
 
+    @OneToMany(mappedBy = "customerAccount")
+    private Set<Invoice> invoices = new HashSet<>();
 
     // TODO: list of invoice
     public CustomerAccount(long id, String fName, String mName, String lName, String address, String zipcode, String pNumber, String companyName, String contract, Double balans) {

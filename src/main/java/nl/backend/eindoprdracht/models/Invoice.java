@@ -31,6 +31,9 @@ import java.time.LocalDate;
         @OneToOne (mappedBy = "invoice")
         private Order order;
 
+        @ManyToOne
+        @JoinColumn(name = "customer_account_id")
+        private CustomerAccount customerAccount;
 
         public Invoice(Long id, String typeOfWork, Double price, String typeOfProduct, String businessTaxNumber, int amount, long taxAmount, LocalDate date, String businessAddress, String customerAddress, String termOfPayment) {
             this.id = id;

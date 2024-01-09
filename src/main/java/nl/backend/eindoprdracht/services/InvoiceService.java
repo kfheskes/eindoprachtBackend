@@ -3,7 +3,9 @@ package nl.backend.eindoprdracht.services;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceInputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
+import nl.backend.eindoprdracht.models.CustomerAccount;
 import nl.backend.eindoprdracht.models.Invoice;
+import nl.backend.eindoprdracht.repositories.CustomerAccountRepository;
 import nl.backend.eindoprdracht.repositories.InvoiceRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,15 @@ import java.util.Optional;
 @Service
 public class InvoiceService {
 
-    private InvoiceRepository invoiceRepository;
+    private final InvoiceRepository invoiceRepository;
 
-    public InvoiceService(InvoiceRepository invoiceRepository) {
+    private final CustomerAccountRepository customerAccountRepository;
+
+    private final CustomerAccountService customerAccountService;
+    public InvoiceService(InvoiceRepository invoiceRepository, CustomerAccountRepository customerAccountRepository, CustomerAccountService customerAccountService) {
         this.invoiceRepository = invoiceRepository;
+        this.customerAccountRepository = customerAccountRepository;
+        this.customerAccountService = customerAccountService;
     }
 
     public Invoice dtoTransferToInvoice (InvoiceInputDto invoiceInputDto) {
@@ -50,6 +57,11 @@ public class InvoiceService {
         dto.businessAddress = invoice.getBusinessAddress();
         dto.customerAddress = invoice.getCustomerAddress();
         dto.termOfPayment = invoice.getTermOfPayment();
+
+        if (invoice.getCustomerAccount() != null) {
+            dto.setCustomerAccountOutputDto(customerAccountService.customerAccountTransferCustomerAccountOutputDto(invoice.getCustomerAccount()));
+        }
+
         return dto;
     }
 
@@ -121,6 +133,21 @@ public InvoiceOutputDto updateInvoice(long id, InvoiceInputDto invoice){
             return invoiceTransferToDto(returnInvoice);
         }
 }
+
+        public void assignCustomerToInvoice(long invoiceId, long customerId) {
+        Optional<Invoice> optionalInvoice = invoiceRepository.findById(invoiceId);
+        Optional<CustomerAccount> optionalCustomerAccount = customerAccountRepository.findById(customerId);
+        if(optionalInvoice.isPresent() && optionalCustomerAccount.isPresent()) {
+            Invoice invoice = optionalInvoice.get();
+            CustomerAccount customerAccount = optionalCustomerAccount.get();
+            invoice.setCustomerAccount(customerAccount);
+            invoiceRepository.save(invoice);
+        } else {
+            throw new RecordNotFoundException("No combination invoice customer is found");
+        }
+
+        }
+
 
 public void deleteInvoice(long id) {
         invoiceRepository.deleteById(id);
