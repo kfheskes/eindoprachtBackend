@@ -10,9 +10,9 @@ import java.time.LocalTime;
 @Setter
 public class OrderInputDto {
     public String typeOfWork;
-    public int amount;
+    public Integer amount;
     public Double price;
-    public int productId;
+    public Integer productId;
     public String productName;
     public String customerName;
     public String status;

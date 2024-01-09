@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "customer_account")
+@Table(name = "customer_accounts")
 public class CustomerAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +27,12 @@ public class CustomerAccount {
     private String contract;
     private Double balans;
 
+    @OneToMany(mappedBy = "customerAccount")
+    private Set<Order> orders = new HashSet<>();
+
+    @OneToMany(mappedBy = "customerAccount")
+    private Set<Invoice> invoices = new HashSet<>();
+
     // TODO: list of invoice
     public CustomerAccount(long id, String fName, String mName, String lName, String address, String zipcode, String pNumber, String companyName, String contract, Double balans) {
         this.id = id;
@@ -38,8 +47,9 @@ public class CustomerAccount {
         this.balans = balans;
     }
 
-   public CustomerAccount(){
-   }
+    public CustomerAccount() {
+    }
+
 
 
 }

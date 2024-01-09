@@ -7,21 +7,25 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
+
 @Entity
-@Table(name = "order")
+@Table (name = "orders")
+
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long Id;
+    private long id;
     private String typeOfWork;
-    private int amount;
+    private Integer amount;
     private Double price;
-    private int productId;
+    private Integer productId;
     private String productName;
     private String customerName;
     private String status;
@@ -30,8 +34,27 @@ public class Order {
     private String workAddress;
     private String workZipcode;
 
+    @OneToOne
+    @JoinColumn(name = "InvoiceCombi")
+    private Invoice invoice;
+
+    @ManyToMany
+    @JoinTable(name = "orders_employees", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns =  @JoinColumn(name = "employee_id"))
+
+    //TODO waarom een set gebruiken inplaats van List
+    private Set<EmployeeAccount> employees = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "orders_managers", joinColumns =  @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "manager_id"))
+
+    private Set<ManagerAccount> managers = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "customer_account_id")
+    private CustomerAccount customerAccount;
+
     public Order(Long id, String typeOfWork, int amount, Double price, int productId, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
-        Id = id;
+        this.id = id;
         this.typeOfWork = typeOfWork;
         this.amount = amount;
         this.price = price;

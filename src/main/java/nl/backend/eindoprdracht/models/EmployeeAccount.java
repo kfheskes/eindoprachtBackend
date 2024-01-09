@@ -5,12 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+//TODO kijk naar de datums dattype de data wilt meestal YYYY-MAAND-DAG dit moet anders
 
 @Getter
 @Setter
 
 @Entity
-@Table(name = "employee_account")
+@Table(name = "employee_accounts")
 public class EmployeeAccount {
 
     @Id
@@ -27,8 +31,16 @@ public class EmployeeAccount {
     private String zipcode;
     private String pNumber;
 
+    @Column(name = "contract_h")
     private Double contractH;
     private Date startContract;
+
+    @ManyToOne
+    @JoinColumn(name = "work_schedule_id")
+    private WorkSchedule workSchedule;
+
+    @ManyToMany(mappedBy = "employees")
+    private Set<Order> orders = new HashSet<>();
 
     public EmployeeAccount(long id, String fName, String mName, String lName, Date dob, String address, String zipcode, String pNumber, Double contractH, Date startContract) {
         this.id = id;

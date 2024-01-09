@@ -13,8 +13,8 @@ public class InvoiceInputDto {
     public Double price;
     public String typeOfProduct;
     public String businessTaxNumber;
-    public int amount;
-    public long taxAmount;
+    public Integer amount;
+    public Long taxAmount;
     public LocalDate date;
     public String businessAddress;
     public String customerAddress;

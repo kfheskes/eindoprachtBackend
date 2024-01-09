@@ -2,13 +2,13 @@ package nl.backend.eindoprdracht.dtos.manageraccount;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.dtos.workschedule.WorkScheduleOutputDto;
 
 import java.util.Date;
-@Getter
-@Setter
+
 public class ManagerAccountOutputDto {
 
-    public long id;
+    public Long id;
     public String fName;
     public String mName;
     public String lName;
@@ -16,5 +16,11 @@ public class ManagerAccountOutputDto {
     public String address;
     public String zipcode;
     public String pNumber;
-public String responsibilities;
+    public String responsibilities;
+
+    public void setManagerAccountOutputDto(WorkScheduleOutputDto workScheduleDto) {
+        this.workScheduleDto = workScheduleDto;
+    }
+
+    public WorkScheduleOutputDto workScheduleDto;
 }

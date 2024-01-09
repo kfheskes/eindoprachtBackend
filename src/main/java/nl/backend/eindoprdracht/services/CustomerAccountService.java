@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
-// TODO zorg overal voor ctr alt L
 @Service
 public class CustomerAccountService {
 
@@ -70,7 +68,7 @@ public class CustomerAccountService {
         }
     }
 
-    public List<CustomerAccountOutputDto> getAllCustomer() {
+    public List<CustomerAccountOutputDto> getAllCustomers() {
         List<CustomerAccount> customerAccounts = customerAccountRepository.findAll();
         List<CustomerAccountOutputDto> customerAccountOutputDtoList = new ArrayList<>();
         for (CustomerAccount customerAccount : customerAccounts) {
@@ -79,31 +77,48 @@ public class CustomerAccountService {
         return customerAccountOutputDtoList;
     }
 
-    public void deleteCustomerAccount(long id) {
-        customerAccountRepository.deleteById(id);
-    }
-
-    public CustomerAccountOutputDto updateCustomerAccount(long id, CustomerAccount customerAccount) {
+    public CustomerAccountOutputDto updateCustomerAccount(long id, CustomerAccountInputDto customerAccount) {
         Optional<CustomerAccount> getCustomerAccount = customerAccountRepository.findById(id);
         if (getCustomerAccount.isEmpty()) {
             throw new RecordNotFoundException("No customerAccount found by id");
         } else {
             CustomerAccount changeCustomerAccount1 = getCustomerAccount.get();
-            changeCustomerAccount1.setFName(customerAccount.getFName());
-            changeCustomerAccount1.setMName(customerAccount.getMName());
-            changeCustomerAccount1.setLName(customerAccount.getLName());
-            changeCustomerAccount1.setAddress(customerAccount.getAddress());
-            changeCustomerAccount1.setZipcode(customerAccount.getZipcode());
-            changeCustomerAccount1.setPNumber(customerAccount.getPNumber());
-            changeCustomerAccount1.setCompanyName(customerAccount.getCompanyName());
-            changeCustomerAccount1.setContract(customerAccount.getContract());
-            changeCustomerAccount1.setBalans(customerAccount.getBalans());
+
+            if (customerAccount.getFName() != null) {
+                changeCustomerAccount1.setFName(customerAccount.getFName());
+            }
+            if (customerAccount.getMName() != null) {
+                changeCustomerAccount1.setMName(customerAccount.getMName());
+            }
+            if (customerAccount.getLName() != null) {
+                changeCustomerAccount1.setLName(customerAccount.getLName());
+            }
+            if (customerAccount.getAddress() != null) {
+                changeCustomerAccount1.setAddress(customerAccount.getAddress());
+            }
+            if (customerAccount.getZipcode() != null) {
+                changeCustomerAccount1.setZipcode(customerAccount.getZipcode());
+            }
+            if (customerAccount.getPNumber() != null) {
+                changeCustomerAccount1.setPNumber(customerAccount.getPNumber());
+            }
+            if (customerAccount.getCompanyName() != null) {
+                changeCustomerAccount1.setCompanyName(customerAccount.getCompanyName());
+            }
+            if (customerAccount.getContract() != null) {
+                changeCustomerAccount1.setContract(customerAccount.getContract());
+            }
+            if (customerAccount.getBalans() != null) {
+                changeCustomerAccount1.setBalans(customerAccount.getBalans());
+            }
             CustomerAccount returnCustomerAccount = customerAccountRepository.save(changeCustomerAccount1);
             return customerAccountTransferCustomerAccountOutputDto(returnCustomerAccount);
         }
 
     }
-
+    public void deleteCustomerAccount(long id) {
+        customerAccountRepository.deleteById(id);
+    }
 }
 
 
