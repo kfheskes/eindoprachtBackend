@@ -34,6 +34,8 @@ public class CustomerAccount {
     private Set<Invoice> invoices = new HashSet<>();
 
     // TODO: list of invoice
+
+    //TODO: aan profile employee,manager,customer email toevoegen
     public CustomerAccount(long id, String fName, String mName, String lName, String address, String zipcode, String pNumber, String companyName, String contract, Double balans) {
         this.id = id;
         this.fName = fName;
