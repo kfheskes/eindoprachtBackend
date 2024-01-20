@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
 
+import java.util.Set;
+
 @Getter
 @Setter
 public class UserOutputDto {
@@ -14,6 +16,6 @@ public class UserOutputDto {
     private String password;
     private String role;
 
-    private RoleOutputDto roleOutputDto;
+    private Set<RoleOutputDto> roles;
 
 }

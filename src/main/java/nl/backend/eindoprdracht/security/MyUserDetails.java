@@ -1,11 +1,11 @@
 package nl.backend.eindoprdracht.security;
 
+import nl.backend.eindoprdracht.models.Role;
 import nl.backend.eindoprdracht.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -22,8 +22,8 @@ public class MyUserDetails implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
 
 
-        if (user.getRole() != null) {
-            authorities.add(new SimpleGrantedAuthority(user.getRole().getRolename()));
+        for (Role role : user.getRoles()) {
+            authorities.add(new SimpleGrantedAuthority(role.getRolename()));
         }
 
         return authorities;

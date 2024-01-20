@@ -1,7 +1,9 @@
 package nl.backend.eindoprdracht.services;
 
+import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
 import nl.backend.eindoprdracht.dtos.user.UserInputDto;
 import nl.backend.eindoprdracht.dtos.user.UserOutputDto;
+import nl.backend.eindoprdracht.models.Role;
 import nl.backend.eindoprdracht.models.User;
 
 import nl.backend.eindoprdracht.repositories.UserRepository;
@@ -9,8 +11,10 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.Role;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -19,22 +23,23 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final RoleService roleService;
 
 
-    @Lazy
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
     }
 
-//    public List<UserOutputDto> getUsers() {
-//        List<UserOutputDto> collection = new ArrayList<>();
-//        List<User> list = userRepository.findAll();
-//        for (User user : list) {
-//            collection.add(userTransferToDto(user));
-//        }
-//        return collection;
-//    }
+    public List<UserOutputDto> getUsers() {
+        List<UserOutputDto> collection = new ArrayList<>();
+        List<User> list = userRepository.findAll();
+        for (User user : list) {
+            collection.add(userTransferToDto(user));
+        }
+        return collection;
+    }
 //
 //    public UserOutputDto getUser(String username) {
 //        UserOutputDto dto = new UserOutputDto();
@@ -100,6 +105,13 @@ public class UserService {
         dto.setUsername(user.getUsername());
         dto.setPassword(user.getPassword());
 
+        if(user.getRoles() != null){
+            Set<RoleOutputDto>  roleOutputDtos = new HashSet<>();
+            for(Role role : user.getRoles()) {
+                roleOutputDtos.add(roleService.roleTransferToDto(role));
+            }
+            dto.setRoles(roleOutputDtos);
+        }
 
         return dto;
     }

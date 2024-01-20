@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class RoleInputDto {
 
-    public String rolename;
+    private String rolename;
 }
