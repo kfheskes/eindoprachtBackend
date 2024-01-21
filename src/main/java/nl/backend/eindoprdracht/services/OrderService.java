@@ -78,19 +78,19 @@ public class OrderService {
         dto.setWorkAddress(order.getWorkAddress());
         dto.setWorkZipcode(order.getWorkZipcode());
 
-        if (order.getInvoice() != null){
+        if (order.getInvoice() != null) {
             dto.setInvoiceOutputDto(invoiceService.invoiceTransferToDto(order.getInvoice()));
         }
         if (order.getEmployees() != null) {
             Set<EmployeeAccountOutputDto> employeeAccountOutputDtos = new HashSet<>();
-            for(EmployeeAccount ea : order.getEmployees()){
+            for (EmployeeAccount ea : order.getEmployees()) {
                 employeeAccountOutputDtos.add(employeeAccountService.employeeAccountTransferToDto(ea));
             }
             dto.setEmployees(employeeAccountOutputDtos);
         }
-        if (order.getManagers() != null){
+        if (order.getManagers() != null) {
             Set<ManagerAccountOutputDto> managerAccountOutputDtos = new HashSet<>();
-            for(ManagerAccount ma : order.getManagers()){
+            for (ManagerAccount ma : order.getManagers()) {
                 managerAccountOutputDtos.add(managerAccountService.managerAccountTransferToDto(ma));
             }
             dto.setManagers(managerAccountOutputDtos);
@@ -179,9 +179,9 @@ public class OrderService {
     }
 
 
-    public void assignInvoiceToOrder(long orderId, long invoiceId ){
+    public void assignInvoiceToOrder(long orderId, long invoiceId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
-        Optional<Invoice>  optionalInvoice = invoiceRepository.findById(invoiceId);
+        Optional<Invoice> optionalInvoice = invoiceRepository.findById(invoiceId);
 
         if (optionalOrder.isPresent() && optionalInvoice.isPresent()) {
             Order order = optionalOrder.get();
@@ -211,8 +211,8 @@ public class OrderService {
 
     public void assignManagerToOrder(long orderId, long managerId) {
         Optional<Order> optionalOrder = orderRepository.findById(orderId);
-        Optional<ManagerAccount> optionalManager =managerAccountRepository.findById(managerId);
-        if (optionalOrder.isPresent() && optionalManager.isPresent()){
+        Optional<ManagerAccount> optionalManager = managerAccountRepository.findById(managerId);
+        if (optionalOrder.isPresent() && optionalManager.isPresent()) {
             Order order = optionalOrder.get();
             ManagerAccount manager = optionalManager.get();
             order.getManagers().add(manager);

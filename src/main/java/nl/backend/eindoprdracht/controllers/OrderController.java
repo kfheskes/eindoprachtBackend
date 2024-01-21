@@ -61,7 +61,7 @@ public class OrderController {
     //TODO Rowan vragen voor uitleg one to one relatie plus input.id
     //TODO Rowan wanneer gebruik maken van Cascade??
     @PutMapping("/{id}/invoices")
-    public ResponseEntity<OrderOutputDto> assignInvoiceToOrder(@PathVariable long id, @RequestBody IdInputDto input ) {
+    public ResponseEntity<OrderOutputDto> assignInvoiceToOrder(@PathVariable long id, @RequestBody IdInputDto input) {
         orderService.assignInvoiceToOrder(id, input.id);
         return ResponseEntity.noContent().build();
     }
@@ -80,7 +80,7 @@ public class OrderController {
     }
 
     @PutMapping("{id}/customers")
-    public ResponseEntity<OrderOutputDto> assignCustomerToOrder (@PathVariable long id, @RequestBody IdInputDto input) {
+    public ResponseEntity<OrderOutputDto> assignCustomerToOrder(@PathVariable long id, @RequestBody IdInputDto input) {
         orderService.assignCustomerToOrder(id, input.id);
         return ResponseEntity.noContent().build();
     }

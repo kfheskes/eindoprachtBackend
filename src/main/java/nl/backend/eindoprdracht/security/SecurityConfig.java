@@ -18,6 +18,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.concurrent.ExecutionException;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -47,13 +50,15 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return new MyUserDetailsService(this.userRepository);
     }
-
+ //TODO wie mag naar welke auth
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/user").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/manageraccount").hasRole("MANAGER")
                         .requestMatchers("/secret").hasRole("ADMIN")
                         .requestMatchers("/hello").authenticated()
                         .requestMatchers("/profiles", "/profiles/*").authenticated()

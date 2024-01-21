@@ -3,6 +3,8 @@ package nl.backend.eindoprdracht.dtos.user;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class UserInputDto {
@@ -11,6 +13,6 @@ public class UserInputDto {
 
     public String password;
 
-    public String role;
+    public String[] roles;
 
 }

@@ -6,15 +6,12 @@ import nl.backend.eindoprdracht.dtos.user.UserOutputDto;
 import nl.backend.eindoprdracht.models.Role;
 import nl.backend.eindoprdracht.models.User;
 
+import nl.backend.eindoprdracht.repositories.RoleRepository;
 import nl.backend.eindoprdracht.repositories.UserRepository;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -24,12 +21,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final RoleService roleService;
+    private final RoleRepository roleRepository;
 
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
+        this.roleRepository = roleRepository;
     }
 
     public List<UserOutputDto> getUsers() {
@@ -123,9 +122,30 @@ public class UserService {
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.password));
 
+        Set<Role> roles = new HashSet<>();
+        for (String roleName : userDto.getRoles()) {
+            Role role = roleRepository.findByRolename("ROLE_" + roleName)
+                    .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+            roles.add(role);
+        }
+        user.setRoles(roles);
 
         return user;
     }
+
+    public void assignRolesToUser(long userId, String roleName) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<Role> optionalRole = roleRepository.findById("ROLE_ " + roleName);
+
+        if (optionalUser.isPresent() && optionalRole.isPresent()) {
+            User user = optionalUser.get();
+            user.getRoles().add(optionalRole.get());
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("User or Role not found");
+        }
+    }
+
 
 
 }
