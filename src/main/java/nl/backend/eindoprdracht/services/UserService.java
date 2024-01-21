@@ -39,21 +39,7 @@ public class UserService {
         }
         return collection;
     }
-//
-//    public UserOutputDto getUser(String username) {
-//        UserOutputDto dto = new UserOutputDto();
-//        Optional<User> user = userRepository.findById(username);
-//        if (user.isPresent()){
-//            dto = userTransferToDto(user.get());
-//        }else {
-//            throw new RecordNotFoundException( username);
-//        }
-//        return dto;
-//    }
-//
-//    public boolean userExists(String username) {
-//        return userRepository.existsById(username);
-//    }
+
 
     public UserOutputDto createUser(UserInputDto userDto) {
         User newUser = dtoTransfertoUser(userDto);
@@ -102,7 +88,6 @@ public class UserService {
 
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
 
         if(user.getRoles() != null){
             Set<RoleOutputDto>  roleOutputDtos = new HashSet<>();

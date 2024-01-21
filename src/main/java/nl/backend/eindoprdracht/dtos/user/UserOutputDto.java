@@ -13,8 +13,6 @@ public class UserOutputDto {
     private Long Id;
     private String username;
 
-    private String password;
-    private String role;
 
     private Set<RoleOutputDto> roles;
 

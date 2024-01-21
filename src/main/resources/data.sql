@@ -37,7 +37,14 @@ VALUES
     ('kay','$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu'),
     ('nancy', '$2a$12$t7BzVOLmQFSFzijkENoC7eQfRbnG.VuRea3HzIO8SSBJofJjqORA.');
 
-
 INSERT INTO roles(rolename)
 VALUES
     ('ROLE_EMPLOYEE'), ('ROLE_MANAGER'), ('ROLE_CUSTOMER');
+
+
+
+INSERT INTO users_roles(user_id, role_id)
+VALUES
+ ((SELECT id FROM users WHERE username = 'kay'), (SELECT id FROM roles WHERE rolename = 'ROLE_MANAGER')),
+  ((SELECT id FROM users WHERE username = 'nancy'), (SELECT id FROM roles WHERE rolename = 'ROLE_EMPLOYEE'));
+

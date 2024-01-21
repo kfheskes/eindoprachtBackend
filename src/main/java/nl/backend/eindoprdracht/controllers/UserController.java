@@ -12,13 +12,11 @@ import nl.backend.eindoprdracht.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 import static nl.backend.eindoprdracht.controllers.ControllerHelper.checkForBindingResult;
 
@@ -46,11 +44,15 @@ public class UserController {
                             .path("/" + userDto.getId()).toUriString());
             return ResponseEntity.created(uri).build();
         }
-
-
-
-
     }
+
+    @GetMapping
+    public ResponseEntity<List<UserOutputDto>> getUsers(){
+        List<UserOutputDto> userOutputDtoList = userService.getUsers();
+
+        return ResponseEntity.ok().body(userOutputDtoList);
+    }
+
 
 
 }
