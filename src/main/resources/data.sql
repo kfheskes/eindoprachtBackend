@@ -32,6 +32,12 @@ VALUES
     ('2024-01-15', '09:00', NULL, '2024-01-15 09:00', NULL, 'Manager B'),
     ('2024-01-20', '10:00', '2024-01-20 10:00', NULL, '2024-01-20', 'Manager C');
 
+INSERT INTO users(username, password)
+VALUES
+    ('kay','$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu'),
+    ('nancy', '$2a$12$t7BzVOLmQFSFzijkENoC7eQfRbnG.VuRea3HzIO8SSBJofJjqORA.');
+
+
 INSERT INTO roles(rolename)
 VALUES
     ('ROLE_EMPLOYEE'), ('ROLE_MANAGER'), ('ROLE_CUSTOMER');
