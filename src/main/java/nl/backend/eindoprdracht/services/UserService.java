@@ -48,9 +48,9 @@ public class UserService {
         return userTransferToDto(newUser);
     }
 
-//    public void deleteUser(String username) {
-//        userRepository.deleteById(username);
-//    }
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
+    }
 
 //    public void updateUser(String username, UserInputDto newUser) {
 //        if (!userRepository.existsById(username)) throw new RecordNotFoundException();
