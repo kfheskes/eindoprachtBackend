@@ -3,6 +3,7 @@ package nl.backend.eindoprdracht.services;
 import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
 import nl.backend.eindoprdracht.dtos.user.UserInputDto;
 import nl.backend.eindoprdracht.dtos.user.UserOutputDto;
+import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
 import nl.backend.eindoprdracht.models.Role;
 import nl.backend.eindoprdracht.models.User;
 
@@ -52,13 +53,23 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-//    public void updateUser(String username, UserInputDto newUser) {
-//        if (!userRepository.existsById(username)) throw new RecordNotFoundException();
-//        User user = userRepository.findById(username).get();
-//        user.setPassword(newUser.getPassword());
-//        userRepository.save(user);
-//    }
-//
+    public UserOutputDto updateUser(Long userId, UserInputDto inputDto) {
+        Optional<User> getUser = userRepository.findById(userId);
+        if (!userRepository.existsById(userId)) {
+            throw new RecordNotFoundException("No user found by id" + userId);
+        } else {
+            User userUpdate = getUser.get();
+            if (inputDto.getUsername() != null) {
+                userUpdate.setUsername(inputDto.getUsername());
+            }
+            if (inputDto.getPassword() != null) {
+                userUpdate.setPassword(inputDto.password);
+            }
+            User updateUser = userRepository.save(userUpdate);
+            return userTransferToDto(updateUser);
+        }
+    }
+
 //    public Set<Role> getRoles(String username) {
 //        if (!userRepository.existsById(username)) throw new RecordNotFoundException(username);
 //        User user = userRepository.findById(username).get();
