@@ -63,46 +63,63 @@ public class UserService {
                 userUpdate.setUsername(inputDto.getUsername());
             }
             if (inputDto.getPassword() != null) {
-                userUpdate.setPassword(inputDto.password);
+                userUpdate.setPassword(passwordEncoder.encode(inputDto.getPassword()));
             }
             User updateUser = userRepository.save(userUpdate);
             return userTransferToDto(updateUser);
         }
     }
 
-//    public Set<Role> getRoles(String username) {
-//        if (!userRepository.existsById(username)) throw new RecordNotFoundException(username);
-//        User user = userRepository.findById(username).get();
-//        UserInputDto userDto = fromUser(user);
-//        return userDto.getAuthorities();
-//    }
-//
-//    public void addAuthority(String username, String authority) {
-//
-//        if (!userRepository.existsById(username)) throw new RecordNotFoundException(username);
-//        User user = userRepository.findById(username).get();
-//        user.addAuthority(new Authority(username, authority));
-//        userRepository.save(user);
-//    }
-//
-//    public void removeAuthority(String username, String authority) {
-//        if (!userRepository.existsById(username)) throw new RecordNotFoundException(username);
-//        User user = userRepository.findById(username).get();
-//        Authority authorityToRemove = user.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().get();
-//        user.removeAuthority(authorityToRemove);
-//        userRepository.save(user);
-//    }
+    public void removeRole(Long userId, String roleName) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<Role> optionalRole = roleRepository.findByRolename("ROLE_" + roleName);
 
-    public  UserOutputDto userTransferToDto(User user){
+        if (optionalUser.isPresent() && optionalRole.isPresent()) {
+            User user = optionalUser.get();
+            Role role = optionalRole.get();
+
+            if (user.getRoles().contains(role)) {
+                user.getRoles().remove(role);
+                userRepository.save(user);
+            } else {
+                throw new RuntimeException("User does not have role: " + roleName);
+            }
+        } else {
+            throw new RuntimeException("User or Role not found");
+        }
+    }
+
+
+    public void assignRolesToUser(long userId, String roleName) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<Role> optionalRole = roleRepository.findByRolename("ROLE_" + roleName);
+
+        if (optionalUser.isPresent() && optionalRole.isPresent()) {
+            User user = optionalUser.get();
+            Role role = optionalRole.get();
+
+            if (!user.getRoles().contains(role)) {
+                user.getRoles().add(role);
+                userRepository.save(user);
+            } else {
+                throw new RuntimeException("User already has role: " + roleName);
+            }
+        } else {
+            throw new RuntimeException("User or Role not found");
+        }
+    }
+
+
+    public UserOutputDto userTransferToDto(User user) {
 
         UserOutputDto dto = new UserOutputDto();
 
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
 
-        if(user.getRoles() != null){
-            Set<RoleOutputDto>  roleOutputDtos = new HashSet<>();
-            for(Role role : user.getRoles()) {
+        if (user.getRoles() != null) {
+            Set<RoleOutputDto> roleOutputDtos = new HashSet<>();
+            for (Role role : user.getRoles()) {
                 roleOutputDtos.add(roleService.roleTransferToDto(role));
             }
             dto.setRoles(roleOutputDtos);
@@ -129,18 +146,6 @@ public class UserService {
         return user;
     }
 
-    public void assignRolesToUser(long userId, String roleName) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        Optional<Role> optionalRole = roleRepository.findById("ROLE_ " + roleName);
-
-        if (optionalUser.isPresent() && optionalRole.isPresent()) {
-            User user = optionalUser.get();
-            user.getRoles().add(optionalRole.get());
-            userRepository.save(user);
-        } else {
-            throw new RuntimeException("User or Role not found");
-        }
-    }
 
 
 
