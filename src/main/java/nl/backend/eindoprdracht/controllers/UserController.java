@@ -53,17 +53,25 @@ public class UserController {
         return ResponseEntity.ok().body(userOutputDtoList);
     }
 
-@DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable long id){
-        userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-}
 
 @PutMapping("/{id}")
     public ResponseEntity<UserOutputDto> updateUser(@PathVariable long id, @RequestBody UserInputDto inputDto){
         UserOutputDto outputDto = userService.updateUser(id, inputDto);
 return ResponseEntity.ok().body(outputDto);
 }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable long id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+//TODO onderstaande testen
+    @DeleteMapping("/{id}/{rolename}")
+    public ResponseEntity<Void> deleteRole(@PathVariable long userId, String roleName ){
+        userService.removeRole(userId,roleName);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
 

@@ -70,6 +70,8 @@ public class UserService {
         }
     }
 
+    //TODO enabled toevoegen zodat de persoon bestaat in database maar niet meer kan inloggen.
+
     public void removeRole(Long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Role> optionalRole = roleRepository.findByRolename("ROLE_" + roleName);
