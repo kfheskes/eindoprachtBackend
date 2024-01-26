@@ -74,7 +74,7 @@ public class UserService {
 
     public void removeRole(Long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        Optional<Role> optionalRole = roleRepository.findByRolename("ROLE_" + roleName);
+        Optional<Role> optionalRole = roleRepository.findByRolename("ROLE_" + roleName.toUpperCase());
 
         if (optionalUser.isPresent() && optionalRole.isPresent()) {
             User user = optionalUser.get();

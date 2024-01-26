@@ -65,10 +65,10 @@ return ResponseEntity.ok().body(outputDto);
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
-//TODO onderstaande testen
-    @DeleteMapping("/{id}/{rolename}")
-    public ResponseEntity<Void> deleteRole(@PathVariable long userId, String roleName ){
-        userService.removeRole(userId,roleName);
+
+    @DeleteMapping("/{id}/{roleName}")
+    public ResponseEntity<Void> deleteRole(@PathVariable Long id, @PathVariable String roleName){
+        userService.removeRole(id,roleName);
         return ResponseEntity.noContent().build();
     }
 
