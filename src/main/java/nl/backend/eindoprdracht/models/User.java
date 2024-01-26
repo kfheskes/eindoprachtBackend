@@ -21,6 +21,9 @@ public class User {
 
     private String password;
 
+    @Column(nullable = false)
+    private boolean enabled = true;
+
 
     //TODO one to one relaties aanleggen met verschillende accounts:
 

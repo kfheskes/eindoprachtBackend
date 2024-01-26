@@ -32,12 +32,12 @@ VALUES
     ('2024-01-15', '09:00', NULL, '2024-01-15 09:00', NULL, 'Manager B'),
     ('2024-01-20', '10:00', '2024-01-20 10:00', NULL, '2024-01-20', 'Manager C');
 
-INSERT INTO users(username, password)
+INSERT INTO users(username, password, enabled)
 VALUES
-    ('kay','$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu'),
-    ('nancy', '$2a$12$t7BzVOLmQFSFzijkENoC7eQfRbnG.VuRea3HzIO8SSBJofJjqORA.');
+    ('kay','$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu',TRUE),
+    ('nancy', '$2a$12$t7BzVOLmQFSFzijkENoC7eQfRbnG.VuRea3HzIO8SSBJofJjqORA.',TRUE);
 
-INSERT INTO roles(rolename)
+INSERT INTO roles(role_name)
 VALUES
     ('ROLE_EMPLOYEE'), ('ROLE_MANAGER'), ('ROLE_CUSTOMER');
 
@@ -45,6 +45,6 @@ VALUES
 
 INSERT INTO users_roles(user_id, role_id)
 VALUES
- ((SELECT id FROM users WHERE username = 'kay'), (SELECT id FROM roles WHERE rolename = 'ROLE_MANAGER')),
-  ((SELECT id FROM users WHERE username = 'nancy'), (SELECT id FROM roles WHERE rolename = 'ROLE_EMPLOYEE'));
+ ((SELECT id FROM users WHERE username = 'kay'), (SELECT id FROM roles WHERE role_name = 'ROLE_MANAGER')),
+  ((SELECT id FROM users WHERE username = 'nancy'), (SELECT id FROM roles WHERE role_name = 'ROLE_EMPLOYEE'));
 

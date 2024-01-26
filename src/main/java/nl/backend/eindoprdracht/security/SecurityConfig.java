@@ -61,6 +61,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/manageraccount").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.DELETE,"/user/{id}").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/user/{id}/{roleName}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/user/{id}/role").permitAll()
                         .requestMatchers("/manageraccount").hasRole("ADMIN")
                         .requestMatchers("/hello").authenticated()
                         .requestMatchers("/profiles", "/profiles/*").authenticated()

@@ -1,8 +1,10 @@
 package nl.backend.eindoprdracht.controllers;
 
 import jakarta.validation.Valid;
+import nl.backend.eindoprdracht.dtos.IdInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderInputDto;
 import nl.backend.eindoprdracht.dtos.order.OrderOutputDto;
+import nl.backend.eindoprdracht.dtos.role.RoleInputDto;
 import nl.backend.eindoprdracht.dtos.user.UserInputDto;
 import nl.backend.eindoprdracht.dtos.user.UserOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;
@@ -46,6 +48,7 @@ public class UserController {
         }
     }
 
+    //TODO getmapping voor userID
     @GetMapping
     public ResponseEntity<List<UserOutputDto>> getUsers(){
         List<UserOutputDto> userOutputDtoList = userService.getUsers();
@@ -67,11 +70,17 @@ return ResponseEntity.ok().body(outputDto);
     }
 
     @DeleteMapping("/{id}/{roleName}")
-    public ResponseEntity<Void> deleteRole(@PathVariable Long id, @PathVariable String roleName){
+    public ResponseEntity<Void> deleteRole(@PathVariable long id, @PathVariable String roleName){
         userService.removeRole(id,roleName);
         return ResponseEntity.noContent().build();
     }
 
+    //TODO onderstaande werkt nog niet
+@PutMapping("/{id}/role")
+    public ResponseEntity<UserOutputDto> addRoleToUser(@PathVariable long id, @RequestBody RoleInputDto roleName) {
+        userService.addRoleToUser(id, roleName.getRolename());
+        return ResponseEntity.noContent().build();
+}
 
 }
 

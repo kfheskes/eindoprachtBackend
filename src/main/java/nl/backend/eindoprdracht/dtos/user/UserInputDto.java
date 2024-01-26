@@ -14,6 +14,8 @@ public class UserInputDto {
     @NotBlank(message = "Password is required")
     public String password;
 
+    public boolean enabled;
     public String[] roles;
+
 
 }

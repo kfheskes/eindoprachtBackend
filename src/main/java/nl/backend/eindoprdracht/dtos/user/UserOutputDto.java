@@ -13,7 +13,7 @@ public class UserOutputDto {
     private Long Id;
     private String username;
 
-
+    private boolean enabled;
     private Set<RoleOutputDto> roles;
 
 }

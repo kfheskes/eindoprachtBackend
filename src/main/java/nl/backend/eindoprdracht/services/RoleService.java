@@ -35,7 +35,7 @@ public class RoleService {
         RoleOutputDto dto = new RoleOutputDto();
 
         dto.setId(role.getId());
-        dto.setRolename(role.getRolename());
+        dto.setRolename(role.getRoleName());
 
         return dto;
     }
@@ -44,7 +44,7 @@ public class RoleService {
 
         Role role = new Role();
 
-        role.setRolename(roleDto.getRolename());
+        role.setRoleName(roleDto.getRolename());
 
         return role;
     }

@@ -74,7 +74,7 @@ public class UserService {
 
     public void removeRole(Long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        Optional<Role> optionalRole = roleRepository.findByRolename("ROLE_" + roleName.toUpperCase());
+        Optional<Role> optionalRole = roleRepository.findByRoleName("ROLE_" + roleName.toUpperCase());
 
         if (optionalUser.isPresent() && optionalRole.isPresent()) {
             User user = optionalUser.get();
@@ -92,9 +92,9 @@ public class UserService {
     }
 
 
-    public void assignRolesToUser(long userId, String roleName) {
+    public void addRoleToUser(long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        Optional<Role> optionalRole = roleRepository.findByRolename("ROLE_" + roleName);
+        Optional<Role> optionalRole = roleRepository.findByRoleNameContainingIgnoreCase(roleName);
 
         if (optionalUser.isPresent() && optionalRole.isPresent()) {
             User user = optionalUser.get();
@@ -118,6 +118,7 @@ public class UserService {
 
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
+        dto.setEnabled(user.isEnabled());
 
         if (user.getRoles() != null) {
             Set<RoleOutputDto> roleOutputDtos = new HashSet<>();
@@ -135,11 +136,13 @@ public class UserService {
         User user = new User();
 
         user.setUsername(userDto.getUsername());
+        user.setEnabled(userDto.isEnabled());
         user.setPassword(passwordEncoder.encode(userDto.password));
+
 
         Set<Role> roles = new HashSet<>();
         for (String roleName : userDto.getRoles()) {
-            Role role = roleRepository.findByRolename("ROLE_" + roleName)
+            Role role = roleRepository.findByRoleName("ROLE_" + roleName)
                     .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
             roles.add(role);
         }
