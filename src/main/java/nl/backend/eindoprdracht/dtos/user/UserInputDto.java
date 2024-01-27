@@ -17,5 +17,6 @@ public class UserInputDto {
     public boolean enabled;
     public String[] roles;
 
+    public String fName;
 
 }

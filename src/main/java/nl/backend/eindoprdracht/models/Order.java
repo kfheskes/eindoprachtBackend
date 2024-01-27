@@ -35,13 +35,13 @@ public class Order {
     private String workZipcode;
 
     @OneToOne
-    @JoinColumn(name = "InvoiceCombi")
+    @JoinColumn(name = "invoice_combi")
     private Invoice invoice;
 
     @ManyToMany
     @JoinTable(name = "orders_employees", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns =  @JoinColumn(name = "employee_id"))
 
-    //TODO waarom een set gebruiken inplaats van List
+
     private Set<EmployeeAccount> employees = new HashSet<>();
 
     @ManyToMany

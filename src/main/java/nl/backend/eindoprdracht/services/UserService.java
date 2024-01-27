@@ -1,12 +1,15 @@
 package nl.backend.eindoprdracht.services;
 
+import jakarta.transaction.Transactional;
 import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
 import nl.backend.eindoprdracht.dtos.user.UserInputDto;
 import nl.backend.eindoprdracht.dtos.user.UserOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
+import nl.backend.eindoprdracht.models.EmployeeAccount;
 import nl.backend.eindoprdracht.models.Role;
 import nl.backend.eindoprdracht.models.User;
 
+import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
 import nl.backend.eindoprdracht.repositories.RoleRepository;
 import nl.backend.eindoprdracht.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,12 +27,16 @@ public class UserService {
     private final RoleService roleService;
     private final RoleRepository roleRepository;
 
+    private final EmployeeAccountService employeeAccountService;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository) {
+    private final EmployeeAccountRepository employeeAccountRepository;
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository, EmployeeAccountService employeeAccountService, EmployeeAccountRepository employeeAccountRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
         this.roleRepository = roleRepository;
+        this.employeeAccountService = employeeAccountService;
+        this.employeeAccountRepository = employeeAccountRepository;
     }
 
     public List<UserOutputDto> getUsers() {
@@ -42,12 +49,27 @@ public class UserService {
     }
 
 
+    public UserOutputDto getUser(long id){
+        Optional<User> getUser = userRepository.findById(id);
+        if(getUser.isPresent()){
+            User u = getUser.get();
+            UserOutputDto dto = userTransferToDto(u);
+            return dto;
+        } else {
+            throw new RecordNotFoundException("No User found with id: " + id);
+        }
+    }
+
+    @Transactional
     public UserOutputDto createUser(UserInputDto userDto) {
         User newUser = dtoTransfertoUser(userDto);
-
-        userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
+        if (newUser.getEmployeeAccount() != null) {
+            employeeAccountRepository.save(newUser.getEmployeeAccount());
+        }
         return userTransferToDto(newUser);
     }
+
 
     public void deleteUser(long id) {
         userRepository.deleteById(id);
@@ -120,6 +142,10 @@ public class UserService {
         dto.setUsername(user.getUsername());
         dto.setEnabled(user.isEnabled());
 
+
+        if(user.getEmployeeAccount() != null) {
+            dto.setEmployeeAccountOutputDto(employeeAccountService.employeeAccountTransferToDto(user.getEmployeeAccount()));
+        }
         if (user.getRoles() != null) {
             Set<RoleOutputDto> roleOutputDtos = new HashSet<>();
             for (Role role : user.getRoles()) {
@@ -127,29 +153,39 @@ public class UserService {
             }
             dto.setRoles(roleOutputDtos);
         }
-
         return dto;
     }
 
     public User dtoTransfertoUser(UserInputDto userDto) {
-
         User user = new User();
-
         user.setUsername(userDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEnabled(userDto.isEnabled());
-        user.setPassword(passwordEncoder.encode(userDto.password));
-
 
         Set<Role> roles = new HashSet<>();
+        EmployeeAccount employeeAccount = null;
+
         for (String roleName : userDto.getRoles()) {
             Role role = roleRepository.findByRoleName("ROLE_" + roleName)
                     .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
             roles.add(role);
+            if ("ROLE_EMPLOYEE".equals(roleName)) {
+                employeeAccount = new EmployeeAccount();
+                employeeAccount.setFName(userDto.getFName());
+
+                employeeAccount.setUser(user); /
+            }
         }
         user.setRoles(roles);
 
+        if (employeeAccount != null) {
+            user.setEmployeeAccount(employeeAccount);
+            employeeAccountRepository.save(employeeAccount); // Sla EmployeeAccount op
+        }
+
         return user;
     }
+
 
 
 

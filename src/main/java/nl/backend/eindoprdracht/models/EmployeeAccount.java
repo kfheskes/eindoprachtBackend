@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,6 +35,10 @@ public class EmployeeAccount {
     @Column(name = "contract_h")
     private Double contractH;
     private Date startContract;
+
+    //TODO omschrijven waarom CasdadeType wordt gebruikt
+    @OneToOne (mappedBy = "employeeAccount", cascade = CascadeType.ALL)
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "work_schedule_id")

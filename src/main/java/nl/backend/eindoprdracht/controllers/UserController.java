@@ -48,8 +48,12 @@ public class UserController {
         }
     }
 
-    //TODO getmapping voor userID
-    @GetMapping
+    @GetMapping("/{id}")
+    public ResponseEntity<UserOutputDto> getUser(@PathVariable long id){
+       UserOutputDto outputDto = userService.getUser(id);
+        return ResponseEntity.ok().body(outputDto);
+    }
+    @GetMapping("/users")
     public ResponseEntity<List<UserOutputDto>> getUsers(){
         List<UserOutputDto> userOutputDtoList = userService.getUsers();
 
