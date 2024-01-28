@@ -47,7 +47,7 @@ public class CustomerAccountController {
         return ResponseEntity.ok(caDto);
     }
 
-    @GetMapping
+    @GetMapping("/customeraccounts")
     public ResponseEntity<List<CustomerAccountOutputDto>> getAllCustomers() {
         List<CustomerAccountOutputDto> caDtoList = customerAccountService.getAllCustomers();
         return ResponseEntity.ok(caDtoList);

@@ -47,7 +47,7 @@ public class ManagerAccountController {
         return ResponseEntity.ok(maDto);
     }
 
-    @GetMapping
+    @GetMapping("/manageraccounts")
     public ResponseEntity<List<ManagerAccountOutputDto>> getAllManagers() {
         List<ManagerAccountOutputDto> maDtoList = managerAccountService.getAllManagers();
         return ResponseEntity.ok(maDtoList);

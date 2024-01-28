@@ -27,6 +27,9 @@ public class CustomerAccount {
     private String contract;
     private Double balans;
 
+    @OneToOne(mappedBy = "customerAccount", cascade = CascadeType.ALL)
+    private User user;
+
     @OneToMany(mappedBy = "customerAccount")
     private Set<Order> orders = new HashSet<>();
 
@@ -34,6 +37,8 @@ public class CustomerAccount {
     private Set<Invoice> invoices = new HashSet<>();
 
     // TODO: list of invoice
+
+    //TODO: aan profile employee,manager,customer email toevoegen
     public CustomerAccount(long id, String fName, String mName, String lName, String address, String zipcode, String pNumber, String companyName, String contract, Double balans) {
         this.id = id;
         this.fName = fName;
