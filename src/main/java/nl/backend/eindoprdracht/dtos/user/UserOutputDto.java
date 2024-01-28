@@ -2,6 +2,7 @@ package nl.backend.eindoprdracht.dtos.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
@@ -21,6 +22,7 @@ public class UserOutputDto {
 
     private ManagerAccountOutputDto managerAccountOutputDto;
 
+    private CustomerAccountOutputDto customerAccountOutputDto;
     public void setEmployeeAccountOutput(EmployeeAccountOutputDto employeeAccountOutputDto){
     this.employeeAccountOutputDto = employeeAccountOutputDto;
 }

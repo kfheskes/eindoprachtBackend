@@ -27,6 +27,9 @@ public class CustomerAccount {
     private String contract;
     private Double balans;
 
+    @OneToOne(mappedBy = "customerAccount", cascade = CascadeType.ALL)
+    private User user;
+
     @OneToMany(mappedBy = "customerAccount")
     private Set<Order> orders = new HashSet<>();
 

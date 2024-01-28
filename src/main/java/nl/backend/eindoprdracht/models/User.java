@@ -34,6 +34,10 @@ public class User {
     @JoinColumn(name = "manager_account_id")
     private ManagerAccount managerAccount;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_account_id")
+    private CustomerAccount customerAccount;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();

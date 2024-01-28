@@ -4,15 +4,9 @@ import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
 import nl.backend.eindoprdracht.dtos.user.UserInputDto;
 import nl.backend.eindoprdracht.dtos.user.UserOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
-import nl.backend.eindoprdracht.models.EmployeeAccount;
-import nl.backend.eindoprdracht.models.ManagerAccount;
-import nl.backend.eindoprdracht.models.Role;
-import nl.backend.eindoprdracht.models.User;
+import nl.backend.eindoprdracht.models.*;
 
-import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
-import nl.backend.eindoprdracht.repositories.ManagerAccountRepository;
-import nl.backend.eindoprdracht.repositories.RoleRepository;
-import nl.backend.eindoprdracht.repositories.UserRepository;
+import nl.backend.eindoprdracht.repositories.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +30,11 @@ public class UserService {
 
     private final ManagerAccountRepository managerAccountRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository, EmployeeAccountService employeeAccountService, EmployeeAccountRepository employeeAccountRepository, ManagerAccountService managerAccountService, ManagerAccountRepository managerAccountRepository) {
+    private final CustomerAccountService customerAccountService;
+
+    private final CustomerAccountRepository customerAccountRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository, EmployeeAccountService employeeAccountService, EmployeeAccountRepository employeeAccountRepository, ManagerAccountService managerAccountService, ManagerAccountRepository managerAccountRepository, CustomerAccountService customerAccountService, CustomerAccountRepository customerAccountRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
@@ -45,6 +43,8 @@ public class UserService {
         this.employeeAccountRepository = employeeAccountRepository;
         this.managerAccountService = managerAccountService;
         this.managerAccountRepository = managerAccountRepository;
+        this.customerAccountService = customerAccountService;
+        this.customerAccountRepository = customerAccountRepository;
     }
 
     public List<UserOutputDto> getUsers() {
@@ -120,7 +120,7 @@ public class UserService {
         }
     }
 
-
+    //TODO check laatste feedback van Rowan in de feedback laatste keer.
     public void addRoleToUser(long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Role> optionalRole = roleRepository.findByRoleNameContainingIgnoreCase(roleName);
@@ -154,6 +154,8 @@ public class UserService {
             dto.setEmployeeAccountOutputDto(employeeAccountService.employeeAccountTransferToDto(user.getEmployeeAccount()));
         } if (user.getManagerAccount() != null){
             dto.setManagerAccountOutputDto(managerAccountService.managerAccountTransferToDto(user.getManagerAccount()));
+        } if (user.getCustomerAccount() != null) {
+            dto.setCustomerAccountOutputDto(customerAccountService.customerAccountTransferCustomerAccountOutputDto(user.getCustomerAccount()));
         }
         if (user.getRoles() != null) {
             Set<RoleOutputDto> roleOutputDtos = new HashSet<>();
@@ -182,14 +184,12 @@ public class UserService {
             if ("ROLE_EMPLOYEE".equals(roleName)) {
                 EmployeeAccount employeeAccount = new EmployeeAccount();
                 employeeAccount.setFName(userDto.getFName());
-                // Stel hier andere vereiste velden van EmployeeAccount in
                 employeeAccount.setUser(user);
-                user.setEmployeeAccount(employeeAccount); // Belangrijk: Koppel EmployeeAccount aan User
+                user.setEmployeeAccount(employeeAccount);
             }
         }
         user.setRoles(roles);
 
-        // Sla de User op, wat door CascadeType.ALL ook EmployeeAccount zou moeten opslaan
         return userRepository.save(user);
     }
 
@@ -215,6 +215,19 @@ public class UserService {
             User user = oUser.get();
             ManagerAccount managerAccount = oManagerAccount.get();
             user.setManagerAccount(managerAccount);
+            userRepository.save(user);
+        } else {
+            throw new RecordNotFoundException("no user or managerAccount is found");
+        }
+    }
+
+    public void assignUserToCustomerAccount(String userName, long customerId) {
+        Optional<User> oUser = userRepository.findByUsername(userName);
+        Optional<CustomerAccount> oCustomerAccount = customerAccountRepository.findById(customerId);
+        if(oUser.isPresent() && oCustomerAccount.isPresent()) {
+            User user = oUser.get();
+            CustomerAccount customerAccount = oCustomerAccount.get();
+            user.setCustomerAccount(customerAccount);
             userRepository.save(user);
         } else {
             throw new RecordNotFoundException("no user or managerAccount is found");

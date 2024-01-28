@@ -49,33 +49,34 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserOutputDto> getUser(@PathVariable long id){
-       UserOutputDto outputDto = userService.getUser(id);
+    public ResponseEntity<UserOutputDto> getUser(@PathVariable long id) {
+        UserOutputDto outputDto = userService.getUser(id);
         return ResponseEntity.ok().body(outputDto);
     }
+
     @GetMapping("/users")
-    public ResponseEntity<List<UserOutputDto>> getUsers(){
+    public ResponseEntity<List<UserOutputDto>> getUsers() {
         List<UserOutputDto> userOutputDtoList = userService.getUsers();
 
         return ResponseEntity.ok().body(userOutputDtoList);
     }
 
 
-@PutMapping("/{id}")
-    public ResponseEntity<UserOutputDto> updateUser(@PathVariable long id, @RequestBody UserInputDto inputDto){
+    @PutMapping("/{id}")
+    public ResponseEntity<UserOutputDto> updateUser(@PathVariable long id, @RequestBody UserInputDto inputDto) {
         UserOutputDto outputDto = userService.updateUser(id, inputDto);
-return ResponseEntity.ok().body(outputDto);
-}
+        return ResponseEntity.ok().body(outputDto);
+    }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable long id){
+    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}/{roleName}")
-    public ResponseEntity<Void> deleteRole(@PathVariable long id, @PathVariable String roleName){
-        userService.removeRole(id,roleName);
+    public ResponseEntity<Void> deleteRole(@PathVariable long id, @PathVariable String roleName) {
+        userService.removeRole(id, roleName);
         return ResponseEntity.noContent().build();
     }
 
@@ -84,19 +85,25 @@ return ResponseEntity.ok().body(outputDto);
     public ResponseEntity<UserOutputDto> addRoleToUser(@PathVariable long id, @RequestBody RoleInputDto roleName) {
         userService.addRoleToUser(id, roleName.getRolename());
         return ResponseEntity.noContent().build();
-}
+    }
 
     @PutMapping("/{userName}/employee")
     public ResponseEntity<UserOutputDto> assignEmployeeToUser(@PathVariable String userName, @RequestBody IdInputDto input) {
         userService.assignUserToEmployeeAccount(userName, input.id);
         return ResponseEntity.noContent().build();
-}
+    }
 
-@PutMapping("/{userName}/manager")
-    public ResponseEntity <UserOutputDto> assignManagerToUser(@PathVariable String userName, @RequestBody IdInputDto input) {
+    @PutMapping("/{userName}/manager")
+    public ResponseEntity<UserOutputDto> assignManagerToUser(@PathVariable String userName, @RequestBody IdInputDto input) {
         userService.assignUserToManagerAccount(userName, input.id);
         return ResponseEntity.noContent().build();
-}
+    }
+
+    @PutMapping("/{userName}/customer")
+    public ResponseEntity<UserOutputDto> assignCustomerToUser(@PathVariable String userName, @RequestBody IdInputDto input) {
+        userService.assignUserToCustomerAccount(userName, input.id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
 
