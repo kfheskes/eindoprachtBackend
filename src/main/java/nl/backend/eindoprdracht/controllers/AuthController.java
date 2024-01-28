@@ -36,7 +36,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/auth")
+    @PostMapping("/sign_in")
     public ResponseEntity<Object> createAuthenticationToken(@RequestBody AuthRequest authDto) {
         UsernamePasswordAuthenticationToken up =
                 new UsernamePasswordAuthenticationToken(authDto.username, authDto.password);
