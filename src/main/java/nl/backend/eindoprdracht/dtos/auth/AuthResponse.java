@@ -1,5 +1,7 @@
 package nl.backend.eindoprdracht.dtos.auth;
 
+
+//TODO is deze classe nodig?
 public class AuthResponse {
 
     private final String jwt;
