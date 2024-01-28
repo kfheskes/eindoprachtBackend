@@ -80,9 +80,21 @@ return ResponseEntity.ok().body(outputDto);
     }
 
     //TODO onderstaande werkt nog niet
-@PutMapping("/{id}/role")
+    @PutMapping("/{id}/role")
     public ResponseEntity<UserOutputDto> addRoleToUser(@PathVariable long id, @RequestBody RoleInputDto roleName) {
         userService.addRoleToUser(id, roleName.getRolename());
+        return ResponseEntity.noContent().build();
+}
+
+    @PutMapping("/{userName}/employee")
+    public ResponseEntity<UserOutputDto> assignEmployeeToUser(@PathVariable String userName, @RequestBody IdInputDto input) {
+        userService.assignUserToEmployeeAccount(userName, input.id);
+        return ResponseEntity.noContent().build();
+}
+
+@PutMapping("/{userName}/manager")
+    public ResponseEntity <UserOutputDto> assignManagerToUser(@PathVariable String userName, @RequestBody IdInputDto input) {
+        userService.assignUserToManagerAccount(userName, input.id);
         return ResponseEntity.noContent().build();
 }
 

@@ -1,15 +1,16 @@
 package nl.backend.eindoprdracht.services;
 
-import jakarta.transaction.Transactional;
 import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
 import nl.backend.eindoprdracht.dtos.user.UserInputDto;
 import nl.backend.eindoprdracht.dtos.user.UserOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
 import nl.backend.eindoprdracht.models.EmployeeAccount;
+import nl.backend.eindoprdracht.models.ManagerAccount;
 import nl.backend.eindoprdracht.models.Role;
 import nl.backend.eindoprdracht.models.User;
 
 import nl.backend.eindoprdracht.repositories.EmployeeAccountRepository;
+import nl.backend.eindoprdracht.repositories.ManagerAccountRepository;
 import nl.backend.eindoprdracht.repositories.RoleRepository;
 import nl.backend.eindoprdracht.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,13 +31,20 @@ public class UserService {
     private final EmployeeAccountService employeeAccountService;
 
     private final EmployeeAccountRepository employeeAccountRepository;
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository, EmployeeAccountService employeeAccountService, EmployeeAccountRepository employeeAccountRepository) {
+
+    private final ManagerAccountService managerAccountService;
+
+    private final ManagerAccountRepository managerAccountRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleService roleService, RoleRepository roleRepository, EmployeeAccountService employeeAccountService, EmployeeAccountRepository employeeAccountRepository, ManagerAccountService managerAccountService, ManagerAccountRepository managerAccountRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
         this.roleRepository = roleRepository;
         this.employeeAccountService = employeeAccountService;
         this.employeeAccountRepository = employeeAccountRepository;
+        this.managerAccountService = managerAccountService;
+        this.managerAccountRepository = managerAccountRepository;
     }
 
     public List<UserOutputDto> getUsers() {
@@ -49,9 +57,9 @@ public class UserService {
     }
 
 
-    public UserOutputDto getUser(long id){
+    public UserOutputDto getUser(long id) {
         Optional<User> getUser = userRepository.findById(id);
-        if(getUser.isPresent()){
+        if (getUser.isPresent()) {
             User u = getUser.get();
             UserOutputDto dto = userTransferToDto(u);
             return dto;
@@ -60,7 +68,6 @@ public class UserService {
         }
     }
 
-    @Transactional
     public UserOutputDto createUser(UserInputDto userDto) {
         User newUser = dtoTransfertoUser(userDto);
         newUser = userRepository.save(newUser);
@@ -143,8 +150,10 @@ public class UserService {
         dto.setEnabled(user.isEnabled());
 
 
-        if(user.getEmployeeAccount() != null) {
+        if (user.getEmployeeAccount() != null) {
             dto.setEmployeeAccountOutputDto(employeeAccountService.employeeAccountTransferToDto(user.getEmployeeAccount()));
+        } if (user.getManagerAccount() != null){
+            dto.setManagerAccountOutputDto(managerAccountService.managerAccountTransferToDto(user.getManagerAccount()));
         }
         if (user.getRoles() != null) {
             Set<RoleOutputDto> roleOutputDtos = new HashSet<>();
@@ -156,6 +165,7 @@ public class UserService {
         return dto;
     }
 
+    // TODO automatisch meegeven Employee aanmaken als er een User wordt aangemaakt.
     public User dtoTransfertoUser(UserInputDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
@@ -163,31 +173,52 @@ public class UserService {
         user.setEnabled(userDto.isEnabled());
 
         Set<Role> roles = new HashSet<>();
-        EmployeeAccount employeeAccount = null;
 
         for (String roleName : userDto.getRoles()) {
             Role role = roleRepository.findByRoleName("ROLE_" + roleName)
                     .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
             roles.add(role);
-            if ("ROLE_EMPLOYEE".equals(roleName)) {
-                employeeAccount = new EmployeeAccount();
-                employeeAccount.setFName(userDto.getFName());
 
-                employeeAccount.setUser(user); /
+            if ("ROLE_EMPLOYEE".equals(roleName)) {
+                EmployeeAccount employeeAccount = new EmployeeAccount();
+                employeeAccount.setFName(userDto.getFName());
+                // Stel hier andere vereiste velden van EmployeeAccount in
+                employeeAccount.setUser(user);
+                user.setEmployeeAccount(employeeAccount); // Belangrijk: Koppel EmployeeAccount aan User
             }
         }
         user.setRoles(roles);
 
-        if (employeeAccount != null) {
-            user.setEmployeeAccount(employeeAccount);
-            employeeAccountRepository.save(employeeAccount); // Sla EmployeeAccount op
-        }
-
-        return user;
+        // Sla de User op, wat door CascadeType.ALL ook EmployeeAccount zou moeten opslaan
+        return userRepository.save(user);
     }
 
+    public void assignUserToEmployeeAccount(String userName, long employeeId) {
+        Optional<User> optionalUser = userRepository.findByUsername(userName);
+        Optional<EmployeeAccount> optionalEmployeeAccount = employeeAccountRepository.findById(employeeId);
 
+        if(optionalUser.isPresent() && optionalEmployeeAccount.isPresent()) {
+            User user = optionalUser.get();
+            EmployeeAccount ea = optionalEmployeeAccount.get();
+            user.setEmployeeAccount(ea);
 
+            userRepository.save(user);
+        } else {
+            throw new RecordNotFoundException("no user or employeeAccount is found");
+        }
+    }
 
+    public void assignUserToManagerAccount(String userName, long managerId) {
+        Optional<User> oUser = userRepository.findByUsername(userName);
+        Optional<ManagerAccount> oManagerAccount = managerAccountRepository.findById(managerId);
+        if(oUser.isPresent() && oManagerAccount.isPresent()) {
+            User user = oUser.get();
+            ManagerAccount managerAccount = oManagerAccount.get();
+            user.setManagerAccount(managerAccount);
+            userRepository.save(user);
+        } else {
+            throw new RecordNotFoundException("no user or managerAccount is found");
+        }
+    }
 
 }

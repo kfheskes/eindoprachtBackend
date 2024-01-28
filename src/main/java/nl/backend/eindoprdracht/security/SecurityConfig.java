@@ -60,6 +60,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/user/{id}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth").permitAll()
                         .requestMatchers(HttpMethod.GET,"/manageraccount").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/user/{userName}/employee").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/user/{userName}/manager").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/user/{id}").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/user/{id}/{roleName}").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/user/{id}/role").permitAll()

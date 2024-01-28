@@ -33,6 +33,9 @@ public class ManagerAccount {
 
     private String responsibilities;
 
+    @OneToOne(mappedBy = "managerAccount", cascade = CascadeType.ALL)
+    private User user;
+
     @ManyToOne
     @JoinColumn(name = "work_schedule_id")
     private WorkSchedule workSchedule;
