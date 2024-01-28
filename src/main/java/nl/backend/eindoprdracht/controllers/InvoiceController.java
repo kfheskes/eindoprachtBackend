@@ -48,7 +48,7 @@ public class InvoiceController {
         return ResponseEntity.ok(invoiceDto);
     }
 
-    @GetMapping
+    @GetMapping("/invoices")
     public ResponseEntity<List<InvoiceOutputDto>> getAllInvoice (){
         List<InvoiceOutputDto> invoiceOutputDtoList = invoiceService.getAllInvoice();
         return ResponseEntity.ok(invoiceOutputDtoList);

@@ -52,7 +52,7 @@ public class EmployeeAccountController {
         return ResponseEntity.ok(eaDto);
     }
 
-    @GetMapping
+    @GetMapping("/employeeaccounts")
     public ResponseEntity<List<EmployeeAccountOutputDto>> getAllEmployees() {
         List<EmployeeAccountOutputDto> eaDtoList = employeeAccountService.getAllEmployees();
         return ResponseEntity.ok(eaDtoList);

@@ -12,12 +12,14 @@ import nl.backend.eindoprdracht.models.User;
 import nl.backend.eindoprdracht.services.OrderService;
 import nl.backend.eindoprdracht.services.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.security.Principal;
 import java.util.List;
 
 import static nl.backend.eindoprdracht.controllers.ControllerHelper.checkForBindingResult;
@@ -49,7 +51,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserOutputDto> getUser(@PathVariable long id) {
+    @PreAuthorize("hasRole('MANAGER') or #id == principal.id")
+    public ResponseEntity<UserOutputDto> getUser(@PathVariable long id, Principal principal) {
         UserOutputDto outputDto = userService.getUser(id);
         return ResponseEntity.ok().body(outputDto);
     }
@@ -63,12 +66,14 @@ public class UserController {
 
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('MANAGER') or #id == principal.id")
     public ResponseEntity<UserOutputDto> updateUser(@PathVariable long id, @RequestBody UserInputDto inputDto) {
         UserOutputDto outputDto = userService.updateUser(id, inputDto);
         return ResponseEntity.ok().body(outputDto);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('MANAGER') or #id == principal.id")
     public ResponseEntity<Void> deleteUser(@PathVariable long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
@@ -80,7 +85,6 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    //TODO onderstaande werkt nog niet
     @PutMapping("/{id}/role")
     public ResponseEntity<UserOutputDto> addRoleToUser(@PathVariable long id, @RequestBody RoleInputDto roleName) {
         userService.addRoleToUser(id, roleName.getRolename());

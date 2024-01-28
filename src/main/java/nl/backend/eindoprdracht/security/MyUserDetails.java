@@ -23,7 +23,7 @@ public class MyUserDetails implements UserDetails {
 
 
         for (Role role : user.getRoles()) {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+            authorities.add(new SimpleGrantedAuthority( role.getRoleName()));
         }
 
         return authorities;
@@ -57,5 +57,9 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return user.getId();
     }
 }

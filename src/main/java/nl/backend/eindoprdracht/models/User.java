@@ -17,15 +17,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String username;
-
+    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
     private boolean enabled = true;
 
     //TODO alle overeenkomende data in user en extra info in entity.
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_account_id")
     private EmployeeAccount employeeAccount;
     //TODO one to one relaties aanleggen met verschillende accounts:
@@ -38,7 +39,7 @@ public class User {
     @JoinColumn(name = "customer_account_id")
     private CustomerAccount customerAccount;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
@@ -46,7 +47,7 @@ public class User {
         return roles;
     }
 
-    public User(){
+    public User() {
 
     }
 

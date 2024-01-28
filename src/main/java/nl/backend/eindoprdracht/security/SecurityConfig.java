@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,6 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final JwtService jwtService;
@@ -50,26 +52,56 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService() {
         return new MyUserDetailsService(this.userRepository);
     }
- //TODO wie mag naar welke auth
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST,"/authenticated").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/user").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/user").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/user/{id}").permitAll()
+
+                        //........................AUTH............................
                         .requestMatchers(HttpMethod.POST, "/sign_in").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/manageraccount").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PUT, "/user/{userName}/employee").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/user/{userName}/manager").permitAll()
-                        .requestMatchers("/user/{userName}/customer").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/user/{id}").permitAll()
-                        .requestMatchers(HttpMethod.DELETE,"/user/{id}/{roleName}").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PUT, "/user/{id}/role").permitAll()
-                        .requestMatchers("/manageraccount").hasRole("ADMIN")
-                        .requestMatchers("/hello").authenticated()
-                        .requestMatchers("/profiles", "/profiles/*").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/authenticated").authenticated()
+                        //........................USER............................
+                        .requestMatchers(HttpMethod.POST, "/user").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/user/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/user/users").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/user/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/user/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/user/{id}/{roleName}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/user/{id}/role").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/user/{userName}/**").authenticated()
+                        //........................ROLE............................
+                        .requestMatchers(HttpMethod.GET, "/role").hasRole("MANAGER")
+                        //........................Manager............................
+                        .requestMatchers("/manageraccount/**").hasRole("MANAGER")
+                        //........................Employee............................
+                        .requestMatchers("/employeeaccount/**").hasAnyRole("MANAGER", "EMPLOYEE")
+
+                        //........................Customer............................
+                        .requestMatchers("/customeraccount/**").hasAnyRole("MANAGER", "CUSTOMER")
+
+                        //........................WORKSCHEDULE............................
+                        .requestMatchers(HttpMethod.POST, "/workschedule").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/workschedule/{id}").hasAnyRole("MANAGER", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET, "/workschedule/workschedules").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT,"/workschedule/{id}").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE,"/workschedule/{id}").hasRole("MANAGER")
+                        //........................ORDER............................
+                        .requestMatchers(HttpMethod.POST,"/order").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET,"/order/{id}").hasAnyRole("MANAGER", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.GET,"/order/orders").hasAnyRole("MANAGER", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.PUT,"/order/{id}").hasAnyRole("MANAGER", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.PUT,"/order/{id}/invoices").hasAnyRole("MANAGER", "EMPLOYEE")
+                        .requestMatchers(HttpMethod.PUT,"/order/{id}/employees").hasRole("MANAGER").requestMatchers(HttpMethod.PUT,"/order/{id}/managers").hasRole("MANAGER").requestMatchers(HttpMethod.PUT,"/order/{id}/customers").hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.DELETE,"/order/{id}").hasRole("MANAGER")
+                        //........................Invoice............................
+                        .requestMatchers(HttpMethod.POST,"/invoice").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET,"/invoice/{id}").hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET,"/invoice/invoices").hasAnyRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT ,"/invoice/{id}/**").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.DELETE,"/invoice/{id}").hasRole("MANAGER")
+
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

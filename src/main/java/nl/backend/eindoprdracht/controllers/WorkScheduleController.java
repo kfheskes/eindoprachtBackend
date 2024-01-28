@@ -23,12 +23,13 @@ import static nl.backend.eindoprdracht.controllers.ControllerHelper.checkForBind
 public class WorkScheduleController {
 
     private final WorkScheduleService workScheduleService;
+
     public WorkScheduleController(WorkScheduleService workScheduleService) {
         this.workScheduleService = workScheduleService;
     }
 
     @PostMapping
-    public ResponseEntity<WorkScheduleOutputDto> createWorkSchedule (@Valid @RequestBody WorkScheduleInputDto workScheduleInputDto, BindingResult br) {
+    public ResponseEntity<WorkScheduleOutputDto> createWorkSchedule(@Valid @RequestBody WorkScheduleInputDto workScheduleInputDto, BindingResult br) {
         if (br.hasErrors()) {
             throw new ValidationException(checkForBindingResult(br));
         } else {
@@ -42,26 +43,26 @@ public class WorkScheduleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkScheduleOutputDto> getWorkScheduleId (@PathVariable long id){
+    public ResponseEntity<WorkScheduleOutputDto> getWorkScheduleId(@PathVariable long id) {
         WorkScheduleOutputDto workScheduleOutputDto = workScheduleService.getWorkScheduleId(id);
         return ResponseEntity.ok(workScheduleOutputDto);
     }
 
-    @GetMapping
-    public ResponseEntity<List<WorkScheduleOutputDto>> getAllWorkSchedules(){
-        List <WorkScheduleOutputDto> workScheduleOutputDtoList = workScheduleService.getAllWorkSchedules();
+    @GetMapping("/workschedules")
+    public ResponseEntity<List<WorkScheduleOutputDto>> getAllWorkSchedules() {
+        List<WorkScheduleOutputDto> workScheduleOutputDtoList = workScheduleService.getAllWorkSchedules();
         return ResponseEntity.ok(workScheduleOutputDtoList);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<WorkScheduleOutputDto>
-    updateEmployeeAccount(@PathVariable long id, @RequestBody WorkScheduleInputDto inputDto){
+    updateWorkSchedule(@PathVariable long id, @RequestBody WorkScheduleInputDto inputDto) {
         WorkScheduleOutputDto workScheduleOutputdto = workScheduleService.updateWorkSchedule(id, inputDto);
         return ResponseEntity.ok().body(workScheduleOutputdto);
     }
 
     @DeleteMapping("/{id}")
-        public ResponseEntity<WorkSchedule> deleteWorkSchedule(@PathVariable long id) {
+    public ResponseEntity<WorkSchedule> deleteWorkSchedule(@PathVariable long id) {
         workScheduleService.deleteWorkSchedule(id);
         return ResponseEntity.noContent().build();
     }

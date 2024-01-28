@@ -19,7 +19,7 @@ public class RoleController {
         this.roleService = roleService;
     }
 
-    @GetMapping
+    @GetMapping("/roles")
     public ResponseEntity<List<RoleOutputDto>> getAllRoles(){
         List<RoleOutputDto> roleOutputDtoList = roleService.getAllRoles();
         return ResponseEntity.ok(roleOutputDtoList);
