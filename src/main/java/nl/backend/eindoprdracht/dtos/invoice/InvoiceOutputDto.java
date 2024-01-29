@@ -1,5 +1,6 @@
 package nl.backend.eindoprdracht.dtos.invoice;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
@@ -17,6 +18,8 @@ public class InvoiceOutputDto {
     public String businessTaxNumber;
     public Integer amount;
     public Long taxAmount;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
     public LocalDate date;
     public String businessAddress;
     public String customerAddress;
