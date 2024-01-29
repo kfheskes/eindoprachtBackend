@@ -71,9 +71,6 @@ public ResponseEntity<EmployeeAccountOutputDto> assignEmployeeToWorkSchedule(@Pa
         return ResponseEntity.noContent().build();
 }
 
-
-//TODO kijken of er ook een return teruggestuurd kan worden.
-
 @DeleteMapping("/{id}")
     public ResponseEntity<EmployeeAccount> deleteEmployeeAccount(@PathVariable long id) {
         employeeAccountService.deleteEmployeeAccount(id);

@@ -21,10 +21,3 @@ public class ControllerHelper {
 }
 
 
-//TODO: check volgende optie voor meerwaard:
-
-//Verbeter de Leesbaarheid: Overweeg een betere formattering voor de uitvoer, zoals het gebruik van tabs of het indelen van de uitvoer in een tabelvorm, wat kan helpen bij het lezen en begrijpen van de fouten.
-//
-//java
-//Copy code
-//sb.append(String.format("%-20s : %s\n", fe.getField(), fe.getDefaultMessage()));

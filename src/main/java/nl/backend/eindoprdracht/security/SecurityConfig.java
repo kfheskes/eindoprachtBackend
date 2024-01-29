@@ -65,15 +65,13 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/user/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/user/{userName}/**").authenticated()
                         //........................ROLE............................
-                        .requestMatchers(HttpMethod.GET, "/role").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.GET, "/role/roles").hasRole("MANAGER")
                         //........................Manager............................
                         .requestMatchers("/manageraccount/**").hasRole("MANAGER")
                         //........................Employee............................
                         .requestMatchers("/employeeaccount/**").hasAnyRole("MANAGER", "EMPLOYEE")
-
                         //........................Customer............................
                         .requestMatchers("/customeraccount/**").hasAnyRole("MANAGER", "CUSTOMER")
-
                         //........................WORKSCHEDULE............................
                         .requestMatchers(HttpMethod.GET, "/workschedule/{id}").hasAnyRole("MANAGER", "EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/workschedule").hasRole("MANAGER")
@@ -93,13 +91,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/invoice/{id}").hasAnyRole("MANAGER", "CUSTOMER")
                         .requestMatchers(HttpMethod.POST, "/invoice").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.GET, "/invoice/invoices").hasAnyRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/invoice/{id}/customer").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/invoice/{id}/**").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.DELETE, "/invoice/{id}").hasRole("MANAGER")
-
                         //........................AUTH............................
                         .requestMatchers(HttpMethod.POST, "/sign_in").permitAll()
                         .requestMatchers(HttpMethod.GET, "/authenticated").authenticated()
-
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -16,12 +16,11 @@ import java.util.Set;
 @Table(name = "manager_accounts")
 public class ManagerAccount {
 
-    //TODO moet er een woonplaats komen naast zipcode en address
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long id;
-
 
     private String responsibilities;
 

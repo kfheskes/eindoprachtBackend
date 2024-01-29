@@ -58,7 +58,6 @@ public class CustomerAccountController {
         CustomerAccountOutputDto dto = customerAccountService.updateCustomerAccount(id, caInputDto);
         return ResponseEntity.ok().body(dto);
     }
-//TODO Als je alleen specifieke velden wilt bijwerken, overweeg dan om PATCH te gebruiken in plaats van PUT. PATCH is bedoeld voor gedeeltelijke updates.
 
     @DeleteMapping("/{id}")
     public ResponseEntity<CustomerAccount> deleteCustomerAccount(@PathVariable long id) {
