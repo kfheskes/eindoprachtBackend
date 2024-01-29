@@ -25,7 +25,6 @@ public class Order {
     private String typeOfWork;
     private Integer amount;
     private Double price;
-    private Integer productId;
     private String productName;
     private String customerName;
     private String status;
@@ -53,12 +52,11 @@ public class Order {
     @JoinColumn(name = "customer_account_id")
     private CustomerAccount customerAccount;
 
-    public Order(Long id, String typeOfWork, int amount, Double price, int productId, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
+    public Order(Long id, String typeOfWork, int amount, Double price, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
         this.id = id;
         this.typeOfWork = typeOfWork;
         this.amount = amount;
         this.price = price;
-        this.productId = productId;
         this.productName = productName;
         this.customerName = customerName;
         this.status = status;

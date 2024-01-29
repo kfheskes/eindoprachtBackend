@@ -8,7 +8,6 @@ import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;
 import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.services.InvoiceService;
-import nl.backend.eindoprdracht.util.DateUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,7 @@ public class InvoiceController {
     private final InvoiceService invoiceService;
 
 
-    public InvoiceController(InvoiceService invoiceService, DateUtils dateUtils) {
+    public InvoiceController(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
 

@@ -50,9 +50,8 @@ public class OrderService {
         order.setTypeOfWork(dto.getTypeOfWork());
         order.setAmount(dto.getAmount());
         order.setPrice(dto.getPrice());
-        order.setProductId(dto.getProductId());
         order.setProductName(dto.getProductName());
-        order.setCustomerName(dto.getCustomerName());
+        order.setCustomerName(dto.getCustomerId());
         order.setStatus(dto.getStatus());
         order.setDateCreated(dto.getDateCreated());
         order.setTime(dto.getTime());
@@ -69,9 +68,8 @@ public class OrderService {
         dto.setTypeOfWork(order.getTypeOfWork());
         dto.setAmount(order.getAmount());
         dto.setPrice(order.getPrice());
-        dto.setProductId(order.getProductId());
         dto.setProductName(order.getProductName());
-        dto.setCustomerName(order.getCustomerName());
+        dto.setCustomerId(order.getCustomerName());
         dto.setStatus(order.getStatus());
         dto.setDateCreated(order.getDateCreated());
         dto.setTime(order.getTime());
@@ -144,14 +142,11 @@ public class OrderService {
             if (dto.getPrice() != null) {
                 orderToUpdate.setPrice(dto.getPrice());
             }
-            if (dto.getProductId() != null) {
-                orderToUpdate.setProductId(dto.getProductId());
-            }
             if (dto.getProductName() != null) {
                 orderToUpdate.setProductName(dto.getProductName());
             }
-            if (dto.getCustomerName() != null) {
-                orderToUpdate.setCustomerName(dto.getCustomerName());
+            if (dto.getCustomerId() != null) {
+                orderToUpdate.setCustomerName(dto.getCustomerId());
             }
             if (dto.getStatus() != null) {
                 orderToUpdate.setStatus(dto.getStatus());

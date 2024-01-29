@@ -1,5 +1,6 @@
 package nl.backend.eindoprdracht.dtos.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
@@ -19,10 +20,11 @@ public class OrderOutputDto {
     private String typeOfWork;
     private Integer amount;
     private Double price;
-    private Integer productId;
     private String productName;
-    private String customerName;
+
+    private String customerId;
     private String status;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateCreated;
     private LocalTime time;
     private String workAddress;
