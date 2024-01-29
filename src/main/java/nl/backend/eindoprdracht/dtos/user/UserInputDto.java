@@ -26,6 +26,7 @@ public class UserInputDto {
     public String address;
     public String houseNumber;
     public String zipcode;
+    public String residence;
     public String pNumber;
     public String email;
 

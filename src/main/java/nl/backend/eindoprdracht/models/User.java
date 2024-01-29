@@ -31,6 +31,8 @@ public class User {
     private Date dob;
     private String address;
     private String zipcode;
+
+    private String residence;
     private String pNumber;
     private String houseNumber;
 

@@ -26,6 +26,8 @@ public class UserOutputDto {
     private String address;
     private String houseNumber;
     private String zipcode;
+
+    private String residence;
     private String pNumber;
     private String email;
 

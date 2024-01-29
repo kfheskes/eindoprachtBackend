@@ -121,6 +121,9 @@ public class UserService {
             if (inputDto.getEmail() != null) {
                 userUpdate.setEmail(inputDto.getEmail());
             }
+            if (inputDto.getResidence() != null) {
+                userUpdate.setResidence(inputDto.getResidence());
+            }
 
             User updateUser = userRepository.save(userUpdate);
             return userTransferToDto(updateUser);
