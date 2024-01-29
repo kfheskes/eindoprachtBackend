@@ -23,6 +23,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long id;
+
     private TypeOfWork typeOfWork;
     private Integer amount;
     private Double price;

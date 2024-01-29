@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import nl.backend.eindoprdracht.utils.RandomStringGenerator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    //TODO na werkend te krijgen een randomgenerator toevoegen
-    private final static String SECRET_KEY = "yabbadabbadooyabbadabbadooyabbadabbadooyabbadabbadoo";
+
+    private final static String SECRET_KEY = RandomStringGenerator.generateAlphaNumeric(45);
 
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);

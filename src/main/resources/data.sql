@@ -30,9 +30,9 @@ VALUES
 
 INSERT INTO invoices ( type_of_work, price, type_of_product, business_tax_number, amount, tax_amount, date, business_address, customer_address, term_of_payment)
 VALUES
-    ( '1', 250.00, 'Dienst', 'BT1234567', 1, 50, '10-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorcomplex A, 5678 CD Dorp', '30 dagen'),
-    ( '2', 1500.00, 'Dienst', 'BT7654321', 1, 300, '20-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Fabrieksweg 10, 6789 EF Dorp', '60 dagen'),
-    ( '3', 100.00, 'Dienst', 'BT1928374', 1, 20, '10-12-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorgebouw B, 8901 GH Dorp', '30 dagen');
+    ( '1', 250.00, 'Dienst', 'BT1234567', 1, 50, '10-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorcomplex A, 5678 CD Dorp','DAGEN_30' ),
+    ( '2', 1500.00, 'Dienst', 'BT7654321', 1, 300, '20-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Fabrieksweg 10, 6789 EF Dorp','DAGEN_60' ),
+    ( '3', 100.00, 'Dienst', 'BT1928374', 1, 20, '10-12-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorgebouw B, 8901 GH Dorp', 'DAGEN_90' );
 
 INSERT INTO orders (type_of_work, amount, price, product_name, customer_name, status, date_created, time, work_address, work_zipcode)
 VALUES

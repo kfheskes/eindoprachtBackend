@@ -150,7 +150,6 @@ public class UserService {
         }
     }
 
-    //TODO check laatste feedback van Rowan in de feedback huiswerk laatste keer.
     public void addRoleToUser(long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Role> optionalRole = roleRepository.findByRoleNameContainingIgnoreCase(roleName);

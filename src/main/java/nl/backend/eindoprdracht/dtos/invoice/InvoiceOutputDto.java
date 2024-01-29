@@ -1,15 +1,10 @@
 package nl.backend.eindoprdracht.dtos.invoice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
-import nl.backend.eindoprdracht.models.CustomerAccount;
-import nl.backend.eindoprdracht.utils.TermOfPayment;
 import nl.backend.eindoprdracht.utils.TypeOfWork;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 public class InvoiceOutputDto {
 
@@ -25,7 +20,8 @@ public class InvoiceOutputDto {
     public LocalDate date;
     public String businessAddress;
     public String customerAddress;
-    public TermOfPayment termOfPayment;
+
+    public String termOfPayment;
 
 
     private CustomerAccountOutputDto customers;
