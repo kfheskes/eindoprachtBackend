@@ -7,12 +7,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class ManagerAccountInputDto {
-    public String fName;
-    public String mName;
-    public String lName;
-    public Date dob;
-    public String address;
-    public String zipcode;
-    public String pNumber;
+
     public String responsibilities;
 }

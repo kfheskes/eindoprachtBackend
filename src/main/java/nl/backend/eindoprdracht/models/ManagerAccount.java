@@ -22,14 +22,6 @@ public class ManagerAccount {
 
     private long id;
 
-    private String fName;
-    private String mName;
-    private String lName;
-    private Date dob;
-
-    private String address;
-    private String zipcode;
-    private String pNumber;
 
     private String responsibilities;
 
@@ -43,15 +35,8 @@ public class ManagerAccount {
     @ManyToMany(mappedBy = "managers")
     private Set<Order> orders = new HashSet<>();
 
-    public ManagerAccount(long id, String fName, String mName, String lName, Date dob, String address, String zipcode, String pNumber, String responsibilities) {
+    public ManagerAccount(long id, String responsibilities) {
         this.id = id;
-        this.fName = fName;
-        this.mName = mName;
-        this.lName = lName;
-        this.dob = dob;
-        this.address = address;
-        this.zipcode = zipcode;
-        this.pNumber = pNumber;
         this.responsibilities = responsibilities;
     }
 

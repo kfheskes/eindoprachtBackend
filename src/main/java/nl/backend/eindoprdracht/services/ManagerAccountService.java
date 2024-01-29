@@ -30,13 +30,6 @@ public class ManagerAccountService {
     public ManagerAccount dtoTransferToManagerAccount(ManagerAccountInputDto dto) {
         ManagerAccount managerAccount = new ManagerAccount();
 
-        managerAccount.setFName(dto.getFName());
-        managerAccount.setMName(dto.getMName());
-        managerAccount.setLName(dto.getLName());
-        managerAccount.setDob(dto.getDob());
-        managerAccount.setAddress(dto.getAddress());
-        managerAccount.setZipcode(dto.getZipcode());
-        managerAccount.setPNumber(dto.getPNumber());
         managerAccount.setResponsibilities(dto.getResponsibilities());
 
         return managerAccount;
@@ -46,13 +39,7 @@ public class ManagerAccountService {
         ManagerAccountOutputDto dto = new ManagerAccountOutputDto();
 
         dto.id = (managerAccount.getId());
-        dto.fName =(managerAccount.getFName());
-        dto.mName =(managerAccount.getMName());
-        dto.lName =(managerAccount.getLName());
-        dto.dob =(managerAccount.getDob());
-        dto.address = (managerAccount.getAddress());
-        dto.zipcode = (managerAccount.getZipcode());
-        dto.pNumber = (managerAccount.getPNumber());
+
         dto.responsibilities = (managerAccount.getResponsibilities());
 
         if (managerAccount.getWorkSchedule() != null) {
@@ -93,27 +80,7 @@ public class ManagerAccountService {
             throw new RecordNotFoundException("No Manager account found by id" + id);
         } else  {
             ManagerAccount accountToUpdate = getManagerAccount.get();
-            if(dto.getFName() != null) {
-                accountToUpdate.setFName(dto.getFName());
-            }
-            if(dto.getMName() != null) {
-                accountToUpdate.setMName(dto.getMName());
-            }
-            if(dto.getLName() != null) {
-                accountToUpdate.setLName(dto.getLName());
-            }
-            if (dto.getDob() != null) {
-                accountToUpdate.setDob(dto.getDob());
-            }
-            if (dto.getAddress() != null) {
-                accountToUpdate.setAddress(dto.getAddress());
-            }
-            if (dto.getZipcode() != null) {
-                accountToUpdate.setZipcode(dto.getZipcode());
-            }
-            if (dto.getPNumber() != null) {
-                accountToUpdate.setPNumber(dto.getPNumber());
-            }
+
             if (dto.getResponsibilities() != null) {
                 accountToUpdate.setResponsibilities(dto.getResponsibilities());
             }
