@@ -29,7 +29,7 @@ public class FileService {
     }
 
     public List<FileDto> getAllFiles() {
-        Iterable<File> files = fileRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+        List<File> files = fileRepository.findAll();
         List<FileDto> fileDtos = new ArrayList<>();
 
         for (File f : files) {
@@ -38,21 +38,19 @@ public class FileService {
         return fileDtos;
     }
 
-    public FileDto getFile(Long id) {
+    public FileDto getFileById(Long id) {
         Optional<File> fileOptional = fileRepository.findById(id);
-
         if (fileOptional.isEmpty()) {
             throw new RecordNotFoundException("No file found with id " + id);
         }
-
         File file = fileOptional.get();
-
         return transferFileToDto(file);
     }
 
+
     @Transactional
-    public List<FileDto> getFilesByTaskId(Long taskId) {
-        List<File> files = fileRepository.findByTask_Id(taskId);
+    public List<FileDto> getFilesByOrderId(Long orderId) {
+        Iterable<File> files = fileRepository.findByOrder_Id(orderId);
         List<FileDto> fileDtos = new ArrayList<>();
 
         for (File f : files) {
