@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 
 @Entity
-@Table (name = "orders")
+@Table(name = "orders")
 
 public class Order {
 
@@ -40,13 +40,13 @@ public class Order {
     private Invoice invoice;
 
     @ManyToMany
-    @JoinTable(name = "orders_employees", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns =  @JoinColumn(name = "employee_id"))
+    @JoinTable(name = "orders_employees", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
 
 
     private Set<EmployeeAccount> employees = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "orders_managers", joinColumns =  @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "manager_id"))
+    @JoinTable(name = "orders_managers", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "manager_id"))
 
     private Set<ManagerAccount> managers = new HashSet<>();
 
@@ -68,9 +68,9 @@ public class Order {
         this.workZipcode = workZipcode;
     }
 
-public Order(){
+    public Order() {
 
-}
+    }
 
 
 }

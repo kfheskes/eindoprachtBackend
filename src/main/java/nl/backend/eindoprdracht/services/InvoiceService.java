@@ -29,7 +29,7 @@ public class InvoiceService {
         this.customerAccountService = customerAccountService;
     }
 
-    public Invoice dtoTransferToInvoice (InvoiceInputDto invoiceInputDto) {
+    public Invoice dtoTransferToInvoice(InvoiceInputDto invoiceInputDto) {
         Invoice invoice = new Invoice();
 
         invoice.setTypeOfWork(invoiceInputDto.getTypeOfWork());
@@ -45,7 +45,7 @@ public class InvoiceService {
         return invoice;
     }
 
-    public InvoiceOutputDto invoiceTransferToDto (Invoice invoice){
+    public InvoiceOutputDto invoiceTransferToDto(Invoice invoice) {
         InvoiceOutputDto dto = new InvoiceOutputDto();
 
         dto.id = invoice.getId();
@@ -67,16 +67,16 @@ public class InvoiceService {
         return dto;
     }
 
-    public InvoiceOutputDto createInvoice(InvoiceInputDto inputDto){
-         Invoice invoice = dtoTransferToInvoice(inputDto);
-         invoiceRepository.save(invoice);
-         return invoiceTransferToDto(invoice);
+    public InvoiceOutputDto createInvoice(InvoiceInputDto inputDto) {
+        Invoice invoice = dtoTransferToInvoice(inputDto);
+        invoiceRepository.save(invoice);
+        return invoiceTransferToDto(invoice);
     }
 
-    public InvoiceOutputDto getInvoice(long id){
+    public InvoiceOutputDto getInvoice(long id) {
         Optional<Invoice> invoiceId = invoiceRepository.findById(id);
 
-        if (invoiceId.isPresent()){
+        if (invoiceId.isPresent()) {
             Invoice invoice = invoiceId.get();
             InvoiceOutputDto dto = invoiceTransferToDto(invoice);
             return dto;
@@ -88,26 +88,26 @@ public class InvoiceService {
     public List<InvoiceOutputDto> getAllInvoice() {
         List<Invoice> invoiceList = invoiceRepository.findAll();
         List<InvoiceOutputDto> invoiceOutputDtoList = new ArrayList<>();
-        for (Invoice invoice: invoiceList) {
+        for (Invoice invoice : invoiceList) {
             invoiceOutputDtoList.add(invoiceTransferToDto(invoice));
 
         }
         return invoiceOutputDtoList;
     }
 
-public InvoiceOutputDto updateInvoice(long id, InvoiceInputDto invoice){
+    public InvoiceOutputDto updateInvoice(long id, InvoiceInputDto invoice) {
         Optional<Invoice> getInvoice = invoiceRepository.findById(id);
-        if (getInvoice.isEmpty()){
+        if (getInvoice.isEmpty()) {
             throw new RecordNotFoundException("No invoice found by id " + id);
         } else {
             Invoice changeInvoice1 = getInvoice.get();
             if (invoice.getTypeOfWork() != null) {
                 changeInvoice1.setTypeOfWork(invoice.getTypeOfWork());
             }
-            if (invoice.getPrice() != null){
+            if (invoice.getPrice() != null) {
                 changeInvoice1.setPrice(invoice.getPrice());
             }
-            if (invoice.getTypeOfProduct() != null){
+            if (invoice.getTypeOfProduct() != null) {
                 changeInvoice1.setTypeOfProduct(invoice.getTypeOfProduct());
             }
             if (invoice.getBusinessTaxNumber() != null) {
@@ -131,15 +131,15 @@ public InvoiceOutputDto updateInvoice(long id, InvoiceInputDto invoice){
             if (invoice.getTermOfPayment() != null) {
                 changeInvoice1.setTermOfPayment(invoice.getTermOfPayment());
             }
-                Invoice returnInvoice = invoiceRepository.save(changeInvoice1);
+            Invoice returnInvoice = invoiceRepository.save(changeInvoice1);
             return invoiceTransferToDto(returnInvoice);
         }
-}
+    }
 
-        public void assignCustomerToInvoice(long invoiceId, long customerId) {
+    public void assignCustomerToInvoice(long invoiceId, long customerId) {
         Optional<Invoice> optionalInvoice = invoiceRepository.findById(invoiceId);
         Optional<CustomerAccount> optionalCustomerAccount = customerAccountRepository.findById(customerId);
-        if(optionalInvoice.isPresent() && optionalCustomerAccount.isPresent()) {
+        if (optionalInvoice.isPresent() && optionalCustomerAccount.isPresent()) {
             Invoice invoice = optionalInvoice.get();
             CustomerAccount customerAccount = optionalCustomerAccount.get();
             invoice.setCustomerAccount(customerAccount);
@@ -148,12 +148,12 @@ public InvoiceOutputDto updateInvoice(long id, InvoiceInputDto invoice){
             throw new RecordNotFoundException("No combination invoice customer is found");
         }
 
-        }
+    }
 
 
-public void deleteInvoice(long id) {
+    public void deleteInvoice(long id) {
         invoiceRepository.deleteById(id);
-}
+    }
 
 
 }

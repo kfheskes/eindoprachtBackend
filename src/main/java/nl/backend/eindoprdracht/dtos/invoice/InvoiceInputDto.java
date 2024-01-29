@@ -6,8 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.utils.TypeOfWork;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 
 
 @Getter
