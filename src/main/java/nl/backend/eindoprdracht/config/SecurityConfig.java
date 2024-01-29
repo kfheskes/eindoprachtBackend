@@ -98,6 +98,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/invoice/{id}/**").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.DELETE, "/invoice/{id}").hasRole("MANAGER")
                         //........................Files............................
+                        // onderstaande straks weghalen:
+                        .requestMatchers(HttpMethod.POST, "/files").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER")
                         .requestMatchers(HttpMethod.GET, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER").requestMatchers(HttpMethod.POST, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER").requestMatchers(HttpMethod.DELETE, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER")
                         //........................AUTH............................

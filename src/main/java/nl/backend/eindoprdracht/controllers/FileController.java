@@ -37,7 +37,7 @@ public class FileController {
         return ResponseEntity.ok(fileDto);
     }
 
-    @GetMapping("/task/{task_id}")
+    @GetMapping("/order/{order_id}")
     public ResponseEntity<List<FileDto>> getFilesByOrderId(@PathVariable Long order_id) {
         return ResponseEntity.ok().body(fileService.getFilesByOrderId(order_id));
     }

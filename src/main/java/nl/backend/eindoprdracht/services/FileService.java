@@ -58,20 +58,27 @@ public class FileService {
         }
         return fileDtos;
     }
+//TODO wellicht fileDto public FileDto addFile(FileDto fileDto) throws IOException {
+//    File newFile = transferDtoToFile(fileDto);
+//    fileRepository.save(newFile);
+//    return transferFileToDto(newFile);
+//}
+    public FileDto addFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
 
-    public FileDto addFile(MultipartFile fileUpload, String description, Long task_id) throws IOException {
-
-        File newFile = createNewFile(fileUpload, description, task_id);
+        File newFile = createNewFile(fileUpload, description, order_id);
         fileRepository.save(newFile);
         return transferFileToDto(newFile);
     }
 
-    public FileDto updateFile(Long id, MultipartFile fileUpload, String description, Long task_id) throws IOException {
+
+
+
+    public FileDto updateFile(Long id, MultipartFile fileUpload, String description, Long order_id) throws IOException {
         Optional<File> fileOptional = fileRepository.findById(id);
         if (fileOptional.isEmpty()) {
-            throw new RecordNotFoundException("Geen bestand gevonden met id: " + id);
+            throw new RecordNotFoundException("No file found with id: " + id);
         }
-        File newFile = createNewFile(fileUpload, description, task_id);
+        File newFile = createNewFile(fileUpload, description, order_id);
         newFile.setId(id);
         fileRepository.save(newFile);
 
@@ -81,12 +88,12 @@ public class FileService {
     public void deleteFile(Long id) {
         Optional<File> optionalFile = fileRepository.findById(id);
         if (optionalFile.isEmpty()) {
-            throw new RecordNotFoundException("Geen bestand gevonden met id: " + id);
+            throw new RecordNotFoundException("No file found with id:" + id);
         }
         fileRepository.deleteById(id);
     }
 
-    private File createNewFile(MultipartFile fileUpload, String description, Long task_id) throws IOException {
+    private File createNewFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
 
         if (fileUpload.isEmpty()) {
             throw new ContentNotFoundException("Upload file please");
@@ -100,7 +107,7 @@ public class FileService {
         newFile.setFilename(fileUpload.getOriginalFilename());
         newFile.setDescription(description);
 
-        Order order = orderRepository.findById(task_id).orElseThrow(() -> new RecordNotFoundException("No order with id " + task_id));
+        Order order = orderRepository.findById(order_id).orElseThrow(() -> new RecordNotFoundException("No order with id " + order_id));
         newFile.setOrder(order);
 
         return newFile;
@@ -129,9 +136,6 @@ public class FileService {
 
         return file;
     }
-
-
-
 
 
 }
