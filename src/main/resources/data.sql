@@ -27,17 +27,18 @@ INSERT INTO manager_accounts (id, responsibilities)
 VALUES
     (1, 'Algemeen management');
 
+
 INSERT INTO invoices ( type_of_work, price, type_of_product, business_tax_number, amount, tax_amount, date, business_address, customer_address, term_of_payment)
 VALUES
-    ( 'Kantoorreiniging', 250.00, 'Dienst', 'BT1234567', 1, 50, '10-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorcomplex A, 5678 CD Dorp', '30 dagen'),
-    ( 'Industriële reiniging', 1500.00, 'Dienst', 'BT7654321', 1, 300, '20-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Fabrieksweg 10, 6789 EF Dorp', '60 dagen'),
-    ( 'Raamreiniging', 100.00, 'Dienst', 'BT1928374', 1, 20, '10-12-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorgebouw B, 8901 GH Dorp', '30 dagen');
+    ( '1', 250.00, 'Dienst', 'BT1234567', 1, 50, '10-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorcomplex A, 5678 CD Dorp', '30 dagen'),
+    ( '2', 1500.00, 'Dienst', 'BT7654321', 1, 300, '20-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Fabrieksweg 10, 6789 EF Dorp', '60 dagen'),
+    ( '3', 100.00, 'Dienst', 'BT1928374', 1, 20, '10-12-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorgebouw B, 8901 GH Dorp', '30 dagen');
 
 INSERT INTO orders (type_of_work, amount, price, product_name, customer_name, status, date_created, time, work_address, work_zipcode)
 VALUES
-    ('Schoonmaken', 10, 150.00, 'Schoonmaakmiddelen', 'Bedrijf A', 'In behandeling', '2024-01-10', '08:00', 'Hoofdstraat 1', '1234 AB'),
-    ('Ramen lappen', 20, 200.00,  'Raamreiniger', 'Bedrijf B', 'Voltooid', '2024-01-15', '09:00', 'Zijstraat 2', '5678 CD'),
-    ('Vloerreiniging', 5, 100.00,  'Vloerreiniger', 'Bedrijf C', 'Gepland', '2024-01-20', '10:00', 'Achterweg 3', '9012 EF');
+    ('1', 10, 150.00, 'Schoonmaakmiddelen', 'Bedrijf A', 'In behandeling', '2024-01-10', '08:00', 'Hoofdstraat 1', '1234 AB'),
+    ('2', 20, 200.00,  'Raamreiniger', 'Bedrijf B', 'Voltooid', '2024-01-15', '09:00', 'Zijstraat 2', '5678 CD'),
+    ('3', 5, 100.00,  'Vloerreiniger', 'Bedrijf C', 'Gepland', '2024-01-20', '10:00', 'Achterweg 3', '9012 EF');
 
 INSERT INTO work_schedule (date, time, available, absence, sick, manager_available)
 VALUES

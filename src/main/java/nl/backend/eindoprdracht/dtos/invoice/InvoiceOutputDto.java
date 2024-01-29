@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.models.CustomerAccount;
+import nl.backend.eindoprdracht.utils.TypeOfWork;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
 public class InvoiceOutputDto {
 
     public Long id;
-    public String typeOfWork;
+    public TypeOfWork typeOfWork;
     public Double price;
     public String typeOfProduct;
     public String businessTaxNumber;

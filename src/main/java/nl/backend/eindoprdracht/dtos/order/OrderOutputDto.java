@@ -7,6 +7,7 @@ import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
+import nl.backend.eindoprdracht.utils.TypeOfWork;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,7 +18,7 @@ import java.util.Set;
 public class OrderOutputDto {
 
     private Long Id;
-    private String typeOfWork;
+    private TypeOfWork typeOfWork;
     private Integer amount;
     private Double price;
     private String productName;

@@ -4,6 +4,7 @@ package nl.backend.eindoprdracht.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.utils.TypeOfWork;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,7 +23,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long id;
-    private String typeOfWork;
+    private TypeOfWork typeOfWork;
     private Integer amount;
     private Double price;
     private String productName;
@@ -52,7 +53,7 @@ public class Order {
     @JoinColumn(name = "customer_account_id")
     private CustomerAccount customerAccount;
 
-    public Order(Long id, String typeOfWork, int amount, Double price, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
+    public Order(Long id, TypeOfWork typeOfWork, int amount, Double price, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
         this.id = id;
         this.typeOfWork = typeOfWork;
         this.amount = amount;

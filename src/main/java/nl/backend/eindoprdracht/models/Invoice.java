@@ -3,6 +3,7 @@ package nl.backend.eindoprdracht.models;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.utils.TypeOfWork;
 
 import java.time.LocalDate;
 
@@ -16,7 +17,7 @@ import java.time.LocalDate;
         @GeneratedValue(strategy = GenerationType.IDENTITY)
 
         private Long id;
-        private String typeOfWork;
+        private TypeOfWork typeOfWork;
         private Double price;
         private String typeOfProduct;
         private String businessTaxNumber;
@@ -35,7 +36,7 @@ import java.time.LocalDate;
         @JoinColumn(name = "customer_account_id")
         private CustomerAccount customerAccount;
 
-        public Invoice(Long id, String typeOfWork, Double price, String typeOfProduct, String businessTaxNumber, int amount, long taxAmount, LocalDate date, String businessAddress, String customerAddress, String termOfPayment) {
+        public Invoice(Long id, TypeOfWork typeOfWork, Double price, String typeOfProduct, String businessTaxNumber, int amount, long taxAmount, LocalDate date, String businessAddress, String customerAddress, String termOfPayment) {
             this.id = id;
             this.typeOfWork = typeOfWork;
             this.price = price;

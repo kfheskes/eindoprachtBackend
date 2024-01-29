@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
+import nl.backend.eindoprdracht.utils.TypeOfWork;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -12,7 +13,7 @@ import java.time.LocalTime;
 @Setter
 public class OrderInputDto {
     @NotBlank(message = "Type of work is required")
-    public String typeOfWork;
+    public TypeOfWork typeOfWork;
     public Integer amount;
     public Double price;
     public String productName;

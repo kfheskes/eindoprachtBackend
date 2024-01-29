@@ -1,18 +1,20 @@
 package nl.backend.eindoprdracht.dtos.invoice;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-
+import nl.backend.eindoprdracht.utils.TypeOfWork;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 
 
 @Getter
 @Setter
 public class InvoiceInputDto {
 
-    public String typeOfWork;
+    @NotBlank(message = "Type of work is required")
+    public TypeOfWork typeOfWork;
     public Double price;
     public String typeOfProduct;
     public String businessTaxNumber;
@@ -24,4 +26,9 @@ public class InvoiceInputDto {
     public String businessAddress;
     public String customerAddress;
     public String termOfPayment;
+
+
+
+
+
 }
