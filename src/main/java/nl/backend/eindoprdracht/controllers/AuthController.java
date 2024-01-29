@@ -31,7 +31,7 @@ public class AuthController {
     //TODO alle request postman controleren
 
     @GetMapping(value = "/authenticated")
-    public ResponseEntity<Object> authenticated(Authentication authentication, Principal principal) {
+    public ResponseEntity<Object> authenticated( Principal principal) {
         return ResponseEntity.ok().body(principal);
     }
 
