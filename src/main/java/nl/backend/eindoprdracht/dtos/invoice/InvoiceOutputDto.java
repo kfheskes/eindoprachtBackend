@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.models.CustomerAccount;
+import nl.backend.eindoprdracht.utils.TermOfPayment;
 import nl.backend.eindoprdracht.utils.TypeOfWork;
 
 import java.time.LocalDate;
@@ -24,7 +25,7 @@ public class InvoiceOutputDto {
     public LocalDate date;
     public String businessAddress;
     public String customerAddress;
-    public String termOfPayment;
+    public TermOfPayment termOfPayment;
 
 
     private CustomerAccountOutputDto customers;
