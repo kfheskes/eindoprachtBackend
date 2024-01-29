@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +29,7 @@ public class User {
     private String lName;
 
     private String email;
-    private Date dob;
+    private LocalDate dob;
     private String address;
     private String zipcode;
 

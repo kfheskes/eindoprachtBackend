@@ -19,7 +19,7 @@ public class InvoiceInputDto {
     public Integer amount;
     public Long taxAmount;
 
-
+    @JsonFormat(pattern = "dd-MM-yyyy")
     public LocalDate date;
     public String businessAddress;
     public String customerAddress;

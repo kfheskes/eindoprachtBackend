@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -22,7 +23,7 @@ public class UserInputDto {
 
     public String mName;
     public String lName;
-    public Date dob;
+    public LocalDate dob;
     public String address;
     public String houseNumber;
     public String zipcode;

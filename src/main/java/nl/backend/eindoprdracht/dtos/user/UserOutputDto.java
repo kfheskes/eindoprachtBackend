@@ -7,6 +7,7 @@ import nl.backend.eindoprdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.manageraccount.ManagerAccountOutputDto;
 import nl.backend.eindoprdracht.dtos.role.RoleOutputDto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class UserOutputDto {
     private String fName;
     private String mName;
     private String lName;
-    private Date dob;
+    private LocalDate dob;
     private String address;
     private String houseNumber;
     private String zipcode;
