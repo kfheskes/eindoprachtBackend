@@ -32,13 +32,6 @@ public class EmployeeAccountService {
     public EmployeeAccount dtoTransferToEmployeeAccount(EmployeeAccountInputDto employeeAccountInputDto) {
         EmployeeAccount employeeAccount = new EmployeeAccount();
 
-        employeeAccount.setFName( employeeAccountInputDto.getFName());
-        employeeAccount.setMName(employeeAccountInputDto.getMName());
-        employeeAccount.setLName(employeeAccountInputDto.getLName());
-        employeeAccount.setDob(employeeAccountInputDto.getDob());
-        employeeAccount.setAddress(employeeAccountInputDto.getAddress());
-        employeeAccount.setZipcode(employeeAccountInputDto.getZipcode());
-        employeeAccount.setPNumber(employeeAccountInputDto.getPNumber());
         employeeAccount.setContractH(employeeAccountInputDto.getContractH());
         employeeAccount.setStartContract(employeeAccountInputDto.getStartContract());
         return employeeAccount;
@@ -48,13 +41,6 @@ public class EmployeeAccountService {
     public EmployeeAccountOutputDto employeeAccountTransferToDto(EmployeeAccount employeeAccount) {
         EmployeeAccountOutputDto employeeAccountOutputDto = new EmployeeAccountOutputDto();
         employeeAccountOutputDto.id = (employeeAccount.getId());
-        employeeAccountOutputDto.fName = employeeAccount.getFName();
-        employeeAccountOutputDto.mName = (employeeAccount.getMName());
-        employeeAccountOutputDto.lName = (employeeAccount.getLName());
-        employeeAccountOutputDto.dob = (employeeAccount.getDob());
-        employeeAccountOutputDto.address = (employeeAccount.getAddress());
-        employeeAccountOutputDto.zipcode = (employeeAccount.getZipcode());
-        employeeAccountOutputDto.pNumber = (employeeAccount.getPNumber());
         employeeAccountOutputDto.contractH = (employeeAccount.getContractH());
         employeeAccountOutputDto.startContract = (employeeAccount.getStartContract());
 
@@ -100,27 +86,6 @@ public class EmployeeAccountService {
         } else {
             EmployeeAccount changeEmployeeAccount1 = getEmployeeAccount.get();
 
-            if (employeeAccount.getFName() != null) {
-               changeEmployeeAccount1.setFName(employeeAccount.getFName());
-            }
-            if (employeeAccount.getMName() != null) {
-                changeEmployeeAccount1.setMName(employeeAccount.getMName());
-            }
-            if (employeeAccount.getLName() != null) {
-                changeEmployeeAccount1.setLName(employeeAccount.getLName());
-            }
-            if (employeeAccount.getDob() != null) {
-                changeEmployeeAccount1.setDob(employeeAccount.getDob());
-            }
-            if (employeeAccount.getAddress() != null) {
-                changeEmployeeAccount1.setAddress(employeeAccount.getAddress());
-            }
-            if (employeeAccount.getZipcode() != null) {
-                changeEmployeeAccount1.setZipcode(employeeAccount.getZipcode());
-            }
-            if (employeeAccount.getPNumber() != null) {
-                changeEmployeeAccount1.setPNumber(employeeAccount.getPNumber());
-            }
             if (employeeAccount.getContractH() != null) {
                 changeEmployeeAccount1.setContractH(employeeAccount.getContractH());
             }

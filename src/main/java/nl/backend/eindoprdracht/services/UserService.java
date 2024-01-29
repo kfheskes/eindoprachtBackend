@@ -93,7 +93,8 @@ public class UserService {
             }
             if (inputDto.getPassword() != null) {
                 userUpdate.setPassword(passwordEncoder.encode(inputDto.getPassword()));
-            } if (inputDto.getFName() != null) {
+            }
+            if (inputDto.getFName() != null) {
                 userUpdate.setFName(inputDto.getFName());
             }
             if (inputDto.getMName() != null) {
@@ -187,9 +188,11 @@ public class UserService {
 
         if (user.getEmployeeAccount() != null) {
             dto.setEmployeeAccountOutputDto(employeeAccountService.employeeAccountTransferToDto(user.getEmployeeAccount()));
-        } if (user.getManagerAccount() != null){
+        }
+        if (user.getManagerAccount() != null) {
             dto.setManagerAccountOutputDto(managerAccountService.managerAccountTransferToDto(user.getManagerAccount()));
-        } if (user.getCustomerAccount() != null) {
+        }
+        if (user.getCustomerAccount() != null) {
             dto.setCustomerAccountOutputDto(customerAccountService.customerAccountTransferCustomerAccountOutputDto(user.getCustomerAccount()));
         }
         if (user.getRoles() != null) {
@@ -202,21 +205,21 @@ public class UserService {
         return dto;
     }
 
-    // TODO automatisch meegeven Employee aanmaken als er een User wordt aangemaakt.
+
     public User dtoTransfertoUser(UserInputDto userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEnabled(userDto.isEnabled());
         user.setFName(userDto.getFName());
-       user.setMName(userDto.getMName());
-       user.setLName(userDto.getLName());
-       user.setDob(userDto.getDob());
-       user.setAddress(userDto.getAddress());
-       user.setAddress(userDto.getHouseNumber());
-       user.setZipcode(userDto.getZipcode());
-       user.setPNumber(userDto.getPNumber());
-       user.setEmail(userDto.getEmail());
+        user.setMName(userDto.getMName());
+        user.setLName(userDto.getLName());
+        user.setDob(userDto.getDob());
+        user.setAddress(userDto.getAddress());
+        user.setAddress(userDto.getHouseNumber());
+        user.setZipcode(userDto.getZipcode());
+        user.setPNumber(userDto.getPNumber());
+        user.setEmail(userDto.getEmail());
 
 
         Set<Role> roles = new HashSet<>();
@@ -226,14 +229,8 @@ public class UserService {
                     .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
             roles.add(role);
 
-            if ("ROLE_EMPLOYEE".equals(roleName)) {
-                EmployeeAccount employeeAccount = new EmployeeAccount();
-                employeeAccount.setFName(userDto.getFName());
-                employeeAccount.setUser(user);
-                user.setEmployeeAccount(employeeAccount);
-            }
         }
-        user.setRoles(roles);
+
 
         return userRepository.save(user);
     }
@@ -242,7 +239,7 @@ public class UserService {
         Optional<User> optionalUser = userRepository.findByUsername(userName);
         Optional<EmployeeAccount> optionalEmployeeAccount = employeeAccountRepository.findById(employeeId);
 
-        if(optionalUser.isPresent() && optionalEmployeeAccount.isPresent()) {
+        if (optionalUser.isPresent() && optionalEmployeeAccount.isPresent()) {
             User user = optionalUser.get();
             EmployeeAccount ea = optionalEmployeeAccount.get();
             user.setEmployeeAccount(ea);
@@ -256,7 +253,7 @@ public class UserService {
     public void assignUserToManagerAccount(String userName, long managerId) {
         Optional<User> oUser = userRepository.findByUsername(userName);
         Optional<ManagerAccount> oManagerAccount = managerAccountRepository.findById(managerId);
-        if(oUser.isPresent() && oManagerAccount.isPresent()) {
+        if (oUser.isPresent() && oManagerAccount.isPresent()) {
             User user = oUser.get();
             ManagerAccount managerAccount = oManagerAccount.get();
             user.setManagerAccount(managerAccount);
@@ -269,7 +266,7 @@ public class UserService {
     public void assignUserToCustomerAccount(String userName, long customerId) {
         Optional<User> oUser = userRepository.findByUsername(userName);
         Optional<CustomerAccount> oCustomerAccount = customerAccountRepository.findById(customerId);
-        if(oUser.isPresent() && oCustomerAccount.isPresent()) {
+        if (oUser.isPresent() && oCustomerAccount.isPresent()) {
             User user = oUser.get();
             CustomerAccount customerAccount = oCustomerAccount.get();
             user.setCustomerAccount(customerAccount);
