@@ -4,7 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Date;
+
 
 @Getter
 @Setter
@@ -18,5 +19,14 @@ public class UserInputDto {
     public String[] roles;
 
     public String fName;
+
+    public String mName;
+    public String lName;
+    public Date dob;
+    public String address;
+    public String houseNumber;
+    public String zipcode;
+    public String pNumber;
+    public String email;
 
 }

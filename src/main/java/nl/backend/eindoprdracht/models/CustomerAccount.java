@@ -16,13 +16,7 @@ public class CustomerAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private long id;
-    private String fName;
-    private String mName;
-    private String lName;
 
-    private String address;
-    private String zipcode;
-    private String pNumber;
     private String companyName;
     private String contract;
     private Double balans;
@@ -38,15 +32,9 @@ public class CustomerAccount {
 
     // TODO: list of invoice
 
-    //TODO: aan profile employee,manager,customer email toevoegen
-    public CustomerAccount(long id, String fName, String mName, String lName, String address, String zipcode, String pNumber, String companyName, String contract, Double balans) {
+
+    public CustomerAccount(long id, String companyName, String contract, Double balans) {
         this.id = id;
-        this.fName = fName;
-        this.mName = mName;
-        this.lName = lName;
-        this.address = address;
-        this.zipcode = zipcode;
-        this.pNumber = pNumber;
         this.companyName = companyName;
         this.contract = contract;
         this.balans = balans;

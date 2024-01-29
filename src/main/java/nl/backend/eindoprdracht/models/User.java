@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,21 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
+
+    private String fName;
+    private String mName;
+    private String lName;
+
+    private String email;
+    private Date dob;
+    private String address;
+    private String zipcode;
+    private String pNumber;
+    private String houseNumber;
+
+
+
+
 
     @Column(nullable = false)
     private boolean enabled = true;

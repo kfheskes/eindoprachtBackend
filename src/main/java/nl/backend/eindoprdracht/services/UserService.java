@@ -93,13 +93,39 @@ public class UserService {
             }
             if (inputDto.getPassword() != null) {
                 userUpdate.setPassword(passwordEncoder.encode(inputDto.getPassword()));
+            } if (inputDto.getFName() != null) {
+                userUpdate.setFName(inputDto.getFName());
             }
+            if (inputDto.getMName() != null) {
+                userUpdate.setMName(inputDto.getMName());
+            }
+            if (inputDto.getLName() != null) {
+                userUpdate.setLName(inputDto.getLName());
+            }
+            if (inputDto.getDob() != null) {
+                userUpdate.setDob(inputDto.getDob());
+            }
+            if (inputDto.getAddress() != null) {
+                userUpdate.setAddress(inputDto.getAddress());
+            }
+            if (inputDto.getHouseNumber() != null) {
+                userUpdate.setHouseNumber(inputDto.getHouseNumber());
+            }
+            if (inputDto.getZipcode() != null) {
+                userUpdate.setZipcode(inputDto.getZipcode());
+            }
+            if (inputDto.getPNumber() != null) {
+                userUpdate.setPNumber(inputDto.getPNumber());
+            }
+            if (inputDto.getEmail() != null) {
+                userUpdate.setEmail(inputDto.getEmail());
+            }
+
             User updateUser = userRepository.save(userUpdate);
             return userTransferToDto(updateUser);
         }
     }
 
-    //TODO enabled toevoegen zodat de persoon bestaat in database maar niet meer kan inloggen.
 
     public void removeRole(Long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -120,7 +146,7 @@ public class UserService {
         }
     }
 
-    //TODO check laatste feedback van Rowan in de feedback laatste keer.
+    //TODO check laatste feedback van Rowan in de feedback huiswerk laatste keer.
     public void addRoleToUser(long userId, String roleName) {
         Optional<User> optionalUser = userRepository.findById(userId);
         Optional<Role> optionalRole = roleRepository.findByRoleNameContainingIgnoreCase(roleName);
@@ -148,6 +174,15 @@ public class UserService {
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
         dto.setEnabled(user.isEnabled());
+        dto.setFName(user.getFName());
+        dto.setMName(user.getMName());
+        dto.setLName(user.getLName());
+        dto.setDob(user.getDob());
+        dto.setAddress(user.getAddress());
+        dto.setHouseNumber(user.getHouseNumber());
+        dto.setZipcode(user.getZipcode());
+        dto.setPNumber(user.getPNumber());
+        dto.setEmail(user.getEmail());
 
 
         if (user.getEmployeeAccount() != null) {
@@ -173,6 +208,16 @@ public class UserService {
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEnabled(userDto.isEnabled());
+        user.setFName(userDto.getFName());
+       user.setMName(userDto.getMName());
+       user.setLName(userDto.getLName());
+       user.setDob(userDto.getDob());
+       user.setAddress(userDto.getAddress());
+       user.setAddress(userDto.getHouseNumber());
+       user.setZipcode(userDto.getZipcode());
+       user.setPNumber(userDto.getPNumber());
+       user.setEmail(userDto.getEmail());
+
 
         Set<Role> roles = new HashSet<>();
 

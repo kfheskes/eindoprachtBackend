@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class CustomerAccountService {
 
-    private CustomerAccountRepository customerAccountRepository;
+    private final CustomerAccountRepository customerAccountRepository;
 
     public CustomerAccountService(CustomerAccountRepository customerAccountRepository) {
         this.customerAccountRepository = customerAccountRepository;
@@ -23,12 +23,6 @@ public class CustomerAccountService {
     public CustomerAccount dtoTransferToCustomerAccount(CustomerAccountInputDto customerAccountInputDto) {
         CustomerAccount customerAccount = new CustomerAccount();
 
-        customerAccount.setFName(customerAccountInputDto.getFName());
-        customerAccount.setMName(customerAccountInputDto.getMName());
-        customerAccount.setLName(customerAccountInputDto.getLName());
-        customerAccount.setAddress(customerAccountInputDto.getAddress());
-        customerAccount.setZipcode(customerAccountInputDto.getZipcode());
-        customerAccount.setPNumber(customerAccountInputDto.getPNumber());
         customerAccount.setCompanyName(customerAccountInputDto.getCompanyName());
         customerAccount.setContract(customerAccountInputDto.getContract());
         customerAccount.setBalans(customerAccountInputDto.getBalans());
@@ -38,12 +32,7 @@ public class CustomerAccountService {
     public CustomerAccountOutputDto customerAccountTransferCustomerAccountOutputDto(CustomerAccount customerAccount) {
         CustomerAccountOutputDto customerAccountOutputDto = new CustomerAccountOutputDto();
         customerAccountOutputDto.id = customerAccount.getId();
-        customerAccountOutputDto.fName = customerAccount.getFName();
-        customerAccountOutputDto.mName = customerAccount.getMName();
-        customerAccountOutputDto.lName = customerAccount.getLName();
-        customerAccountOutputDto.address = customerAccount.getAddress();
-        customerAccountOutputDto.zipcode = customerAccount.getZipcode();
-        customerAccountOutputDto.pNumber = customerAccount.getPNumber();
+
         customerAccountOutputDto.companyName = customerAccount.getCompanyName();
         customerAccountOutputDto.contract = customerAccount.getContract();
         customerAccountOutputDto.balans = customerAccount.getBalans();
@@ -84,24 +73,6 @@ public class CustomerAccountService {
         } else {
             CustomerAccount changeCustomerAccount1 = getCustomerAccount.get();
 
-            if (customerAccount.getFName() != null) {
-                changeCustomerAccount1.setFName(customerAccount.getFName());
-            }
-            if (customerAccount.getMName() != null) {
-                changeCustomerAccount1.setMName(customerAccount.getMName());
-            }
-            if (customerAccount.getLName() != null) {
-                changeCustomerAccount1.setLName(customerAccount.getLName());
-            }
-            if (customerAccount.getAddress() != null) {
-                changeCustomerAccount1.setAddress(customerAccount.getAddress());
-            }
-            if (customerAccount.getZipcode() != null) {
-                changeCustomerAccount1.setZipcode(customerAccount.getZipcode());
-            }
-            if (customerAccount.getPNumber() != null) {
-                changeCustomerAccount1.setPNumber(customerAccount.getPNumber());
-            }
             if (customerAccount.getCompanyName() != null) {
                 changeCustomerAccount1.setCompanyName(customerAccount.getCompanyName());
             }
