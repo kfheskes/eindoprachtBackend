@@ -9,7 +9,6 @@ public class FileDto {
     public String filename;
     @NotBlank
     public byte[] data;
-    public String mimeType;
     @NotBlank
     public String description;
 

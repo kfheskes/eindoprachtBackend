@@ -97,7 +97,6 @@ public class FileService {
 
         File newFile = new File();
         newFile.setData(fileUpload.getBytes());
-        newFile.setMimeType(fileUpload.getContentType());
         newFile.setFilename(fileUpload.getOriginalFilename());
         newFile.setDescription(description);
 
@@ -114,7 +113,6 @@ public class FileService {
         fileDto.filename = file.getFilename();
         fileDto.description = file.getDescription();
         fileDto.data = file.getData();
-        fileDto.mimeType = file.getMimeType();
         fileDto.order = file.getOrder();
 
         return fileDto;
@@ -127,7 +125,6 @@ public class FileService {
         file.setFilename(fileDto.filename);
         file.setDescription(fileDto.description);
         file.setData(fileDto.data);
-        file.setMimeType(fileDto.mimeType);
         file.setOrder(fileDto.order);
 
         return file;

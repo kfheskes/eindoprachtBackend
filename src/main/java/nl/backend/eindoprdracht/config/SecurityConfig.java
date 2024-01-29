@@ -1,6 +1,9 @@
-package nl.backend.eindoprdracht.security;
+package nl.backend.eindoprdracht.config;
 
 import nl.backend.eindoprdracht.repositories.UserRepository;
+import nl.backend.eindoprdracht.security.JwtRequestFilter;
+import nl.backend.eindoprdracht.security.JwtService;
+import nl.backend.eindoprdracht.security.MyUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -94,6 +97,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/invoice/{id}/customer").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/invoice/{id}/**").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.DELETE, "/invoice/{id}").hasRole("MANAGER")
+                        //........................Files............................
+                        .requestMatchers(HttpMethod.PUT, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER").requestMatchers(HttpMethod.POST, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER").requestMatchers(HttpMethod.DELETE, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER")
                         //........................AUTH............................
                         .requestMatchers(HttpMethod.POST, "/sign_in").permitAll()
                         .requestMatchers(HttpMethod.GET, "/authenticated").authenticated()

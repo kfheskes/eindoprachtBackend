@@ -16,10 +16,8 @@ public class File {
     private Long id;
 
     private String filename;
-
     @Lob
     private byte[] data;
-    private String mimeType;
     private String description;
 
     @ManyToOne
