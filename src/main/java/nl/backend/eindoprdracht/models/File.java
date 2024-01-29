@@ -23,6 +23,6 @@ public class File {
     private String description;
 
     @ManyToOne
-    private Invoice invoice;
+    private Order order;
 
 }

@@ -1,7 +1,7 @@
 package nl.backend.eindoprdracht.dtos.file;
 
 import jakarta.validation.constraints.NotBlank;
-import nl.backend.eindoprdracht.models.Invoice;
+import nl.backend.eindoprdracht.models.Order;
 
 public class FileDto {
     public Long id;
@@ -12,7 +12,8 @@ public class FileDto {
     public String mimeType;
     @NotBlank
     public String description;
-    public Invoice invoice;
+
+    public Order order;
 
 
 

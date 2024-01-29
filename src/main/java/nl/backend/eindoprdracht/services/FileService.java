@@ -1,10 +1,20 @@
 package nl.backend.eindoprdracht.services;
 
+import jakarta.transaction.Transactional;
+import nl.backend.eindoprdracht.dtos.file.FileDto;
+import nl.backend.eindoprdracht.exceptions.ContentNotFoundException;
+import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
+import nl.backend.eindoprdracht.models.File;
+import nl.backend.eindoprdracht.models.Order;
 import nl.backend.eindoprdracht.repositories.FileRepository;
-import nl.backend.eindoprdracht.repositories.InvoiceRepository;
 import nl.backend.eindoprdracht.repositories.OrderRepository;
-import nl.backend.eindoprdracht.repositories.UserRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FileService {
@@ -32,7 +42,7 @@ public class FileService {
         Optional<File> fileOptional = fileRepository.findById(id);
 
         if (fileOptional.isEmpty()) {
-            throw new RecordNotFoundException("Geen bestand gevonden met id: " + id);
+            throw new RecordNotFoundException("No file found with id " + id);
         }
 
         File file = fileOptional.get();
@@ -40,9 +50,9 @@ public class FileService {
         return transferFileToDto(file);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public List<FileDto> getFilesByTaskId(Long taskId) {
-        Iterable<File> files = fileRepository.findByTask_Id(taskId);
+        List<File> files = fileRepository.findByTask_Id(taskId);
         List<FileDto> fileDtos = new ArrayList<>();
 
         for (File f : files) {
@@ -52,7 +62,7 @@ public class FileService {
     }
 
     public FileDto addFile(MultipartFile fileUpload, String description, Long task_id) throws IOException {
-        //Foutmeldingen worden afgehandeld in createNewFile
+
         File newFile = createNewFile(fileUpload, description, task_id);
         fileRepository.save(newFile);
         return transferFileToDto(newFile);
@@ -63,7 +73,6 @@ public class FileService {
         if (fileOptional.isEmpty()) {
             throw new RecordNotFoundException("Geen bestand gevonden met id: " + id);
         }
-        //Overige foutmeldingen worden afgehandeld in createNewFile
         File newFile = createNewFile(fileUpload, description, task_id);
         newFile.setId(id);
         fileRepository.save(newFile);
@@ -82,10 +91,10 @@ public class FileService {
     private File createNewFile(MultipartFile fileUpload, String description, Long task_id) throws IOException {
 
         if (fileUpload.isEmpty()) {
-            throw new ContentNotFoundException("Je moet nog een bestand uploaden");
+            throw new ContentNotFoundException("Upload file please");
         }
         if (description.isEmpty() || description.isBlank()) {
-            throw new ContentNotFoundException("Voeg nog een beschrijving toe voor je afbeelding");
+            throw new ContentNotFoundException("Add description for your image");
         }
 
         File newFile = new File();
@@ -94,8 +103,8 @@ public class FileService {
         newFile.setFilename(fileUpload.getOriginalFilename());
         newFile.setDescription(description);
 
-        Task task = taskRepository.findById(task_id).orElseThrow(() -> new RecordNotFoundException("Er is geen taak met id: " + task_id));
-        newFile.setTask(task);
+        Order order = orderRepository.findById(task_id).orElseThrow(() -> new RecordNotFoundException("No order with id " + task_id));
+        newFile.setOrder(order);
 
         return newFile;
     }
@@ -108,7 +117,7 @@ public class FileService {
         fileDto.description = file.getDescription();
         fileDto.data = file.getData();
         fileDto.mimeType = file.getMimeType();
-        fileDto.task = file.getTask();
+        fileDto.order = file.getOrder();
 
         return fileDto;
     }
@@ -116,12 +125,12 @@ public class FileService {
     public File transferDtoToFile(FileDto fileDto) {
         File file = new File();
 
-        // Geen setId nodig, deze genereert de database of staat in de URL
+
         file.setFilename(fileDto.filename);
         file.setDescription(fileDto.description);
         file.setData(fileDto.data);
         file.setMimeType(fileDto.mimeType);
-        file.setTask(fileDto.task);
+        file.setOrder(fileDto.order);
 
         return file;
     }
