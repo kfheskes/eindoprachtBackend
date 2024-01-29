@@ -7,6 +7,7 @@ import nl.backend.eindoprdracht.models.CustomerAccount;
 import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.repositories.CustomerAccountRepository;
 import nl.backend.eindoprdracht.repositories.InvoiceRepository;
+import nl.backend.eindoprdracht.util.DateUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,10 +22,13 @@ public class InvoiceService {
     private final CustomerAccountRepository customerAccountRepository;
 
     private final CustomerAccountService customerAccountService;
-    public InvoiceService(InvoiceRepository invoiceRepository, CustomerAccountRepository customerAccountRepository, CustomerAccountService customerAccountService) {
+
+    private final DateUtils dateUtils;
+    public InvoiceService(InvoiceRepository invoiceRepository, CustomerAccountRepository customerAccountRepository, CustomerAccountService customerAccountService, DateUtils dateUtils) {
         this.invoiceRepository = invoiceRepository;
         this.customerAccountRepository = customerAccountRepository;
         this.customerAccountService = customerAccountService;
+        this.dateUtils = dateUtils;
     }
 
     public Invoice dtoTransferToInvoice (InvoiceInputDto invoiceInputDto) {

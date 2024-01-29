@@ -28,8 +28,6 @@ public class AuthController {
         this.jwtService = service;
     }
 
-    //TODO alle request postman controleren
-
     @GetMapping(value = "/authenticated")
     public ResponseEntity<Object> authenticated( Principal principal) {
         return ResponseEntity.ok().body(principal);
