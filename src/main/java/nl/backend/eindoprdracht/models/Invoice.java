@@ -40,8 +40,7 @@ public class Invoice {
     @JoinColumn(name = "customer_account_id")
     private CustomerAccount customerAccount;
 
-    @OneToMany(mappedBy = "invoice", orphanRemoval = true)
-    private List<File> fileList;
+
 
     public Invoice(Long id, TypeOfWork typeOfWork, Double price, String typeOfProduct, String businessTaxNumber, int amount, long taxAmount, LocalDate date, String businessAddress, String customerAddress, String termOfPayment) {
         this.id = id;

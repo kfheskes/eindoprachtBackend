@@ -1,4 +1,9 @@
 package nl.backend.eindoprdracht.repositories;
 
-public interface FileRepository {
+import nl.backend.eindoprdracht.models.File;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface FileRepository extends JpaRepository <File, Long> {
+
+
 }

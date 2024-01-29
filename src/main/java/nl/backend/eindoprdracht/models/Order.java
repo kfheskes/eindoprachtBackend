@@ -9,6 +9,7 @@ import nl.backend.eindoprdracht.utils.TypeOfWork;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -53,6 +54,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_account_id")
     private CustomerAccount customerAccount;
+
+    @OneToMany(mappedBy = "order", orphanRemoval = true)
+    private List<File> fileList;
 
     public Order(Long id, TypeOfWork typeOfWork, int amount, Double price, String productName, String customerName, String status, LocalDate dateCreated, LocalTime time, String workAddress, String workZipcode) {
         this.id = id;
