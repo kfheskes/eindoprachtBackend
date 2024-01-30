@@ -4,12 +4,14 @@ import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountInputDto;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
 import nl.backend.eindoprdracht.models.CustomerAccount;
+import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.repositories.CustomerAccountRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CustomerAccountService {
@@ -90,6 +92,15 @@ public class CustomerAccountService {
     public void deleteCustomerAccount(long id) {
         customerAccountRepository.deleteById(id);
     }
+
+
+    public Set<Invoice> getInvoicesForCustomerAccount(long customerId) {
+        CustomerAccount customerAccount = customerAccountRepository.findById(customerId)
+                .orElseThrow(() -> new RuntimeException("Customer Account not found"));
+        return customerAccount.getListOfInvoices();
+    }
+
+
 }
 
 

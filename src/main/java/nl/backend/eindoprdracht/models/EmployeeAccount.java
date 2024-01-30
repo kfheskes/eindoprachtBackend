@@ -23,7 +23,6 @@ public class EmployeeAccount {
 
     private long id;
 
-
     @Column(name = "contract_h")
     private Double contractH;
     private LocalDate startContract;

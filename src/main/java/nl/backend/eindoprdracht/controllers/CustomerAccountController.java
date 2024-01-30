@@ -6,6 +6,7 @@ import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountInputDto;
 import nl.backend.eindoprdracht.dtos.customeraccount.CustomerAccountOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;
 import nl.backend.eindoprdracht.models.CustomerAccount;
+import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.services.CustomerAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 import static nl.backend.eindoprdracht.controllers.ControllerHelper.checkForBindingResult;
 
@@ -65,7 +67,10 @@ public class CustomerAccountController {
         return ResponseEntity.noContent().build();
     }
 
-
+    @GetMapping("/{customerId}/invoices")
+    public Set<Invoice> getCustomerAccountInvoices(@PathVariable long customerId) {
+        return customerAccountService.getInvoicesForCustomerAccount(customerId);
+    }
 
 
 }
