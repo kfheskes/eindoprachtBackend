@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import nl.backend.eindoprdracht.dtos.file.FileDto;
 import nl.backend.eindoprdracht.services.FileService;
 import org.apache.coyote.BadRequestException;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -39,9 +40,9 @@ public class FileController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FileDto> getFileById(@PathVariable Long id) {
-        FileDto fileDto = fileService.getFileById(id);
-        return ResponseEntity.ok(fileDto);
+    public ResponseEntity<Object> getFileById(@PathVariable Long id) {
+        byte[] fileByte = fileService.getFileById(id);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(fileByte);
     }
 
     @GetMapping("/order/{order_id}")

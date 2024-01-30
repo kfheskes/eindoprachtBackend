@@ -8,6 +8,7 @@ import nl.backend.eindoprdracht.models.File;
 import nl.backend.eindoprdracht.models.Order;
 import nl.backend.eindoprdracht.repositories.FileRepository;
 import nl.backend.eindoprdracht.repositories.OrderRepository;
+import nl.backend.eindoprdracht.utils.ConvertPdf;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +23,6 @@ public class FileService {
     private final FileRepository fileRepository;
     private final OrderRepository orderRepository;
 
-
-
     public FileService(FileRepository fileRepository, OrderRepository orderRepository) {
         this.fileRepository = fileRepository;
         this.orderRepository = orderRepository;
@@ -37,7 +36,8 @@ public class FileService {
         }
 
         File newFile = new File();
-        newFile.setData(fileUpload.getBytes());
+        newFile.setContentType(fileUpload.getContentType());
+        newFile.setData(ConvertPdf.compressPdf(fileUpload.getBytes()));
         newFile.setFilename(fileUpload.getOriginalFilename());
         newFile.setDescription(description);
 
@@ -91,13 +91,13 @@ public class FileService {
         return fileDtos;
     }
 
-    public FileDto getFileById(Long id) {
+    public byte[] getFileById(Long id) {
         Optional<File> fileOptional = fileRepository.findById(id);
         if (fileOptional.isEmpty()) {
             throw new RecordNotFoundException("No file found with id " + id);
         }
         File file = fileOptional.get();
-        return transferFileToDto(file);
+        return ConvertPdf.decompressPdf(file.getData());
     }
 
     public FileDto updateFile(Long id, MultipartFile fileUpload, String description, Long order_id) throws IOException {

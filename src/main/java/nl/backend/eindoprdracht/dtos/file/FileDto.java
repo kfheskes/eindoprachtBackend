@@ -10,6 +10,7 @@ import nl.backend.eindoprdracht.models.Order;
 public class FileDto {
     public Long id;
 
+    public String contentType;
     public String filename;
     @NotBlank
     public byte[] data;
