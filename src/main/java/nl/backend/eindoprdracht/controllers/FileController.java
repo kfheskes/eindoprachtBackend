@@ -25,6 +25,13 @@ public class FileController {
         this.fileService = fileService;
     }
 
+    @PostMapping
+    public ResponseEntity<String> singleFileUpload(@RequestParam MultipartFile file, @Valid @RequestParam() String description, Long order_id) throws IOException {
+        FileDto fileDto = fileService.addFile(file, description, order_id);
+        return ResponseEntity.ok("succes upload file " + fileDto.getFilename());
+    }
+
+
     @GetMapping
     public ResponseEntity<List<FileDto>> getAllFiles() {
         List<FileDto> fileDtos = fileService.getAllFiles();
@@ -42,22 +49,13 @@ public class FileController {
         return ResponseEntity.ok().body(fileService.getFilesByOrderId(order_id));
     }
 
-    @PostMapping
-    public ResponseEntity<Object> addFile(
-            @RequestParam() MultipartFile file,
-            @Valid @RequestParam() String description,
-            @RequestParam(required = false) Long order_id) throws IOException, HttpClientErrorException.BadRequest {
-            if (file.isEmpty()) {
-            throw new FileNotFoundException("Add file to upload!");
-        }
-        if (order_id == null) {
-            throw new BadRequestException("Add order_id");
-        }
 
-        FileDto addedFile = fileService.addFile(file, description, order_id);
-        URI uri = URI.create(String.valueOf(ServletUriComponentsBuilder.fromCurrentRequest().path("/" + addedFile.id)));
-        return ResponseEntity.created(uri).body(addedFile);
-    }
+
+
+
+
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateFile(

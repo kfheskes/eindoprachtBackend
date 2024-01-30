@@ -16,7 +16,7 @@ public class File {
     private Long id;
 
     private String filename;
-    @Lob
+//    @Lob
     private byte[] data;
     private String description;
 

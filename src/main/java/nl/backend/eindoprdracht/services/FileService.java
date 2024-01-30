@@ -23,9 +23,62 @@ public class FileService {
     private final OrderRepository orderRepository;
 
 
+
     public FileService(FileRepository fileRepository, OrderRepository orderRepository) {
         this.fileRepository = fileRepository;
         this.orderRepository = orderRepository;
+    }
+
+    public FileDto addFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
+        if (fileUpload.isEmpty()) {
+            throw new IOException("Het geüploade bestand is leeg");
+        } if (description.isEmpty() || description.isBlank()) {
+            throw new ContentNotFoundException("Add description");
+        }
+
+        File newFile = new File();
+        newFile.setData(fileUpload.getBytes());
+        newFile.setFilename(fileUpload.getOriginalFilename());
+        newFile.setDescription(description);
+
+        Order order = orderRepository.findById(order_id).orElseThrow(() -> new RecordNotFoundException("No order with id " + order_id));
+        newFile.setOrder(order);
+
+        fileRepository.save(newFile);
+        return transferFileToDto(newFile);
+    }
+
+
+
+    private File createNewFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
+
+        if (fileUpload.isEmpty()) {
+            throw new ContentNotFoundException("Upload file please");
+        }
+        if (description.isEmpty() || description.isBlank()) {
+            throw new ContentNotFoundException("Add description");
+        }
+
+        File newFile = new File();
+        newFile.setData(fileUpload.getBytes());
+        newFile.setFilename(fileUpload.getOriginalFilename());
+        newFile.setDescription(description);
+
+        Order order = orderRepository.findById(order_id).orElseThrow(() -> new RecordNotFoundException("No order with id " + order_id));
+        newFile.setOrder(order);
+
+        return newFile;
+    }
+
+    @Transactional
+    public List<FileDto> getFilesByOrderId(Long orderId) {
+        Iterable<File> files = fileRepository.findByOrder_Id(orderId);
+        List<FileDto> fileDtos = new ArrayList<>();
+
+        for (File f : files) {
+            fileDtos.add(transferFileToDto(f));
+        }
+        return fileDtos;
     }
 
     public List<FileDto> getAllFiles() {
@@ -47,32 +100,6 @@ public class FileService {
         return transferFileToDto(file);
     }
 
-
-    @Transactional
-    public List<FileDto> getFilesByOrderId(Long orderId) {
-        Iterable<File> files = fileRepository.findByOrder_Id(orderId);
-        List<FileDto> fileDtos = new ArrayList<>();
-
-        for (File f : files) {
-            fileDtos.add(transferFileToDto(f));
-        }
-        return fileDtos;
-    }
-//TODO wellicht fileDto public FileDto addFile(FileDto fileDto) throws IOException {
-//    File newFile = transferDtoToFile(fileDto);
-//    fileRepository.save(newFile);
-//    return transferFileToDto(newFile);
-//}
-    public FileDto addFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
-
-        File newFile = createNewFile(fileUpload, description, order_id);
-        fileRepository.save(newFile);
-        return transferFileToDto(newFile);
-    }
-
-
-
-
     public FileDto updateFile(Long id, MultipartFile fileUpload, String description, Long order_id) throws IOException {
         Optional<File> fileOptional = fileRepository.findById(id);
         if (fileOptional.isEmpty()) {
@@ -93,25 +120,7 @@ public class FileService {
         fileRepository.deleteById(id);
     }
 
-    private File createNewFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
 
-        if (fileUpload.isEmpty()) {
-            throw new ContentNotFoundException("Upload file please");
-        }
-        if (description.isEmpty() || description.isBlank()) {
-            throw new ContentNotFoundException("Add description for your image");
-        }
-
-        File newFile = new File();
-        newFile.setData(fileUpload.getBytes());
-        newFile.setFilename(fileUpload.getOriginalFilename());
-        newFile.setDescription(description);
-
-        Order order = orderRepository.findById(order_id).orElseThrow(() -> new RecordNotFoundException("No order with id " + order_id));
-        newFile.setOrder(order);
-
-        return newFile;
-    }
 
     public FileDto transferFileToDto(File file) {
         FileDto fileDto = new FileDto();
