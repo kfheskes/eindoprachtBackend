@@ -94,11 +94,7 @@ public class CustomerAccountService {
     }
 
 
-    public Set<Invoice> getInvoicesForCustomerAccount(long customerId) {
-        CustomerAccount customerAccount = customerAccountRepository.findById(customerId)
-                .orElseThrow(() -> new RuntimeException("Customer Account not found"));
-        return customerAccount.getListOfInvoices();
-    }
+
 
 
 }

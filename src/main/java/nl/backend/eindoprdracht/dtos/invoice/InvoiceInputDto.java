@@ -3,6 +3,7 @@ package nl.backend.eindoprdracht.dtos.invoice;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 import nl.backend.eindoprdracht.utils.TypeOfWork;
@@ -17,6 +18,7 @@ public class InvoiceInputDto {
     @NotBlank(message = "Type of work is required")
 
     public TypeOfWork typeOfWork;
+    @Positive(message = "Price can't by negatieve")
     public Double price;
     public String typeOfProduct;
     public String businessTaxNumber;

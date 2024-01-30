@@ -8,14 +8,17 @@ import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.repositories.CustomerAccountRepository;
 import nl.backend.eindoprdracht.repositories.InvoiceRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class InvoiceService {
+
 
     private final InvoiceRepository invoiceRepository;
 
@@ -154,6 +157,7 @@ public class InvoiceService {
     public void deleteInvoice(long id) {
         invoiceRepository.deleteById(id);
     }
+
 
 
 }

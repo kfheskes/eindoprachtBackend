@@ -32,7 +32,7 @@ public class UserInputDto {
     public String zipcode;
     public String residence;
     public String pNumber;
-    @NotBlank
+    @NotBlank(message = "email is required")
     @Email
     public String email;
 

@@ -87,7 +87,7 @@ public class UserController {
 
     @PutMapping("/{id}/role")
     public ResponseEntity<UserOutputDto> addRoleToUser(@PathVariable long id, @RequestBody RoleInputDto roleName) {
-        userService.addRoleToUser(id, roleName.getRolename());
+        userService.addRoleToUser(id, roleName.getRoleName());
         return ResponseEntity.noContent().build();
     }
 

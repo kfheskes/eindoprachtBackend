@@ -67,10 +67,5 @@ public class CustomerAccountController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{customerId}/invoices")
-    public Set<Invoice> getCustomerAccountInvoices(@PathVariable long customerId) {
-        return customerAccountService.getInvoicesForCustomerAccount(customerId);
-    }
-
 
 }

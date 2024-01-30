@@ -8,6 +8,7 @@ import nl.backend.eindoprdracht.dtos.invoice.InvoiceOutputDto;
 import nl.backend.eindoprdracht.exceptions.ValidationException;
 import nl.backend.eindoprdracht.models.Invoice;
 import nl.backend.eindoprdracht.services.InvoiceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import static nl.backend.eindoprdracht.controllers.ControllerHelper.checkForBind
 @RequestMapping("/invoice")
 @RestController
 public class InvoiceController {
+
 
     private final InvoiceService invoiceService;
 
@@ -54,6 +56,7 @@ public class InvoiceController {
         List<InvoiceOutputDto> invoiceOutputDtoList = invoiceService.getAllInvoice();
         return ResponseEntity.ok(invoiceOutputDtoList);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<InvoiceOutputDto>

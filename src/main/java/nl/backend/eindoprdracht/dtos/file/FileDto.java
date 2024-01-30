@@ -15,7 +15,7 @@ public class FileDto {
 
     public byte[] data;
 
-    @NotBlank
+    @NotBlank(message = "can't be empty")
     public String description;
 
     public Order order;

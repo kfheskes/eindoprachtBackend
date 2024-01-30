@@ -44,7 +44,7 @@ public class RoleService {
 
         Role role = new Role();
 
-        role.setRoleName(roleDto.getRolename());
+        role.setRoleName(roleDto.getRoleName());
 
         return role;
     }

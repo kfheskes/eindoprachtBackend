@@ -1,5 +1,6 @@
 package nl.backend.eindoprdracht.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,12 +29,10 @@ public class CustomerAccount {
     private Set<Order> orders = new HashSet<>();
 
     @OneToMany(mappedBy = "customerAccount")
+    @JsonSerialize
     private Set<Invoice> invoices = new HashSet<>();
 
-    // TODO: list of invoice
-    public Set<Invoice> getListOfInvoices() {
-        return invoices;
-    }
+
 
     public CustomerAccount(long id, String companyName, String contract, Double balans) {
         this.id = id;
