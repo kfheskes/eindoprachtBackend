@@ -12,8 +12,9 @@ public class FileDto {
 
     public String contentType;
     public String filename;
-    @NotBlank
+
     public byte[] data;
+
     @NotBlank
     public String description;
 

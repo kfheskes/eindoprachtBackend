@@ -16,12 +16,12 @@ public class File {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String contentType;
     private String filename;
-//    @Lob
+    @Lob
     private byte[] data;
     private String description;
 
+    private String contentType;
     @ManyToOne
     @JsonIgnore
     private Order order;

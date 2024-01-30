@@ -1,6 +1,5 @@
 package nl.backend.eindoprdracht.services;
 
-import jakarta.transaction.Transactional;
 import nl.backend.eindoprdracht.dtos.file.FileDto;
 import nl.backend.eindoprdracht.exceptions.ContentNotFoundException;
 import nl.backend.eindoprdracht.exceptions.RecordNotFoundException;
@@ -9,12 +8,12 @@ import nl.backend.eindoprdracht.models.Order;
 import nl.backend.eindoprdracht.repositories.FileRepository;
 import nl.backend.eindoprdracht.repositories.OrderRepository;
 import nl.backend.eindoprdracht.utils.ConvertPdf;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
 @Service
@@ -31,13 +30,14 @@ public class FileService {
     public FileDto addFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
         if (fileUpload.isEmpty()) {
             throw new IOException("Het geüploade bestand is leeg");
-        } if (description.isEmpty() || description.isBlank()) {
+        }
+        if (description.isEmpty() || description.isBlank()) {
             throw new ContentNotFoundException("Add description");
         }
 
         File newFile = new File();
         newFile.setContentType(fileUpload.getContentType());
-        newFile.setData(ConvertPdf.compressPdf(fileUpload.getBytes()));
+        newFile.setData(ConvertPdf.compressBytes(fileUpload.getBytes()));
         newFile.setFilename(fileUpload.getOriginalFilename());
         newFile.setDescription(description);
 
@@ -46,49 +46,6 @@ public class FileService {
 
         fileRepository.save(newFile);
         return transferFileToDto(newFile);
-    }
-
-
-
-    private File createNewFile(MultipartFile fileUpload, String description, Long order_id) throws IOException {
-
-        if (fileUpload.isEmpty()) {
-            throw new ContentNotFoundException("Upload file please");
-        }
-        if (description.isEmpty() || description.isBlank()) {
-            throw new ContentNotFoundException("Add description");
-        }
-
-        File newFile = new File();
-        newFile.setData(fileUpload.getBytes());
-        newFile.setFilename(fileUpload.getOriginalFilename());
-        newFile.setDescription(description);
-
-        Order order = orderRepository.findById(order_id).orElseThrow(() -> new RecordNotFoundException("No order with id " + order_id));
-        newFile.setOrder(order);
-
-        return newFile;
-    }
-
-    @Transactional
-    public List<FileDto> getFilesByOrderId(Long orderId) {
-        Iterable<File> files = fileRepository.findByOrder_Id(orderId);
-        List<FileDto> fileDtos = new ArrayList<>();
-
-        for (File f : files) {
-            fileDtos.add(transferFileToDto(f));
-        }
-        return fileDtos;
-    }
-
-    public List<FileDto> getAllFiles() {
-        List<File> files = fileRepository.findAll();
-        List<FileDto> fileDtos = new ArrayList<>();
-
-        for (File f : files) {
-            fileDtos.add(transferFileToDto(f));
-        }
-        return fileDtos;
     }
 
     public byte[] getFileById(Long id) {
@@ -97,20 +54,9 @@ public class FileService {
             throw new RecordNotFoundException("No file found with id " + id);
         }
         File file = fileOptional.get();
-        return ConvertPdf.decompressPdf(file.getData());
+        return ConvertPdf.decompressBytes(file.getData());
     }
 
-    public FileDto updateFile(Long id, MultipartFile fileUpload, String description, Long order_id) throws IOException {
-        Optional<File> fileOptional = fileRepository.findById(id);
-        if (fileOptional.isEmpty()) {
-            throw new RecordNotFoundException("No file found with id: " + id);
-        }
-        File newFile = createNewFile(fileUpload, description, order_id);
-        newFile.setId(id);
-        fileRepository.save(newFile);
-
-        return transferFileToDto(newFile);
-    }
 
     public void deleteFile(Long id) {
         Optional<File> optionalFile = fileRepository.findById(id);
@@ -121,7 +67,6 @@ public class FileService {
     }
 
 
-
     public FileDto transferFileToDto(File file) {
         FileDto fileDto = new FileDto();
 
@@ -129,6 +74,7 @@ public class FileService {
         fileDto.filename = file.getFilename();
         fileDto.description = file.getDescription();
         fileDto.data = file.getData();
+        fileDto.contentType = file.getContentType();
         fileDto.order = file.getOrder();
 
         return fileDto;
