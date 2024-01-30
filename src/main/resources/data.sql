@@ -46,17 +46,17 @@ VALUES
     ( '3', 300.00, 'Dienst', 'BT3456789', 3, 60, '20-06-2024', 'Industrieweg 3, 9012 GH Dorp', 'Kantorenplein 7, 3456 XY Stad', 'DAGEN_60' ),
     ( '1', 1200.00, 'Dienst', 'BT9876543', 5, 300, '15-07-2024', 'Magazijnweg 8, 6789 JK Stad', 'Winkelstraat 20, 1234 AB Dorp', 'DAGEN_30' );
 
-INSERT INTO orders (type_of_work, amount, price, product_name, customer_name, status, date_created, time, work_address, work_zipcode)
+INSERT INTO orders (type_of_work, amount, price, product_name, status, date_created, time, work_address, work_zipcode)
 VALUES
-    ('1', 10, 150.00, 'Schoonmaakmiddelen', 'Bedrijf A', 'In behandeling', '01-10-2024', '08:00', 'Hoofdstraat 1', '1234 AB'),
-    ('2', 20, 200.00,  'Raamreiniger', 'Bedrijf B', 'Voltooid', '15-01-2024', '09:00', 'Zijstraat 2', '5678 CD'),
-    ('3', 5, 100.00,  'Vloerreiniger', 'Bedrijf C', 'Gepland', '01-03-2024', '10:00', 'Achterweg 3', '9012 EF'),
-    ('1', 2, 150.00, 'Schoonmaakmiddelen', 'Bedrijf A', 'Voltooid', '05-02-2024', '14:00', 'Hoofdstraat 1', '1234 AB'),
-    ('2', 5, 200.00, 'Glasreiniger', 'Bedrijf B', 'In behandeling', '03-07-2024', '11:30', 'Zijstraat 2', '5678 CD'),
-    ('3', 3, 100.00, 'Dweil', 'Bedrijf C', 'Gepland', '20-04-2024', '13:45', 'Achterweg 3', '9012 EF'),
-    ('1', 4, 150.00, 'Bezem', 'Bedrijf A', 'Voltooid', '05-10-2024', '10:15', 'Hoofdstraat 1', '1234 AB'),
-    ('2', 8, 200.00, 'Spons', 'Bedrijf B', 'In behandeling', '06-06-2024', '09:30', 'Zijstraat 2', '5678 CD'),
-    ('3', 6, 100.00, 'Stofzuiger', 'Bedrijf C', 'Gepland', '07-03-2024', '12:00', 'Achterweg 3', '9012 EF');
+    ('1', 10, 150.00, 'Schoonmaakmiddelen',  'In behandeling', '01-10-2024', '08:00', 'Hoofdstraat 1', '1234 AB'),
+    ('2', 20, 200.00,  'Raamreiniger',  'Voltooid', '15-01-2024', '09:00', 'Zijstraat 2', '5678 CD'),
+    ('3', 5, 100.00,  'Vloerreiniger',  'Gepland', '01-03-2024', '10:00', 'Achterweg 3', '9012 EF'),
+    ('1', 2, 150.00, 'Schoonmaakmiddelen',  'Voltooid', '05-02-2024', '14:00', 'Hoofdstraat 1', '1234 AB'),
+    ('2', 5, 200.00, 'Glasreiniger',  'In behandeling', '03-07-2024', '11:30', 'Zijstraat 2', '5678 CD'),
+    ('3', 3, 100.00, 'Dweil',  'Gepland', '20-04-2024', '13:45', 'Achterweg 3', '9012 EF'),
+    ('1', 4, 150.00, 'Bezem',  'Voltooid', '05-10-2024', '10:15', 'Hoofdstraat 1', '1234 AB'),
+    ('2', 8, 200.00, 'Spons',  'In behandeling', '06-06-2024', '09:30', 'Zijstraat 2', '5678 CD'),
+    ('3', 6, 100.00, 'Stofzuiger',  'Gepland', '07-03-2024', '12:00', 'Achterweg 3', '9012 EF');
 
 INSERT INTO work_schedule (date, time, available, absence, sick, manager_available)
 VALUES
