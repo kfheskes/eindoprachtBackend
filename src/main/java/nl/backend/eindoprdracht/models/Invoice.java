@@ -1,5 +1,6 @@
 package nl.backend.eindoprdracht.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,7 @@ public class Invoice {
     private Order order;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "customer_account_id")
     private CustomerAccount customerAccount;
 

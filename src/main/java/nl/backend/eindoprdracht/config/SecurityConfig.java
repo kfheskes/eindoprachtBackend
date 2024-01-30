@@ -92,6 +92,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/order/{id}").hasRole("MANAGER")
                         //........................Invoice............................
                         .requestMatchers(HttpMethod.GET, "/invoice/{id}").hasAnyRole("MANAGER", "CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/invoice/customer/{customerId}").hasAnyRole("MANAGER", "CUSTOMER")
                         .requestMatchers(HttpMethod.POST, "/invoice").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.GET, "/invoice/invoices").hasAnyRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/invoice/{id}/customer").hasRole("MANAGER")

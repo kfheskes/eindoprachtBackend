@@ -1,5 +1,6 @@
 package nl.backend.eindoprdracht.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class CustomerAccount {
     private Set<Order> orders = new HashSet<>();
 
     @OneToMany(mappedBy = "customerAccount")
-    @JsonSerialize
+    @JsonIgnore
     private Set<Invoice> invoices = new HashSet<>();
 
 

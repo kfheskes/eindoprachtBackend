@@ -98,6 +98,15 @@ public class InvoiceService {
         return invoiceOutputDtoList;
     }
 
+    public List<InvoiceOutputDto> getAllInvoiceByCustomerId(Long caId){
+        List<Invoice> invoiceList = invoiceRepository.findByCustomerAccountId(caId);
+        List<InvoiceOutputDto> invoiceOutputDtoList = new ArrayList<>();
+        for(Invoice invoice : invoiceList) {
+            invoiceOutputDtoList.add(invoiceTransferToDto(invoice));
+        }
+        return invoiceOutputDtoList;
+    }
+
     public InvoiceOutputDto updateInvoice(long id, InvoiceInputDto invoice) {
         Optional<Invoice> getInvoice = invoiceRepository.findById(id);
         if (getInvoice.isEmpty()) {
