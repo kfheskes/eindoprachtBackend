@@ -1,6 +1,7 @@
 package nl.backend.eindoprdracht.dtos.order;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class OrderInputDto {
     public String productName;
     public String customerId;
     public String status;
+    @FutureOrPresent
     @JsonFormat(pattern = "dd-MM-yyyy")
     public LocalDate dateCreated;
     public LocalTime time;
