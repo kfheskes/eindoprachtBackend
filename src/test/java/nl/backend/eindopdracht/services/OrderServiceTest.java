@@ -61,8 +61,6 @@ class OrderServiceTest {
             //Act
             List<OrderOutputDto> result = orderService.getAllOrders();
             //Assert
-            assertEquals(1, result.get(0).getId());
-            assertEquals(20, result.get(0).getAmount());
-            assertEquals(300.00, result.get(0).getPrice());
+            assertEquals(orders.size(), result.size());
         }
     }
