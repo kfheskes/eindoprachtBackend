@@ -26,7 +26,7 @@ public class EmployeeAccount {
 
     @Column(name = "contract_h")
     private Double contractH;
-    private Date startContract;
+    private LocalDate startContract;
 
     @OneToOne (mappedBy = "employeeAccount", cascade = CascadeType.ALL)
     private User user;
@@ -38,7 +38,7 @@ public class EmployeeAccount {
     @ManyToMany(mappedBy = "employees")
     private Set<Order> orders = new HashSet<>();
 
-    public EmployeeAccount(long id,  Double contractH, Date startContract) {
+    public EmployeeAccount(long id,  Double contractH, LocalDate startContract) {
         this.id = id;
 
         this.contractH = contractH;
