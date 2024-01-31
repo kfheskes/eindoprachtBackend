@@ -37,9 +37,6 @@ public class User {
     private String houseNumber;
 
 
-
-
-
     @Column(nullable = false)
     private boolean enabled = true;
 

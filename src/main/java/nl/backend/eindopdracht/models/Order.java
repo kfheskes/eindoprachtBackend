@@ -72,7 +72,6 @@ public class Order {
     public Order() {
 
     }
-    public Order(long i, int a, double p) {
-    }
+
 
 }

@@ -1,6 +1,6 @@
 package nl.backend.eindopdracht.services;
 
-import nl.backend.eindopdracht.dtos.role.RoleInputDto;
+
 import nl.backend.eindopdracht.dtos.role.RoleOutputDto;
 import nl.backend.eindopdracht.models.Role;
 import nl.backend.eindopdracht.repositories.RoleRepository;
@@ -39,12 +39,4 @@ public class RoleService {
         return dto;
     }
 
-    public Role dtoTransfertoRole(RoleInputDto roleDto) {
-
-        Role role = new Role();
-
-        role.setRoleName(roleDto.getRoleName());
-
-        return role;
-    }
 }

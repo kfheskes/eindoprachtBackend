@@ -11,7 +11,6 @@ import nl.backend.eindopdracht.models.*;
 import nl.backend.eindopdracht.models.Order;
 import nl.backend.eindopdracht.repositories.*;
 import nl.backend.eindopdracht.utils.TypeOfWork;
-import org.apache.catalina.Manager;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -37,18 +36,18 @@ class OrderServiceTest {
     ManagerAccountRepository managerAccountRepository;
     @Mock
     CustomerAccountRepository customerAccountRepository;
-
     @Mock
     InvoiceService invoiceService;
-
-    @Mock CustomerAccountService customerAccountService;
-    @Mock EmployeeAccountService employeeAccountService;
-    @Mock ManagerAccountService managerAccountService;
+    @Mock
+    CustomerAccountService customerAccountService;
+    @Mock
+    EmployeeAccountService employeeAccountService;
+    @Mock
+    ManagerAccountService managerAccountService;
     @InjectMocks
     OrderService orderService;
 
     List<Order> orders = new ArrayList<>();
-
 
     @BeforeEach
     void setup() {
@@ -79,35 +78,6 @@ class OrderServiceTest {
         order2.setWorkAddress("Schoonmaakstraat 123");
         order2.setWorkZipcode("2548 DV");
         orders.add(order2);
-
-
-        OrderInputDto orderInputDto = new OrderInputDto();
-        orderInputDto.setTypeOfWork(TypeOfWork.HUIS);
-        orderInputDto.setAmount(10);
-        orderInputDto.setPrice(150.0);
-        orderInputDto.setProductName("WC-Rollen");
-        orderInputDto.setCustomerId("CUST123");
-        orderInputDto.setStatus("Uitgezet");
-        orderInputDto.setDateCreated(LocalDate.now());
-        orderInputDto.setTime(LocalTime.of(14, 30));
-        orderInputDto.setWorkAddress("Maasstraat");
-        orderInputDto.setWorkZipcode("1001 BV");
-
-        OrderOutputDto orderOutputDto = new OrderOutputDto();
-        orderOutputDto.setId(1L);
-        orderOutputDto.setTypeOfWork(TypeOfWork.HUIS);
-        orderOutputDto.setAmount(10);
-        orderOutputDto.setPrice(150.0);
-        orderOutputDto.setProductName("Zeep");
-        orderOutputDto.setStatus("Vooltooid");
-        orderOutputDto.setDateCreated(LocalDate.now());
-        orderOutputDto.setTime(LocalTime.of(14, 30));
-        orderOutputDto.setWorkAddress("Maasstraat");
-        orderOutputDto.setWorkZipcode("1001 CV");
-        orderOutputDto.setInvoiceOutputDto(null);
-        orderOutputDto.setEmployees(new HashSet<>());
-        orderOutputDto.setManagers(new HashSet<>());
-        orderOutputDto.setCustomerAccountOutputDto(null);
 
         Invoice invoice = new Invoice();
         invoice.setId(1L);
@@ -193,12 +163,8 @@ class OrderServiceTest {
         assertEquals(mockCustomerDto, dto.getCustomerAccountOutputDto());
     }
 
-
-
-
     @Test
     void getAllOrders() {
-
         when(orderRepository.findAll()).thenReturn(orders);
         //Act
         List<OrderOutputDto> result = orderService.getAllOrders();
@@ -222,8 +188,6 @@ class OrderServiceTest {
         assertEquals(orders.get(0).getTime(), orderDto.getTime());
         assertEquals(orders.get(0).getWorkAddress(), orderDto.getWorkAddress());
         assertEquals(orders.get(0).getWorkZipcode(), orderDto.getWorkZipcode());
-
-
     }
 
     @Test
@@ -272,12 +236,11 @@ class OrderServiceTest {
         assertEquals(orderDto3.time, actualOrderOutputDto.getTime());
         assertEquals(orderDto3.workAddress, actualOrderOutputDto.getWorkAddress());
         assertEquals(orderDto3.workZipcode, actualOrderOutputDto.getWorkZipcode());
-
     }
 
     @Test
     public void updateOrder() {
-        Long orderId = 1L;
+        long orderId = 1L;
 
         OrderInputDto orderDto4 = new OrderInputDto();
         orderDto4.amount = 20;
