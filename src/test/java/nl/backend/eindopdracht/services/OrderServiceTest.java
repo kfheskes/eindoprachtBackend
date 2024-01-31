@@ -1,6 +1,7 @@
 package nl.backend.eindopdracht.services;
 
 import nl.backend.eindopdracht.dtos.order.OrderOutputDto;
+import nl.backend.eindopdracht.exceptions.RecordNotFoundException;
 import nl.backend.eindopdracht.models.File;
 import nl.backend.eindopdracht.models.Invoice;
 import nl.backend.eindopdracht.models.Order;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 
@@ -103,5 +105,10 @@ class OrderServiceTest {
             assertEquals(orders.get(0).getWorkZipcode(), orderDto.getWorkZipcode());
         }
 
+
+        @Test
+        void recordNotFoundException(){
+            assertThrows(RecordNotFoundException.class, () -> orderService.getOrderById(9L));
+        }
 
     }
