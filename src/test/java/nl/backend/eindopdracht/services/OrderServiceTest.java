@@ -1,5 +1,9 @@
 package nl.backend.eindopdracht.services;
 
+import nl.backend.eindopdracht.dtos.customeraccount.CustomerAccountOutputDto;
+import nl.backend.eindopdracht.dtos.employeeaccount.EmployeeAccountOutputDto;
+import nl.backend.eindopdracht.dtos.invoice.InvoiceOutputDto;
+import nl.backend.eindopdracht.dtos.manageraccount.ManagerAccountOutputDto;
 import nl.backend.eindopdracht.dtos.order.OrderInputDto;
 import nl.backend.eindopdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindopdracht.exceptions.RecordNotFoundException;
@@ -7,6 +11,7 @@ import nl.backend.eindopdracht.models.*;
 import nl.backend.eindopdracht.models.Order;
 import nl.backend.eindopdracht.repositories.*;
 import nl.backend.eindopdracht.utils.TypeOfWork;
+import org.apache.catalina.Manager;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -14,9 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,16 +37,22 @@ class OrderServiceTest {
     ManagerAccountRepository managerAccountRepository;
     @Mock
     CustomerAccountRepository customerAccountRepository;
+
+    @Mock
+    InvoiceService invoiceService;
+
+    @Mock CustomerAccountService customerAccountService;
+    @Mock EmployeeAccountService employeeAccountService;
+    @Mock ManagerAccountService managerAccountService;
     @InjectMocks
     OrderService orderService;
 
-
     List<Order> orders = new ArrayList<>();
+
 
     @BeforeEach
     void setup() {
 
-        File file = new File();
 
         Order order1 = new Order();
         order1.setId(1);
@@ -72,12 +81,120 @@ class OrderServiceTest {
         orders.add(order2);
 
 
+        OrderInputDto orderInputDto = new OrderInputDto();
+        orderInputDto.setTypeOfWork(TypeOfWork.HUIS);
+        orderInputDto.setAmount(10);
+        orderInputDto.setPrice(150.0);
+        orderInputDto.setProductName("WC-Rollen");
+        orderInputDto.setCustomerId("CUST123");
+        orderInputDto.setStatus("Uitgezet");
+        orderInputDto.setDateCreated(LocalDate.now());
+        orderInputDto.setTime(LocalTime.of(14, 30));
+        orderInputDto.setWorkAddress("Maasstraat");
+        orderInputDto.setWorkZipcode("1001 BV");
+
+        OrderOutputDto orderOutputDto = new OrderOutputDto();
+        orderOutputDto.setId(1L);
+        orderOutputDto.setTypeOfWork(TypeOfWork.HUIS);
+        orderOutputDto.setAmount(10);
+        orderOutputDto.setPrice(150.0);
+        orderOutputDto.setProductName("Zeep");
+        orderOutputDto.setStatus("Vooltooid");
+        orderOutputDto.setDateCreated(LocalDate.now());
+        orderOutputDto.setTime(LocalTime.of(14, 30));
+        orderOutputDto.setWorkAddress("Maasstraat");
+        orderOutputDto.setWorkZipcode("1001 CV");
+        orderOutputDto.setInvoiceOutputDto(null);
+        orderOutputDto.setEmployees(new HashSet<>());
+        orderOutputDto.setManagers(new HashSet<>());
+        orderOutputDto.setCustomerAccountOutputDto(null);
+
+        Invoice invoice = new Invoice();
+        invoice.setId(1L);
+        invoice.setTypeOfWork(TypeOfWork.HUIS);
+        invoice.setPrice(200.00);
+        invoice.setTypeOfProduct("schoonmaakmiddelen");
+        invoice.setBusinessTaxNumber("123456789");
+        invoice.setAmount(10);
+        invoice.setTaxAmount(5000L);
+        invoice.setDate(LocalDate.of(2024, 1, 1));
+        invoice.setBusinessAddress("Maastraat");
+        invoice.setCustomerAddress("Maasstraat");
+        invoice.setTermOfPayment("DAGEN_30");
+        order1.setInvoice(invoice);
+
+        EmployeeAccount employeeAccount = new EmployeeAccount();
+        employeeAccount.setId(1L);
+        employeeAccount.setContractH(40.0);
+        employeeAccount.setStartContract(LocalDate.of(2024, 1, 1));
+
+        Set<EmployeeAccount> employeeAccounts = new HashSet<>();
+        employeeAccounts.add(employeeAccount);
+        order1.setEmployees(employeeAccounts);
+
+        CustomerAccount customerAccount = new CustomerAccount();
+        customerAccount.setId(1L);
+        customerAccount.setCompanyName("Bedrijf");
+        customerAccount.setContract("FulLTime");
+        customerAccount.setBalans(10000.0);
+        order1.setCustomerAccount(customerAccount);
+
+        ManagerAccount managerAccount = new ManagerAccount();
+        managerAccount.setId(1L);
+        managerAccount.setResponsibilities("Algemeen Managament");
+
+        Set<ManagerAccount> managerAccounts = new HashSet<>();
+        managerAccounts.add(managerAccount);
+        order1.setManagers(managerAccounts);
+
     }
 
     @AfterEach
     void tearDown() {
 
     }
+
+    @Test
+    void orderTransferToDtoTest() {
+        // Arrange
+        Order order = orders.get(0);
+
+        InvoiceOutputDto mockInvoiceDto = new InvoiceOutputDto();
+        EmployeeAccountOutputDto mockEmployeeDto = new EmployeeAccountOutputDto();
+        ManagerAccountOutputDto mockManagerDto = new ManagerAccountOutputDto();
+        CustomerAccountOutputDto mockCustomerDto = new CustomerAccountOutputDto();
+
+        when(invoiceService.invoiceTransferToDto(any(Invoice.class))).thenReturn(mockInvoiceDto);
+        when(employeeAccountService.employeeAccountTransferToDto(any(EmployeeAccount.class))).thenReturn(mockEmployeeDto);
+        when(managerAccountService.managerAccountTransferToDto(any(ManagerAccount.class))).thenReturn(mockManagerDto);
+        when(customerAccountService.customerAccountTransferCustomerAccountOutputDto(any(CustomerAccount.class))).thenReturn(mockCustomerDto);
+
+        // Act
+        OrderOutputDto dto = orderService.orderTransferToDto(order);
+
+        // Assert
+        assertEquals(order.getId(), dto.getId());
+        assertEquals(order.getTypeOfWork(), dto.getTypeOfWork());
+        assertEquals(order.getAmount(), dto.getAmount());
+        assertEquals(order.getPrice(), dto.getPrice());
+        assertEquals(order.getProductName(), dto.getProductName());
+        assertEquals(order.getStatus(), dto.getStatus());
+        assertEquals(order.getDateCreated(), dto.getDateCreated());
+        assertEquals(order.getTime(), dto.getTime());
+        assertEquals(order.getWorkAddress(), dto.getWorkAddress());
+        assertEquals(order.getWorkZipcode(), dto.getWorkZipcode());
+
+
+        assertEquals(mockInvoiceDto, dto.getInvoiceOutputDto());
+        assertNotNull(dto.getEmployees());
+        assertTrue(dto.getEmployees().contains(mockEmployeeDto));
+        assertNotNull(dto.getManagers());
+        assertTrue(dto.getManagers().contains(mockManagerDto));
+        assertEquals(mockCustomerDto, dto.getCustomerAccountOutputDto());
+    }
+
+
+
 
     @Test
     void getAllOrders() {
@@ -91,6 +208,7 @@ class OrderServiceTest {
 
     @Test
     void getOrderById() {
+
         when(orderRepository.findById(1L)).thenReturn(Optional.of(orders.get(0)));
 
         OrderOutputDto orderDto = orderService.getOrderById(1L);
@@ -104,8 +222,9 @@ class OrderServiceTest {
         assertEquals(orders.get(0).getTime(), orderDto.getTime());
         assertEquals(orders.get(0).getWorkAddress(), orderDto.getWorkAddress());
         assertEquals(orders.get(0).getWorkZipcode(), orderDto.getWorkZipcode());
-    }
 
+
+    }
 
     @Test
     void recordNotFoundException() {
@@ -136,6 +255,7 @@ class OrderServiceTest {
         order.setTime(orderDto3.time);
         order.setWorkAddress(orderDto3.workAddress);
         order.setWorkZipcode(orderDto3.workZipcode);
+        order.setInvoice(order.getInvoice());
 
         when(orderRepository.save(ArgumentMatchers.any(Order.class))).thenReturn(order);
 
@@ -152,6 +272,7 @@ class OrderServiceTest {
         assertEquals(orderDto3.time, actualOrderOutputDto.getTime());
         assertEquals(orderDto3.workAddress, actualOrderOutputDto.getWorkAddress());
         assertEquals(orderDto3.workZipcode, actualOrderOutputDto.getWorkZipcode());
+
     }
 
     @Test
@@ -343,3 +464,5 @@ class OrderServiceTest {
     }
 
 }
+
+
