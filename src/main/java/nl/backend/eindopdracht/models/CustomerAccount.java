@@ -25,10 +25,10 @@ public class CustomerAccount {
     @OneToOne(mappedBy = "customerAccount", cascade = CascadeType.ALL)
     private User user;
 
-    @OneToMany(mappedBy = "customerAccount")
+    @OneToMany(mappedBy = "customerAccount",orphanRemoval = true)
     private Set<Order> orders = new HashSet<>();
 
-    @OneToMany(mappedBy = "customerAccount")
+    @OneToMany(mappedBy = "customerAccount",orphanRemoval = true)
     @JsonIgnore
     private Set<Invoice> invoices = new HashSet<>();
 

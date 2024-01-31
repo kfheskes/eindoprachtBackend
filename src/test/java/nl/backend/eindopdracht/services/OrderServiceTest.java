@@ -1,7 +1,11 @@
 package nl.backend.eindopdracht.services;
 
 import nl.backend.eindopdracht.dtos.order.OrderOutputDto;
+import nl.backend.eindopdracht.models.File;
+import nl.backend.eindopdracht.models.Invoice;
 import nl.backend.eindopdracht.models.Order;
+import nl.backend.eindopdracht.repositories.CustomerAccountRepository;
+import nl.backend.eindopdracht.repositories.InvoiceRepository;
 import nl.backend.eindopdracht.repositories.OrderRepository;
 import nl.backend.eindopdracht.utils.TypeOfWork;
 import org.junit.jupiter.api.AfterEach;
@@ -17,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -26,6 +31,7 @@ import static org.mockito.Mockito.when;
 class OrderServiceTest {
         @Mock
         OrderRepository orderRepository;
+
         @InjectMocks
         OrderService orderService;
 
@@ -33,6 +39,8 @@ class OrderServiceTest {
 
         @BeforeEach
         void setup() {
+
+            File file = new File();
 
             Order order1 = new Order();
             order1.setId(1);
@@ -46,6 +54,21 @@ class OrderServiceTest {
             order1.setWorkAddress("Schoonmaakstraat 123");
             order1.setWorkZipcode("2548 DV");
             orders.add(order1);
+
+            Order order2 = new Order();
+            order2.setId(2);
+            order2.setTypeOfWork(TypeOfWork.MEDISCH);
+            order2.setAmount(10);
+            order2.setPrice(400.00);
+            order2.setProductName("WC-ROL");
+            order2.setStatus("in behandeling");
+            order2.setDateCreated(LocalDate.of(2024, 1,10));
+            order2.setTime(LocalTime.of(11,0));
+            order2.setWorkAddress("Schoonmaakstraat 123");
+            order2.setWorkZipcode("2548 DV");
+            orders.add(order2);
+
+
         }
 
         @AfterEach
@@ -54,7 +77,6 @@ class OrderServiceTest {
         }
 
         @Test
-        @DisplayName("Should get all orders")
         void getAllOrders() {
 
           when(orderRepository.findAll()).thenReturn(orders);
@@ -63,4 +85,23 @@ class OrderServiceTest {
             //Assert
             assertEquals(orders.size(), result.size());
         }
+
+        @Test
+        void getOrderById(){
+            when(orderRepository.findById(1L)).thenReturn(Optional.of(orders.get(0)));
+
+            OrderOutputDto orderDto = orderService.getOrderById(1L);
+
+            assertEquals(orders.get(0).getTypeOfWork(), orderDto.getTypeOfWork());
+            assertEquals(orders.get(0).getAmount(), orderDto.getAmount());
+            assertEquals(orders.get(0).getPrice(), orderDto.getPrice());
+            assertEquals(orders.get(0).getProductName(), orderDto.getProductName());
+            assertEquals(orders.get(0).getStatus(), orderDto.getStatus());
+            assertEquals(orders.get(0).getDateCreated(), orderDto.getDateCreated());
+            assertEquals(orders.get(0).getTime(), orderDto.getTime());
+            assertEquals(orders.get(0).getWorkAddress(), orderDto.getWorkAddress());
+            assertEquals(orders.get(0).getWorkZipcode(), orderDto.getWorkZipcode());
+        }
+
+
     }

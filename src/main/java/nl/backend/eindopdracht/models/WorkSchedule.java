@@ -36,10 +36,10 @@ public class WorkSchedule {
 
     private String managerAvailable;
 
-    @OneToMany(mappedBy = "workSchedule")
+    @OneToMany(mappedBy = "workSchedule",orphanRemoval = true)
     private Set<EmployeeAccount> employees = new HashSet<>();
 
-    @OneToMany(mappedBy =  "workSchedule")
+    @OneToMany(mappedBy =  "workSchedule",orphanRemoval = true)
     private Set<ManagerAccount> managers = new HashSet<>();
 
     public WorkSchedule(long id, LocalDate date, LocalTime time, LocalDateTime available, LocalDateTime absence, LocalDate sick, String managerAvailable) {
