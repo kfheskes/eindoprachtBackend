@@ -11,7 +11,6 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.jaxb.SpringDataJaxb;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,10 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.any;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -36,6 +32,8 @@ class OrderServiceTest {
     EmployeeAccountRepository employeeAccountRepository;
     @Mock
     ManagerAccountRepository managerAccountRepository;
+    @Mock
+    CustomerAccountRepository customerAccountRepository;
     @InjectMocks
     OrderService orderService;
 
@@ -311,6 +309,37 @@ class OrderServiceTest {
         assertThrows(RecordNotFoundException.class, () -> {
             orderService.assignManagerToOrder(orderId, managerId);
         });
+    }
+
+    @Test
+    public void assignCustomerToOrder_BothFound() {
+        long orderId = 1L;
+        long customerId = 2L;
+
+        Order order = new Order();
+        CustomerAccount customer = new CustomerAccount();
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+        when(customerAccountRepository.findById(customerId)).thenReturn(Optional.of(customer));
+
+        orderService.assignCustomerToOrder(orderId, customerId);
+
+        assertEquals(customer, order.getCustomerAccount());
+        verify(orderRepository).save(order);
+    }
+
+    @Test
+    public void assignCustomerToOrder_NotFound() {
+        long orderId = 1L;
+        long customerId = 2L;
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
+        when(customerAccountRepository.findById(customerId)).thenReturn(Optional.of(new CustomerAccount()));
+
+        assertThrows(RecordNotFoundException.class, () -> {
+            orderService.assignCustomerToOrder(orderId, customerId);
+        });
+
     }
 
 }
