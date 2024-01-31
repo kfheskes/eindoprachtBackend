@@ -3,14 +3,9 @@ package nl.backend.eindopdracht.services;
 import nl.backend.eindopdracht.dtos.order.OrderInputDto;
 import nl.backend.eindopdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindopdracht.exceptions.RecordNotFoundException;
-import nl.backend.eindopdracht.models.EmployeeAccount;
-import nl.backend.eindopdracht.models.File;
-import nl.backend.eindopdracht.models.Invoice;
+import nl.backend.eindopdracht.models.*;
 import nl.backend.eindopdracht.models.Order;
-import nl.backend.eindopdracht.repositories.CustomerAccountRepository;
-import nl.backend.eindopdracht.repositories.EmployeeAccountRepository;
-import nl.backend.eindopdracht.repositories.InvoiceRepository;
-import nl.backend.eindopdracht.repositories.OrderRepository;
+import nl.backend.eindopdracht.repositories.*;
 import nl.backend.eindopdracht.utils.TypeOfWork;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,6 +34,8 @@ class OrderServiceTest {
     InvoiceRepository invoiceRepository;
     @Mock
     EmployeeAccountRepository employeeAccountRepository;
+    @Mock
+    ManagerAccountRepository managerAccountRepository;
     @InjectMocks
     OrderService orderService;
 
@@ -286,6 +283,34 @@ class OrderServiceTest {
         });
     }
 
+    @Test
+    public void assignManagerToOrder_BothFound() {
+        long orderId = 1L;
+        long managerId = 2L;
 
+        Order order = new Order();
+        ManagerAccount manager = new ManagerAccount();
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+        when(managerAccountRepository.findById(managerId)).thenReturn(Optional.of(manager));
+
+        orderService.assignManagerToOrder(orderId, managerId);
+
+        Assertions.assertTrue(order.getManagers().contains(manager));
+        verify(orderRepository).save(order);
+    }
+
+    @Test
+    public void assignManagerToOrder_NotFound() {
+        long orderId = 1L;
+        long managerId = 2L;
+
+        when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
+        when(managerAccountRepository.findById(managerId)).thenReturn(Optional.of(new ManagerAccount()));
+
+        assertThrows(RecordNotFoundException.class, () -> {
+            orderService.assignManagerToOrder(orderId, managerId);
+        });
+    }
 
 }
