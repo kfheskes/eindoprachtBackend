@@ -22,7 +22,7 @@ public class CustomerAccount {
     private String contract;
     private Double balans;
 
-    @OneToOne(mappedBy = "customerAccount", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "customerAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     @OneToMany(mappedBy = "customerAccount",orphanRemoval = true)

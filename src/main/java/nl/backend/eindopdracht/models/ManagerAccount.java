@@ -23,7 +23,7 @@ public class ManagerAccount {
 
     private String responsibilities;
 
-    @OneToOne(mappedBy = "managerAccount", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "managerAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     @ManyToOne

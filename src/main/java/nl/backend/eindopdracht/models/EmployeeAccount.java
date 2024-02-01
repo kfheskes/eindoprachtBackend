@@ -26,7 +26,7 @@ public class EmployeeAccount {
     private Double contractH;
     private LocalDate startContract;
 
-    @OneToOne (mappedBy = "employeeAccount", cascade = CascadeType.ALL)
+    @OneToOne (mappedBy = "employeeAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     @ManyToOne

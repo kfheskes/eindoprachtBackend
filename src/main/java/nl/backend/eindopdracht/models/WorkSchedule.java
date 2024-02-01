@@ -33,13 +33,12 @@ public class WorkSchedule {
     private LocalDateTime absence;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate sick;
-
     private String managerAvailable;
 
-    @OneToMany(mappedBy = "workSchedule",orphanRemoval = true)
+    @OneToMany(mappedBy = "workSchedule", orphanRemoval = true)
     private Set<EmployeeAccount> employees = new HashSet<>();
 
-    @OneToMany(mappedBy =  "workSchedule",orphanRemoval = true)
+    @OneToMany(mappedBy = "workSchedule", orphanRemoval = true)
     private Set<ManagerAccount> managers = new HashSet<>();
 
     public WorkSchedule(long id, LocalDate date, LocalTime time, LocalDateTime available, LocalDateTime absence, LocalDate sick, String managerAvailable) {
@@ -52,7 +51,7 @@ public class WorkSchedule {
         this.managerAvailable = managerAvailable;
     }
 
-    public WorkSchedule(){
+    public WorkSchedule() {
 
     }
 }
