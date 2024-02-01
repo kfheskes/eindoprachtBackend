@@ -25,17 +25,15 @@ public class User {
     private String mName;
     private String lName;
     private String email;
+
     private LocalDate dob;
     private String address;
     private String zipcode;
     private String residence;
     private String pNumber;
     private String houseNumber;
-
-
     @Column(nullable = false)
     private boolean enabled = true;
-
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employee_account_id")
