@@ -29,9 +29,7 @@ public class Invoice {
     private LocalDate date;
     private String businessAddress;
     private String customerAddress;
-
     private String termOfPayment;
-
 
     @OneToOne(mappedBy = "invoice")
     private Order order;
@@ -40,8 +38,6 @@ public class Invoice {
     @JsonIgnore
     @JoinColumn(name = "customer_account_id")
     private CustomerAccount customerAccount;
-
-
 
     public Invoice(Long id, TypeOfWork typeOfWork, Double price, String typeOfProduct, String businessTaxNumber, int amount, long taxAmount, LocalDate date, String businessAddress, String customerAddress, String termOfPayment) {
         this.id = id;
