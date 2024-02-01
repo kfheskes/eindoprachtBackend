@@ -54,9 +54,31 @@ class OrderControllerTest {
     @MockBean
     OrderService orderService;
 
+    private OrderOutputDto orderDto;
+
+    private OrderInputDto orderInputDto;
     @BeforeEach
     void setup() {
+        orderDto = new OrderOutputDto();
+        orderDto.setId(1L);
+        orderDto.setTypeOfWork(TypeOfWork.HUIS);
+        orderDto.setAmount(2);
+        orderDto.setProductName("WC-ROL");
+        orderDto.setStatus("In behandeling");
+        orderDto.setDateCreated(LocalDate.of(2024, 5, 5));
+        orderDto.setTime(LocalTime.of(15, 15));
+        orderDto.setWorkAddress("Maasstraat 12");
+        orderDto.setWorkZipcode("1004 BV");
 
+        orderInputDto = new OrderInputDto();
+        orderInputDto.setTypeOfWork(TypeOfWork.HUIS);
+        orderInputDto.setAmount(2);
+        orderInputDto.setProductName("WC-ROL");
+        orderInputDto.setStatus("In behandeling");
+        orderInputDto.setDateCreated(LocalDate.of(2024, 5, 5));
+        orderInputDto.setTime(LocalTime.of(15, 15));
+        orderInputDto.setWorkAddress("Maasstraat 12");
+        orderInputDto.setWorkZipcode("1004 BV");
 
     }
 
@@ -68,16 +90,7 @@ class OrderControllerTest {
     @Test
     void getOrderById() throws Exception {
         Long orderId = 1L;
-        OrderOutputDto orderDto = new OrderOutputDto();
         orderDto.setId(orderId);
-        orderDto.setTypeOfWork(TypeOfWork.HUIS);
-        orderDto.setAmount(2);
-        orderDto.setProductName("WC-ROL");
-        orderDto.setStatus("In behandeling");
-        orderDto.setDateCreated(LocalDate.of(2024, 5, 5));
-        orderDto.setTime(LocalTime.of(15, 15));
-        orderDto.setWorkAddress("Maasstraat 12");
-        orderDto.setWorkZipcode("1004 BV");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedDate = orderDto.getDateCreated().format(formatter);
@@ -105,26 +118,7 @@ class OrderControllerTest {
     @Test
     void createOrder() throws Exception {
         Long orderId = 1L;
-        OrderOutputDto orderDto = new OrderOutputDto();
         orderDto.setId(orderId);
-        orderDto.setTypeOfWork(TypeOfWork.HUIS);
-        orderDto.setAmount(2);
-        orderDto.setProductName("WC-ROL");
-        orderDto.setStatus("In behandeling");
-        orderDto.setDateCreated(LocalDate.of(2024, 5, 5));
-        orderDto.setTime(LocalTime.of(15, 15));
-        orderDto.setWorkAddress("Maasstraat 12");
-        orderDto.setWorkZipcode("1004 BV");
-
-        OrderInputDto orderInputDto = new OrderInputDto();
-        orderInputDto.setTypeOfWork(TypeOfWork.HUIS);
-        orderInputDto.setAmount(2);
-        orderInputDto.setProductName("WC-ROL");
-        orderInputDto.setStatus("In behandeling");
-        orderInputDto.setDateCreated(LocalDate.of(2024, 5, 5));
-        orderInputDto.setTime(LocalTime.of(15, 15));
-        orderInputDto.setWorkAddress("Maasstraat 12");
-        orderInputDto.setWorkZipcode("1004 BV");
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedDate = orderDto.getDateCreated().format(formatter);
