@@ -2,8 +2,10 @@ package nl.backend.eindopdracht.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.backend.eindopdracht.dtos.order.OrderInputDto;
 import nl.backend.eindopdracht.dtos.order.OrderOutputDto;
 import nl.backend.eindopdracht.models.*;
+import nl.backend.eindopdracht.repositories.OrderRepository;
 import nl.backend.eindopdracht.services.OrderService;
 import nl.backend.eindopdracht.utils.TypeOfWork;
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -32,6 +35,7 @@ import java.util.Set;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.hamcrest.Matchers.matchesPattern;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -48,7 +52,7 @@ class OrderControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    private OrderService orderService;
+    OrderService orderService;
 
     @BeforeEach
     void setup() {
@@ -60,42 +64,6 @@ class OrderControllerTest {
     void tearDown() {
 
     }
-    @Test
-    void createOrder() throws Exception {
-        String jsonInput = """
-                {
-                 "typeOfWork" : "HUIS",
-                 "amount" : 4,
-                 "price" : 150.00,
-                 "productName" : "WC-ROL",
-                 "status" : "In behandeling",
-                 "dateCreated" : "02-12-2024",
-                 "time" : "12:30",
-                 "workAddress" : "Scheldestraat 12",
-                 "workZipcode" : "1004 BV"
-                 }
-                                 
-                 """;
-
-        MvcResult result = this.mockMvc
-                .perform(MockMvcRequestBuilders.post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonInput)
-                )
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andReturn();
-
-        String jsonResponse = result.getResponse().getContentAsString();
-        JsonNode jsonNode = objectMapper.readTree(jsonResponse);
-        String createdId = jsonNode.get("id").asText();
-
-        String locationHeader = result.getResponse().getHeader("Location");
-
-
-        assertThat(locationHeader, matchesPattern("^http://localhost/order/" + createdId ));
-    }
-
 
     @Test
     void getOrderById() throws Exception {
@@ -106,7 +74,7 @@ class OrderControllerTest {
         orderDto.setAmount(2);
         orderDto.setProductName("WC-ROL");
         orderDto.setStatus("In behandeling");
-        orderDto.setDateCreated(LocalDate.of(2024,5,5));
+        orderDto.setDateCreated(LocalDate.of(2024, 5, 5));
         orderDto.setTime(LocalTime.of(15, 15));
         orderDto.setWorkAddress("Maasstraat 12");
         orderDto.setWorkZipcode("1004 BV");
@@ -132,5 +100,62 @@ class OrderControllerTest {
                 .andExpect(jsonPath("$.workAddress").value(orderDto.getWorkAddress()))
                 .andExpect(jsonPath("$.workZipcode").value(orderDto.getWorkZipcode()));
     }
+
+
+    @Test
+    void createOrder() throws Exception {
+        Long orderId = 1L;
+        OrderOutputDto orderDto = new OrderOutputDto();
+        orderDto.setId(orderId);
+        orderDto.setTypeOfWork(TypeOfWork.HUIS);
+        orderDto.setAmount(2);
+        orderDto.setProductName("WC-ROL");
+        orderDto.setStatus("In behandeling");
+        orderDto.setDateCreated(LocalDate.of(2024, 5, 5));
+        orderDto.setTime(LocalTime.of(15, 15));
+        orderDto.setWorkAddress("Maasstraat 12");
+        orderDto.setWorkZipcode("1004 BV");
+
+        OrderInputDto orderInputDto = new OrderInputDto();
+        orderInputDto.setTypeOfWork(TypeOfWork.HUIS);
+        orderInputDto.setAmount(2);
+        orderInputDto.setProductName("WC-ROL");
+        orderInputDto.setStatus("In behandeling");
+        orderInputDto.setDateCreated(LocalDate.of(2024, 5, 5));
+        orderInputDto.setTime(LocalTime.of(15, 15));
+        orderInputDto.setWorkAddress("Maasstraat 12");
+        orderInputDto.setWorkZipcode("1004 BV");
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = orderDto.getDateCreated().format(formatter);
+
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = orderDto.getTime().format(timeFormatter);
+
+        String jsonInput = objectMapper.writeValueAsString(orderInputDto);
+
+        when(orderService.createOrder(any(OrderInputDto.class))).thenReturn(orderDto);
+
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.post("/order")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonInput)
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(jsonPath("$.id").value(orderId))
+                .andExpect(jsonPath("$.typeOfWork").value(orderDto.getTypeOfWork().toString()))
+                .andExpect(jsonPath("$.amount").value(orderDto.getAmount()))
+                .andExpect(jsonPath("$.productName").value(orderDto.getProductName()))
+                .andExpect(jsonPath("$.status").value(orderDto.getStatus()))
+                .andExpect(jsonPath("$.dateCreated").value(formattedDate))
+                .andExpect(jsonPath("$.time").value(formattedTime))
+                .andExpect(jsonPath("$.workAddress").value(orderDto.getWorkAddress()))
+                .andExpect(jsonPath("$.workZipcode").value(orderDto.getWorkZipcode()))
+                .andReturn();
+    }
+
+
 }
 

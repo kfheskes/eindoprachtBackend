@@ -10,7 +10,7 @@ VALUES
     (3, 'Hans', '$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu', TRUE, 'Hans', 'Klaas', 'Dijk', 'hans@example.com', '1985-05-15', 'Kerkstraat 42', '1234 AB', 'Dorp', '0612345678', '42'),
     (4, 'Marie', '$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu', TRUE, 'Marie', 'Alice', 'Smith', 'marie@example.com', '1990-08-15', 'Parkstraat 5', '2345 YZ', 'Amsterdam', '0623456789', '5'),
     (5, 'Peter', '$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu', TRUE, 'Peter', 'Robert', 'Brown', 'peter@example.com', '1988-03-28', 'Kerkplein 12', '6789 AB', 'Rotterdam', '0634567890', '12'),
-    (6, 'Sarah', '$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu', TRUE, 'Sarah', '', 'Johnson', 'sarah@example.com', '1993-05-20', 'Dorpstraat 8', '3456 CD', 'Utrecht', '0645678901', '8');;
+    (6, 'Sarah', '$2a$12$gIM5QtvhuxzXi7NeyTov7.UediBWZN8yp/fTmsLvqSIpjOHX2HcCu', TRUE, 'Sarah', '', 'Johnson', 'sarah@example.com', '1993-05-20', 'Dorpstraat 8', '3456 CD', 'Utrecht', '0645678901', '8');
 
 INSERT INTO users_roles(user_id, role_id)
 VALUES
