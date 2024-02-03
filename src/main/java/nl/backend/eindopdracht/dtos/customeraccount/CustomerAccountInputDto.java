@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class CustomerAccountInputDto {
 
-
     public String companyName;
     public String contract;
     public Double balans;

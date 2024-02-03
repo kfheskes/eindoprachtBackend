@@ -29,7 +29,7 @@ public class AuthController {
     }
 
     @GetMapping(value = "/authenticated")
-    public ResponseEntity<Object> authenticated( Principal principal) {
+    public ResponseEntity<Object> authenticated(Principal principal) {
         return ResponseEntity.ok().body(principal);
     }
 
@@ -48,8 +48,7 @@ public class AuthController {
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                     .body("Token generated");
-        }
-        catch (AuthenticationException ex) {
+        } catch (AuthenticationException ex) {
             return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
         }
     }

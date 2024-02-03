@@ -87,10 +87,10 @@ public class CustomerAccountService {
         }
 
     }
+
     public void deleteCustomerAccount(long id) {
         customerAccountRepository.deleteById(id);
     }
-
 
 
 }

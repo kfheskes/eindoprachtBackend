@@ -38,6 +38,6 @@ public class ManagerAccount {
         this.responsibilities = responsibilities;
     }
 
-    public ManagerAccount(){
+    public ManagerAccount() {
     }
 }

@@ -57,6 +57,7 @@ class OrderControllerTest {
     private OrderOutputDto orderDto;
 
     private OrderInputDto orderInputDto;
+
     @BeforeEach
     void setup() {
         orderDto = new OrderOutputDto();

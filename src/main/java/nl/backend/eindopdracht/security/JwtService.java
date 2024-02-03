@@ -24,6 +24,7 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -50,6 +51,7 @@ public class JwtService {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
     }
+
     private String createToken(Map<String, Object> claims, String
             subject) {
         long validPeriod = 1000 * 60 * 60 * 24; //0 days in ms

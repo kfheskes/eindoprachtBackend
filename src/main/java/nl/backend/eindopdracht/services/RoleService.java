@@ -20,7 +20,7 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public List<RoleOutputDto> getAllRoles(){
+    public List<RoleOutputDto> getAllRoles() {
         List<Role> roles = roleRepository.findAll();
         List<RoleOutputDto> dtoList = new ArrayList<>();
         for (Role role : roles) {

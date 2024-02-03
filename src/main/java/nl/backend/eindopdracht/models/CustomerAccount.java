@@ -25,13 +25,12 @@ public class CustomerAccount {
     @OneToOne(mappedBy = "customerAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
-    @OneToMany(mappedBy = "customerAccount",orphanRemoval = true)
+    @OneToMany(mappedBy = "customerAccount", orphanRemoval = true)
     private Set<Order> orders = new HashSet<>();
 
-    @OneToMany(mappedBy = "customerAccount",orphanRemoval = true)
+    @OneToMany(mappedBy = "customerAccount", orphanRemoval = true)
     @JsonIgnore
     private Set<Invoice> invoices = new HashSet<>();
-
 
 
     public CustomerAccount(long id, String companyName, String contract, Double balans) {
@@ -43,7 +42,6 @@ public class CustomerAccount {
 
     public CustomerAccount() {
     }
-
 
 
 }

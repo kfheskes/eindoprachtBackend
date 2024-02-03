@@ -60,7 +60,7 @@ public class ManagerAccountController {
     }
 
     @PutMapping("{id}/workschedule")
-    public ResponseEntity<ManagerAccountOutputDto> assignManagerToWorkSchedule(@PathVariable long id, @RequestBody IdInputDto input){
+    public ResponseEntity<ManagerAccountOutputDto> assignManagerToWorkSchedule(@PathVariable long id, @RequestBody IdInputDto input) {
         managerAccountService.assignManagerToWorkSchedule(id, input.id);
         return ResponseEntity.noContent().build();
     }

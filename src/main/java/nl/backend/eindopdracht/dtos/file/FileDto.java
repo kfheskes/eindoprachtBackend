@@ -9,7 +9,6 @@ import nl.backend.eindopdracht.models.Order;
 @Setter
 public class FileDto {
     public Long id;
-
     public String contentType;
     public String filename;
 
@@ -19,7 +18,6 @@ public class FileDto {
     public String description;
 
     public Order order;
-
 
 
 }
