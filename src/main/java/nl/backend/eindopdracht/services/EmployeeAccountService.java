@@ -52,7 +52,7 @@ public class EmployeeAccountService {
         return employeeAccountOutputDto;
     }
 
-    public EmployeeAccountOutputDto createEmployeeAccount (EmployeeAccountInputDto employeeAccount ){
+    public EmployeeAccountOutputDto createEmployeeAccount(EmployeeAccountInputDto employeeAccount) {
         EmployeeAccount employeeAccountInputDto = dtoTransferToEmployeeAccount(employeeAccount);
         employeeAccountRepository.save(employeeAccountInputDto);
         return employeeAccountTransferToDto(employeeAccountInputDto);
@@ -70,7 +70,7 @@ public class EmployeeAccountService {
         }
     }
 
-    public List<EmployeeAccountOutputDto> getAllEmployees(){
+    public List<EmployeeAccountOutputDto> getAllEmployees() {
         List<EmployeeAccount> employeeAccounts = employeeAccountRepository.findAll();
         List<EmployeeAccountOutputDto> employeeAccountOutputDtoList = new ArrayList<>();
         for (EmployeeAccount employeeAccount : employeeAccounts) {

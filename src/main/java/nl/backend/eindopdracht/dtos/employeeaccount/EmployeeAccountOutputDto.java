@@ -8,7 +8,6 @@ import java.time.LocalDate;
 public class EmployeeAccountOutputDto {
 
     public long id;
-
     public Double contractH;
     public LocalDate startContract;
 

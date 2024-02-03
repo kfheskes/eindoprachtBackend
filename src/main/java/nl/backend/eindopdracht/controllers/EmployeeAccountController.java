@@ -56,24 +56,24 @@ public class EmployeeAccountController {
         return ResponseEntity.ok(eaDtoList);
     }
 
-@PutMapping("/{id}")
-public ResponseEntity<EmployeeAccountOutputDto>
-    updateEmployeeAccount(@PathVariable long id, @RequestBody EmployeeAccountInputDto employeeAccountInputDto){
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeAccountOutputDto>
+    updateEmployeeAccount(@PathVariable long id, @RequestBody EmployeeAccountInputDto employeeAccountInputDto) {
         EmployeeAccountOutputDto dto = employeeAccountService.updateEmployeeAccount(id, employeeAccountInputDto);
         return ResponseEntity.ok().body(dto);
-}
+    }
 
-@PutMapping("{id}/workschedule")
-public ResponseEntity<EmployeeAccountOutputDto> assignEmployeeToWorkSchedule(@PathVariable long id, @RequestBody IdInputDto input) {
+    @PutMapping("{id}/workschedule")
+    public ResponseEntity<EmployeeAccountOutputDto> assignEmployeeToWorkSchedule(@PathVariable long id, @RequestBody IdInputDto input) {
         employeeAccountService.assignEmployeesToWorkSchedule(id, input.id);
         return ResponseEntity.noContent().build();
-}
+    }
 
-@DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<EmployeeAccount> deleteEmployeeAccount(@PathVariable long id) {
         employeeAccountService.deleteEmployeeAccount(id);
-            return ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
 
-}
+    }
 
 }

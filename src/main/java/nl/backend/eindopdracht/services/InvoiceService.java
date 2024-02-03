@@ -96,10 +96,10 @@ public class InvoiceService {
         return invoiceOutputDtoList;
     }
 
-    public List<InvoiceOutputDto> getAllInvoiceByCustomerId(Long caId){
+    public List<InvoiceOutputDto> getAllInvoiceByCustomerId(Long caId) {
         List<Invoice> invoiceList = invoiceRepository.findByCustomerAccountId(caId);
         List<InvoiceOutputDto> invoiceOutputDtoList = new ArrayList<>();
-        for(Invoice invoice : invoiceList) {
+        for (Invoice invoice : invoiceList) {
             invoiceOutputDtoList.add(invoiceTransferToDto(invoice));
         }
         return invoiceOutputDtoList;
@@ -164,7 +164,6 @@ public class InvoiceService {
     public void deleteInvoice(long id) {
         invoiceRepository.deleteById(id);
     }
-
 
 
 }

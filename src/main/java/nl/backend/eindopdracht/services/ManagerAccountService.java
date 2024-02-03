@@ -76,9 +76,9 @@ public class ManagerAccountService {
 
     public ManagerAccountOutputDto updateManagerAccount(long id, ManagerAccountInputDto dto) {
         Optional<ManagerAccount> getManagerAccount = managerAccountRepository.findById(id);
-        if (getManagerAccount.isEmpty()){
+        if (getManagerAccount.isEmpty()) {
             throw new RecordNotFoundException("No Manager account found by id" + id);
-        } else  {
+        } else {
             ManagerAccount accountToUpdate = getManagerAccount.get();
 
             if (dto.getResponsibilities() != null) {
@@ -90,7 +90,7 @@ public class ManagerAccountService {
 
     }
 
-    public void assignManagerToWorkSchedule (long managerAccountId, long workScheduleId){
+    public void assignManagerToWorkSchedule(long managerAccountId, long workScheduleId) {
         Optional<ManagerAccount> optionalManagerAccount = managerAccountRepository.findById(managerAccountId);
         Optional<WorkSchedule> optionalWorkSchedule = workScheduleRepository.findById(workScheduleId);
 

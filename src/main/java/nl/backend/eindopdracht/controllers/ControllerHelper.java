@@ -6,7 +6,7 @@ import org.springframework.validation.FieldError;
 public class ControllerHelper {
 
 
-    public static String checkForBindingResult (BindingResult br) {
+    public static String checkForBindingResult(BindingResult br) {
         StringBuilder sb = new StringBuilder();
         for (FieldError fe : br.getFieldErrors()) {
             sb.append(fe.getField());

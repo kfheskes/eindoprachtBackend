@@ -1,6 +1,6 @@
 package nl.backend.eindopdracht.exceptions;
 
-public class ValidationException extends RuntimeException{
+public class ValidationException extends RuntimeException {
     public ValidationException() {
         super();
     }

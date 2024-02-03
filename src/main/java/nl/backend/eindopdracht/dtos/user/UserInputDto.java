@@ -21,7 +21,6 @@ public class UserInputDto {
     public String[] roles;
 
     public String fName;
-
     public String mName;
     public String lName;
     @JsonFormat(pattern = "dd-MM-yyyy")

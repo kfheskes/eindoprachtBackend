@@ -26,7 +26,7 @@ public class EmployeeAccount {
     private Double contractH;
     private LocalDate startContract;
 
-    @OneToOne (mappedBy = "employeeAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "employeeAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     private User user;
 
     @ManyToOne
@@ -36,13 +36,13 @@ public class EmployeeAccount {
     @ManyToMany(mappedBy = "employees")
     private Set<Order> orders = new HashSet<>();
 
-    public EmployeeAccount(long id,  Double contractH, LocalDate startContract) {
+    public EmployeeAccount(long id, Double contractH, LocalDate startContract) {
         this.id = id;
 
         this.contractH = contractH;
         this.startContract = startContract;
     }
 
-    public EmployeeAccount(){
+    public EmployeeAccount() {
     }
 }

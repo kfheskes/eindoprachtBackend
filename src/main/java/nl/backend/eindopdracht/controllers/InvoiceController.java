@@ -31,7 +31,7 @@ public class InvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<InvoiceOutputDto> createInvoice(@Valid @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br ) {
+    public ResponseEntity<InvoiceOutputDto> createInvoice(@Valid @RequestBody InvoiceInputDto invoiceInputDto, BindingResult br) {
         if (br.hasFieldErrors()) {
             throw new ValidationException(checkForBindingResult(br));
         } else {
@@ -45,13 +45,13 @@ public class InvoiceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InvoiceOutputDto> getInvoice (@PathVariable long id){
+    public ResponseEntity<InvoiceOutputDto> getInvoice(@PathVariable long id) {
         InvoiceOutputDto invoiceDto = invoiceService.getInvoice(id);
         return ResponseEntity.ok(invoiceDto);
     }
 
     @GetMapping("/invoices")
-    public ResponseEntity<List<InvoiceOutputDto>> getAllInvoice (){
+    public ResponseEntity<List<InvoiceOutputDto>> getAllInvoice() {
         List<InvoiceOutputDto> invoiceOutputDtoList = invoiceService.getAllInvoice();
         return ResponseEntity.ok(invoiceOutputDtoList);
     }

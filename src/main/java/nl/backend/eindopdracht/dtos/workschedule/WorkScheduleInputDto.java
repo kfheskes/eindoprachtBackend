@@ -12,9 +12,9 @@ import java.time.LocalTime;
 public class WorkScheduleInputDto {
 
     public LocalDate date;
-public LocalTime time;
-public LocalDateTime available;
-public LocalDateTime absence;
-public LocalDate sick;
-public String managerAvailable;
+    public LocalTime time;
+    public LocalDateTime available;
+    public LocalDateTime absence;
+    public LocalDate sick;
+    public String managerAvailable;
 }

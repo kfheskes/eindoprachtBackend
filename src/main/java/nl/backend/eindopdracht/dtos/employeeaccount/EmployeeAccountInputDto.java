@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @Setter
 public class EmployeeAccountInputDto {
 
-
     public Double contractH;
     @NotBlank(message = "start date is required")
     @JsonFormat(pattern = "dd-MM-yyyy")

@@ -30,7 +30,7 @@ public class FileController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getFileById(@PathVariable Long id) {
         byte[] fileByte = fileService.getFileById(id);
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF ).body(fileByte);
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(fileByte);
     }
 
     @DeleteMapping("/{id}")

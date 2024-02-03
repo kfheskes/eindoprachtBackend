@@ -72,12 +72,15 @@ public class SecurityConfig {
                         //........................Manager............................
                         .requestMatchers("/manageraccount/**").hasRole("MANAGER")
                         //........................Employee............................
+                        .requestMatchers("/employeeaccount/employeeaccounts").hasRole("MANGAER")
+                        .requestMatchers("/employeeacoount/{id}/workschedule").hasRole("MANAGER")
                         .requestMatchers("/employeeaccount/**").hasAnyRole("MANAGER", "EMPLOYEE")
                         //........................Customer............................
-                        .requestMatchers(HttpMethod.DELETE, "/customeraccount/{id}").hasRole("MANAGER")
+                        .requestMatchers("/customeraccount/customeraccounts").hasRole("MANGAER")
+                        .requestMatchers(HttpMethod.DELETE, "/customeraccount/{id}/").hasRole("MANAGER")
                         .requestMatchers("/customeraccount/**").hasAnyRole("MANAGER", "CUSTOMER")
                         //........................WORKSCHEDULE............................
-                        .requestMatchers(HttpMethod.GET, "/workschedule/{id}").hasAnyRole("MANAGER", "EMPLOYEE","CUSTOMER")
+                        .requestMatchers(HttpMethod.GET, "/workschedule/{id}").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER")
                         .requestMatchers(HttpMethod.POST, "/workschedule").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.GET, "/workschedule/workschedules").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/workschedule/{id}").hasRole("MANAGER")
@@ -98,7 +101,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/invoice").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.GET, "/invoice/invoices").hasAnyRole("MANAGER")
                         .requestMatchers(HttpMethod.PUT, "/invoice/{id}/customer").hasRole("MANAGER")
-                        .requestMatchers(HttpMethod.PUT, "/invoice/{id}/**").hasRole("MANAGER")
+                        .requestMatchers(HttpMethod.PUT, "/invoice/{id}").hasRole("MANAGER")
                         .requestMatchers(HttpMethod.DELETE, "/invoice/{id}").hasRole("MANAGER")
                         //........................Files............................
                         .requestMatchers(HttpMethod.PUT, "/files/**").hasAnyRole("MANAGER", "EMPLOYEE", "CUSTOMER")
@@ -108,6 +111,7 @@ public class SecurityConfig {
                         //........................AUTH............................
                         .requestMatchers(HttpMethod.POST, "/sign_in").permitAll()
                         .requestMatchers(HttpMethod.GET, "/authenticated").authenticated()
+
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

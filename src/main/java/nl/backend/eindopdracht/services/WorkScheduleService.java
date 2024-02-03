@@ -20,7 +20,7 @@ public class WorkScheduleService {
         this.workScheduleRepository = workScheduleRepository;
     }
 
-    public WorkSchedule dtoTransferToWorkSchedule (WorkScheduleInputDto inputDto) {
+    public WorkSchedule dtoTransferToWorkSchedule(WorkScheduleInputDto inputDto) {
         WorkSchedule workSchedule = new WorkSchedule();
 
         workSchedule.setDate(inputDto.getDate());
@@ -32,7 +32,7 @@ public class WorkScheduleService {
         return workSchedule;
     }
 
-public WorkScheduleOutputDto workScheduleTransferToDto (WorkSchedule workSchedule){
+    public WorkScheduleOutputDto workScheduleTransferToDto(WorkSchedule workSchedule) {
         WorkScheduleOutputDto outputDto = new WorkScheduleOutputDto();
 
         outputDto.id = workSchedule.getId();
@@ -43,39 +43,39 @@ public WorkScheduleOutputDto workScheduleTransferToDto (WorkSchedule workSchedul
         outputDto.sick = workSchedule.getSick();
         outputDto.managerAvailable = workSchedule.getManagerAvailable();
         return outputDto;
-}
+    }
 
-public WorkScheduleOutputDto createWorkSchedule (WorkScheduleInputDto inputDto){
+    public WorkScheduleOutputDto createWorkSchedule(WorkScheduleInputDto inputDto) {
         WorkSchedule workSchedule = dtoTransferToWorkSchedule(inputDto);
         workScheduleRepository.save(workSchedule);
         WorkScheduleOutputDto workScheduleOutputDto = workScheduleTransferToDto(workSchedule);
-        return  workScheduleOutputDto;
-}
-
-public WorkScheduleOutputDto getWorkScheduleId (long id){
-    Optional<WorkSchedule> workScheduleId = workScheduleRepository.findById(id);
-
-    if (workScheduleId.isPresent()){
-        WorkSchedule ws = workScheduleId.get();
-        WorkScheduleOutputDto dto = workScheduleTransferToDto(ws);
-        return dto;
-    } else {
-        throw new RecordNotFoundException("No work schedule id found" + id);
+        return workScheduleOutputDto;
     }
-}
 
-public List<WorkScheduleOutputDto> getAllWorkSchedules(){
+    public WorkScheduleOutputDto getWorkScheduleId(long id) {
+        Optional<WorkSchedule> workScheduleId = workScheduleRepository.findById(id);
+
+        if (workScheduleId.isPresent()) {
+            WorkSchedule ws = workScheduleId.get();
+            WorkScheduleOutputDto dto = workScheduleTransferToDto(ws);
+            return dto;
+        } else {
+            throw new RecordNotFoundException("No work schedule id found" + id);
+        }
+    }
+
+    public List<WorkScheduleOutputDto> getAllWorkSchedules() {
         List<WorkSchedule> workScheduleList = workScheduleRepository.findAll();
         List<WorkScheduleOutputDto> workScheduleOutputDtoList = new ArrayList<>();
-    for (WorkSchedule workSchedule : workScheduleList ) {
-        workScheduleOutputDtoList.add(workScheduleTransferToDto(workSchedule));
+        for (WorkSchedule workSchedule : workScheduleList) {
+            workScheduleOutputDtoList.add(workScheduleTransferToDto(workSchedule));
+        }
+        return workScheduleOutputDtoList;
     }
-    return workScheduleOutputDtoList;
-}
 
-public WorkScheduleOutputDto updateWorkSchedule (long id, WorkScheduleInputDto inputDto){
+    public WorkScheduleOutputDto updateWorkSchedule(long id, WorkScheduleInputDto inputDto) {
         Optional<WorkSchedule> updateWS = workScheduleRepository.findById(id);
-        if (updateWS.isEmpty()){
+        if (updateWS.isEmpty()) {
             throw new RecordNotFoundException("no work schedule found with id" + id);
         } else {
             WorkSchedule changeWorkSchedule = updateWS.get();
@@ -89,7 +89,7 @@ public WorkScheduleOutputDto updateWorkSchedule (long id, WorkScheduleInputDto i
                 changeWorkSchedule.setAvailable(inputDto.getAvailable());
             }
             if (inputDto.getAbsence() != null) {
-            changeWorkSchedule.setAbsence(inputDto.getAbsence());
+                changeWorkSchedule.setAbsence(inputDto.getAbsence());
             }
             if (inputDto.getSick() != null) {
                 changeWorkSchedule.setSick(inputDto.getSick());
@@ -101,11 +101,11 @@ public WorkScheduleOutputDto updateWorkSchedule (long id, WorkScheduleInputDto i
             return workScheduleTransferToDto(returnWorkSchedule);
         }
 
-}
+    }
 
-public void deleteWorkSchedule(long id) {
+    public void deleteWorkSchedule(long id) {
         workScheduleRepository.deleteById(id);
-}
+    }
 
 
 }
