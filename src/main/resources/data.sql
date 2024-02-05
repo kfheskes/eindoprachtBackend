@@ -39,32 +39,33 @@ VALUES
 
 INSERT INTO invoices ( type_of_work, price, type_of_product, business_tax_number, amount, tax_amount, date, business_address, customer_address, term_of_payment)
 VALUES
-    ( '1', 250.00, 'Dienst', 'BT1234567', 1, 50, '10-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorcomplex A, 5678 CD Dorp','DAGEN_30' ),
-    ( '2', 1500.00, 'Dienst', 'BT7654321', 1, 300, '20-01-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Fabrieksweg 10, 6789 EF Dorp','DAGEN_60' ),
-    ( '3', 100.00, 'Dienst', 'BT1928374', 1, 20, '10-12-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorgebouw B, 8901 GH Dorp', 'DAGEN_90' ),
-    ( '2', 750.00, 'Dienst', 'BT5678901', 2, 150, '05-05-2024', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Winkelstraat 20, 1234 AB Dorp', 'DAGEN_60' ),
-    ( '3', 300.00, 'Dienst', 'BT3456789', 3, 60, '20-06-2024', 'Industrieweg 3, 9012 GH Dorp', 'Kantorenplein 7, 3456 XY Stad', 'DAGEN_60' ),
-    ( '1', 1200.00, 'Dienst', 'BT9876543', 5, 300, '15-07-2024', 'Magazijnweg 8, 6789 JK Stad', 'Winkelstraat 20, 1234 AB Dorp', 'DAGEN_30' );
+    ( '1', 250.00, 'Dienst', 'BT1234567', 1, 50, '2024-01-10', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorcomplex A, 5678 CD Dorp','DAGEN_30' ),
+    ( '2', 1500.00, 'Dienst', 'BT7654321', 1, 300, '2024-01-20', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Fabrieksweg 10, 6789 EF Dorp','DAGEN_60' ),
+    ( '3', 100.00, 'Dienst', 'BT1928374', 1, 20, '2024-12-10', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Kantoorgebouw B, 8901 GH Dorp', 'DAGEN_90' ),
+    ( '2', 750.00, 'Dienst', 'BT5678901', 2, 150, '2024-05-05', 'Schoonmaakbedrijfstraat 1, 1234 AB Stad', 'Winkelstraat 20, 1234 AB Dorp', 'DAGEN_60' ),
+    ( '3', 300.00, 'Dienst', 'BT3456789', 3, 60, '2024-06-20', 'Industrieweg 3, 9012 GH Dorp', 'Kantorenplein 7, 3456 XY Stad', 'DAGEN_60' ),
+    ( '1', 1200.00, 'Dienst', 'BT9876543', 5, 300, '2024-07-15', 'Magazijnweg 8, 6789 JK Stad', 'Winkelstraat 20, 1234 AB Dorp', 'DAGEN_30' );
 
 INSERT INTO orders (type_of_work, amount, price, product_name, status, date_created, time, work_address, work_zipcode)
 VALUES
-    ('1', 10, 150.00, 'Schoonmaakmiddelen',  'In behandeling', '01-10-2024', '08:00', 'Hoofdstraat 1', '1234 AB'),
-    ('2', 20, 200.00,  'Raamreiniger',  'Voltooid', '15-01-2024', '09:00', 'Zijstraat 2', '5678 CD'),
-    ('3', 5, 100.00,  'Vloerreiniger',  'Gepland', '01-03-2024', '10:00', 'Achterweg 3', '9012 EF'),
-    ('1', 2, 150.00, 'Schoonmaakmiddelen',  'Voltooid', '05-02-2024', '14:00', 'Hoofdstraat 1', '1234 AB'),
-    ('2', 5, 200.00, 'Glasreiniger',  'In behandeling', '03-07-2024', '11:30', 'Zijstraat 2', '5678 CD'),
-    ('3', 3, 100.00, 'Dweil',  'Gepland', '20-04-2024', '13:45', 'Achterweg 3', '9012 EF'),
-    ('1', 4, 150.00, 'Bezem',  'Voltooid', '05-10-2024', '10:15', 'Hoofdstraat 1', '1234 AB'),
-    ('2', 8, 200.00, 'Spons',  'In behandeling', '06-06-2024', '09:30', 'Zijstraat 2', '5678 CD'),
-    ('3', 6, 100.00, 'Stofzuiger',  'Gepland', '07-03-2024', '12:00', 'Achterweg 3', '9012 EF');
+    ('1', 10, 150.00, 'Schoonmaakmiddelen',  'In behandeling', '2024-10-01', '08:00', 'Hoofdstraat 1', '1234 AB'),
+    ('2', 20, 200.00,  'Raamreiniger',  'Voltooid', '2024-01-15', '09:00', 'Zijstraat 2', '5678 CD'),
+    ('3', 5, 100.00,  'Vloerreiniger',  'Gepland', '2024-03-01', '10:00', 'Achterweg 3', '9012 EF'),
+    ('1', 2, 150.00, 'Schoonmaakmiddelen',  'Voltooid', '2024-02-05', '14:00', 'Hoofdstraat 1', '1234 AB'),
+    ('2', 5, 200.00, 'Glasreiniger',  'In behandeling', '2024-07-03', '11:30', 'Zijstraat 2', '5678 CD'),
+    ('3', 3, 100.00, 'Dweil',  'Gepland', '2024-04-20', '13:45', 'Achterweg 3', '9012 EF'),
+    ('1', 4, 150.00, 'Bezem',  'Voltooid', '2024-10-05', '10:15', 'Hoofdstraat 1', '1234 AB'),
+    ('2', 8, 200.00, 'Spons',  'In behandeling', '2024-06-06', '09:30', 'Zijstraat 2', '5678 CD'),
+    ('3', 6, 100.00, 'Stofzuiger',  'Gepland', '2024-03-07', '12:00', 'Achterweg 3', '9012 EF');
 
 INSERT INTO work_schedule (date, time, available, absence, sick, manager_available)
 VALUES
-    ('10-01-2024', '08:00', '10-01-2024 08:00', NULL, NULL, 'Kay'),
-    ('15-01-2024', '09:00', NULL, '15-01-2024 09:00', NULL, 'Marie'),
-    ('20-01-2024', '10:00', '20-01-2024 10:00', NULL, '20-01-2024', 'Kay'),
-    ('10-05-2024', '10:15', NULL, '10-05-2024 10:15', NULL, 'Kay'),
-    ('25-06-2024', '09:30', '25-06-2024 09:30', NULL, '25-06-2024', 'Marie'),
-    ('30-07-2024', '12:00', NULL, '30-07-2024 12:00', NULL, 'Marie');
+    ('2024-01-10', '08:00', '2024-01-10 08:00', NULL, NULL, 'Kay'),
+    ('2024-01-15', '09:00', NULL, '2024-01-15 09:00', NULL, 'Marie'),
+    ('2024-01-20', '10:00', '2024-01-20 10:00', NULL, '2024-01-20', 'Kay'),
+    ('2024-05-10', '10:15', NULL, '2024-05-10 10:15', NULL, 'Kay'),
+    ('2024-06-25', '09:30', '2024-06-25 09:30', NULL, '2024-06-25', 'Marie'),
+    ('2024-07-30', '12:00', NULL, '2024-07-30 12:00', NULL, 'Marie');
+
 
 
